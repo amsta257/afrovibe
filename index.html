@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AfroVibe — Your Sound, Your World</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #101018; color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .app { display: flex; min-height: 100vh; }
+    aside {
+      width: 220px; padding: 28px 20px;
+      background: #171722; flex-shrink: 0;
+    }
+    .logo { font-size: 25px; font-weight: 800; color: #bd83ff; }
+    aside p { color: #aaa; font-size: 13px; margin-top: 35px; }
+    aside a {
+      display: block; padding: 12px 8px; color: #ddd;
+      text-decoration: none; border-radius: 8px;
+    }
+    aside a:hover { background: #29243a; }
+    main { flex: 1; padding: 30px; min-width: 0; }
+    .top { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    input {
+      flex: 1; min-width: 180px; padding: 14px 18px;
+      border: 1px solid #343344; border-radius: 25px;
+      background: #1c1c29; color: white; font-size: 15px;
+    }
+    h1 { font-size: 34px; margin-bottom: 8px; }
+    .muted { color: #aaa; }
+    .hero {
+      margin: 28px 0; padding: 28px; border-radius: 18px;
+      background: linear-gradient(120deg, #572b85, #bd5b8e);
+    }
+    .hero h2 { font-size: 28px; margin: 0 0 10px; }
+    button {
+      border: 0; border-radius: 22px; padding: 11px 20px;
+      cursor: pointer; font-weight: bold;
+    }
+    .primary { background: #bd83ff; color: #181020; }
+    .songs { display: grid; gap: 10px; }
+    .song {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px; background: #1b1b27; border-radius: 12px;
+    }
+    .cover {
+      width: 55px; height: 55px; border-radius: 9px;
+      display: grid; place-items: center; font-size: 25px;
+      flex-shrink: 0;
+    }
+    .song-info { flex: 1; min-width: 0; }
+    .song-info strong, .song-info span { display: block; }
+    .song-info span { color: #aaa; font-size: 13px; margin-top: 5px; }
+    .play { background: #30263f; color: white; }
+    .player {
+      position: sticky; bottom: 0; margin-top: 25px;
+      padding: 16px; background: #252033; border-radius: 14px;
+    }
+    .player-row { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+    audio { width: 100%; margin-top: 12px; height: 36px; }
+    @media(max-width: 650px) {
+      aside { width: 75px; padding: 20px 8px; }
+      .logo { font-size: 14px; }
+      aside p { display: none; }
+      aside a { font-size: 12px; padding: 12px 2px; }
+      main { padding: 18px 12px; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="logo">♫ AfroVibe</div>
+    <p>YOUR MUSIC SPACE</p>
+    <a href="#home">⌂ Home</a>
+    <a href="#discover">◉ Discover</a>
+    <a href="#library">▤ Your library</a>
+    <a href="#player">♫ Player</a>
+  </aside>
+
+  <main id="home">
+    <div class="top">
+      <div>
+        <h1>Your sound. Your world.</h1>
+        <div class="muted">Discover sounds from Africa and beyond.</div>
+      </div>
+      <input id="search" placeholder="Search songs or artists..." aria-label="Search songs">
+    </div>
+
+    <section class="hero">
+      <h2>Feel the rhythm 🌍</h2>
+      <p>Afrobeats, Amapiano, Bongo Flava and more.</p>
+      <button class="primary" onclick="playSong(0)">▶ Play a demo</button>
+    </section>
+
+    <h2 id="discover">Featured music</h2>
+    <p class="muted">Demo tracks to test your player</p>
+    <div class="songs" id="songs"></div>
+
+    <section class="player" id="player">
+      <div class="player-row">
+        <div>
+          <strong id="nowTitle">Choose a song</strong>
+          <div class="muted" id="nowArtist">AfroVibe demo player</div>
+        </div>
+        <button class="primary" id="toggle" onclick="togglePlayback()">▶ Play / Pause</button>
+      </div>
+      <audio id="audio" controls preload="none"></audio>
+    </section>
+    <p class="muted" id="library">AfroVibe © 2026 · Music for everyone.</p>
+  </main>
+</div>
+
+<script>
+  const tracks = [
+    {
+      title: "AfroVibe Demo One",
+      artist: "Demo instrumental",
+      emoji: "🌅",
+      color: "#7042a0",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+      title: "AfroVibe Demo Two",
+      artist: "Demo instrumental",
+      emoji: "🌴",
+      color: "#236c60",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+      title: "AfroVibe Demo Three",
+      artist: "Demo instrumental",
+      emoji: "🌌",
+      color: "#9a426b",
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    }
+  ];
+
+  const audio = document.getElementById("audio");
+  let current = -1;
+
+  function renderSongs(filter = "") {
+    const list = document.getElementById("songs");
+    list.innerHTML = "";
+    const matches = tracks.map((track, index) => ({track, index}))
+      .filter(item => (item.track.title + " " + item.track.artist)
+      .toLowerCase().includes(filter.toLowerCase()));
+
+    if (!matches.length) {
+      list.textContent = "No matching demo tracks found.";
+      return;
+    }
+
+    matches.forEach(({track, index}) => {
+      const row = document.createElement("div");
+      row.className = "song";
+      const cover = document.createElement("div");
+      cover.className = "cover";
+      cover.style.background = track.color;
+      cover.textContent = track.emoji;
+
+      const info = document.createElement("div");
+      info.className = "song-info";
+      const title = document.createElement("strong");
+      title.textContent = track.title;
+      const artist = document.createElement("span");
+      artist.textContent = track.artist;
+      info.append(title, artist);
+
+      const button = document.createElement("button");
+      button.className = "play";
+      button.textContent = current === index && !audio.paused ? "Ⅱ" : "▶";
+      button.onclick = () => playSong(index);
+      row.append(cover, info, button);
+      list.append(row);
+    });
+  }
+
+  function playSong(index) {
+    if (current === index && !audio.paused) {
+      audio.pause();
+      renderSongs(document.getElementById("search").value);
+      return;
+    }
+
+    current = index;
+    audio.src = tracks[index].url;
+    document.getElementById("nowTitle").textContent = tracks[index].title;
+    document.getElementById("nowArtist").textContent = tracks[index].artist;
+    audio.play().then(() => {
+      renderSongs(document.getElementById("search").value);
+    }).catch(() => {
+      document.getElementById("nowArtist").textContent =
+        "Press play on the audio controls to retry, or check your internet connection.";
+    });
+    renderSongs(document.getElementById("search").value);
+  }
+
+  function togglePlayback() {
+    if (current < 0) {
+      playSong(0);
+    } else if (audio.paused) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }
+
+  audio.addEventListener("play", () => {
+    document.getElementById("toggle").textContent = "Ⅱ Playing";
+    renderSongs(document.getElementById("search").value);
+  });
+  audio.addEventListener("pause", () => {
+    document.getElementById("toggle").textContent = "▶ Play / Pause";
+    renderSongs(document.getElementById("search").value);
+  });
+  document.getElementById("search").addEventListener("input", event => {
+    renderSongs(event.target.value);
+  });
+
+  renderSongs();
+</script>
+</body>
+</html>
