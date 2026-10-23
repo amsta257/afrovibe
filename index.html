@@ -308,8 +308,9 @@ function playVideo(video) {
   const frame = document.createElement("iframe");
   frame.className = "player";
   frame.title = "YouTube player: " + video.title;
-  frame.src = "https://www.youtube.com/embed/" + encodeURIComponent(video.id) + "?playsinline=1&rel=0";
-  frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+frame.src = "https://www.youtube.com/embed/" +
+  encodeURIComponent(video.id) +
+  "?autoplay=1&playsinline=1&rel=0";  frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
   frame.referrerPolicy = "strict-origin-when-cross-origin";
   frame.allowFullscreen = true;
 
