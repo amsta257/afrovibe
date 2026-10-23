@@ -2,588 +2,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AfroVibe — Your Music, Your Vibe</title>
-  <meta name="description" content="Discover and play music on AfroVibe using YouTube video and playlist embeds.">
-  <style>
-    :root {
-      --bg: #100d18;
-      --panel: #1c1728;
-      --panel2: #261d36;
-      --purple: #9b5cff;
-      --pink: #ff4f9a;
-      --text: #f8f5ff;
-      --muted: #b8adc9;
-      --border: #382c4d;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    button, input { font: inherit; }
-
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 15px;
-      color: white;
-      background: var(--purple);
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    button:hover { filter: brightness(1.12); }
-    button:focus-visible, input:focus-visible {
-      outline: 2px solid var(--pink);
-      outline-offset: 3px;
-    }
-
-    .app { display: flex; min-height: 100vh; }
-
-    aside {
-      width: 235px;
-      flex-shrink: 0;
-      background: #171220;
-      border-right: 1px solid var(--border);
-      padding: 27px 18px;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: 900;
-      margin: 0 0 32px;
-      letter-spacing: -1px;
-    }
-
-    .logo span { color: var(--pink); }
-
-    .nav-label {
-      color: var(--muted);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin: 24px 10px 10px;
-    }
-
-    .nav-btn {
-      display: block;
-      width: 100%;
-      text-align: left;
-      background: transparent;
-      color: var(--muted);
-      margin: 4px 0;
-    }
-
-    .nav-btn.active, .nav-btn:hover {
-      background: var(--panel2);
-      color: white;
-    }
-
-    main { flex: 1; min-width: 0; padding: 27px 34px 50px; }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .search { max-width: 430px; width: 100%; }
-
-    input {
-      width: 100%;
-      min-width: 0;
-      padding: 13px 15px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: white;
-    }
-
-    .hero {
-      padding: 32px;
-      border-radius: 22px;
-      background: linear-gradient(120deg, #5b249b, #b42f78 70%, #e96b77);
-      margin-bottom: 28px;
-    }
-
-    .eyebrow {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    h1 { font-size: clamp(30px, 4vw, 46px); margin: 12px 0; }
-    .hero p { line-height: 1.6; max-width: 580px; margin-bottom: 0; }
-
-    .section { margin: 28px 0; }
-    .section h2 { font-size: 22px; margin: 0 0 15px; }
-    .muted { color: var(--muted); line-height: 1.6; }
-
-    .player-card, .form-card, .track {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-    }
-
-    .player-card { overflow: hidden; }
-
-    .player-frame {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      min-height: 230px;
-      border: 0;
-      border-radius: 12px;
-      background: #08070c;
-      display: block;
-    }
-
-    .player-placeholder {
-      aspect-ratio: 16 / 9;
-      min-height: 230px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 25px;
-      border-radius: 12px;
-      background: #08070c;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
-    .secondary {
-      background: var(--panel2);
-      border: 1px solid var(--border);
-    }
-
-    .track-list { display: grid; gap: 10px; }
-
-    .track {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 13px;
-    }
-
-    .track-icon {
-      width: 46px;
-      height: 46px;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #7d3bd4, #ec4b91);
-      font-size: 22px;
-    }
-
-    .track-info { flex: 1; min-width: 0; }
-    .track-title { font-weight: 700; overflow-wrap: anywhere; }
-    .track-info small { color: var(--muted); display: block; margin-top: 5px; }
-
-    .track-actions { display: flex; gap: 7px; align-items: center; }
-    .heart { background: var(--panel2); font-size: 18px; padding: 9px 11px; }
-    .heart.fav { color: var(--pink); }
-    .play-track { padding: 9px 12px; }
-
-    .notice { margin-top: 12px; font-size: 14px; color: var(--muted); }
-    .notice.error { color: #ff9cae; }
-    .empty { color: var(--muted); padding: 18px 0; }
-
-    footer {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
-      padding-top: 20px;
-    }
-
-    @media (max-width: 760px) {
-      .app { display: block; }
-      aside { width: 100%; padding: 16px; border-right: 0; border-bottom: 1px solid var(--border); }
-      .logo { margin: 0 0 12px; }
-      .nav-label { display: none; }
-      .nav-links { display: flex; flex-wrap: wrap; gap: 5px; }
-      .nav-btn { width: auto; margin: 0; padding: 9px 11px; }
-      main { padding: 20px 15px 35px; }
-      .hero { padding: 24px; }
-      .topbar { align-items: stretch; flex-direction: column; }
-      .form-grid { grid-template-columns: 1fr; }
-      .track { flex-wrap: wrap; }
-      .track-actions { margin-left: auto; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AfroVibe | Discover Your Sound</title>
+<style>
+:root{--bg:#100d18;--panel:#1d1729;--panel2:#29203a;--purple:#9b5cff;--pink:#ff4f9a;--text:#faf7ff;--muted:#bdb1ce;--border:#3b2d50}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input{font:inherit}
+button{border:0;border-radius:10px;padding:12px 15px;background:var(--purple);color:white;font-weight:bold;cursor:pointer}
+button:hover{filter:brightness(1.12)}
+input{width:100%;padding:13px;border:1px solid var(--border);border-radius:10px;background:#171220;color:white}
+.app{display:flex;min-height:100vh}
+aside{width:220px;flex-shrink:0;background:#171220;border-right:1px solid var(--border);padding:25px 16px}
+.logo{font-size:25px;font-weight:900;margin:0 0 28px}.logo span{color:var(--pink)}
+.nav{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);margin:5px 0}
+.nav.active,.nav:hover{background:var(--panel2);color:white}
+main{flex:1;min-width:0;padding:28px;max-width:1400px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+.muted{color:var(--muted);line-height:1.6}
+.hero{padding:30px;border-radius:20px;background:linear-gradient(120deg,#5b249b,#b42f78 70%,#e96b77);margin-bottom:28px}
+.hero h1{font-size:clamp(30px,4vw,46px);margin:12px 0}
+.section{margin:28px 0}.section h2{margin:0 0 15px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
+.searchrow{display:flex;gap:10px}
+.searchrow input{flex:1;min-width:0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.secondary{background:var(--panel2);border:1px solid var(--border)}
+#status{font-size:14px;color:var(--muted);margin-top:12px;overflow-wrap:anywhere}
+#status.error{color:#ff9cae}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+.video{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;min-width:0}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#08070c}
+.video-body{padding:13px}
+.video h3{font-size:15px;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere}
+.channel{font-size:13px;color:var(--muted);margin-bottom:12px}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{font-size:13px;padding:9px 10px}
+.player{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#08070c;display:block}
+.placeholder{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;background:#08070c;border-radius:12px;color:var(--muted)}
+.list{display:grid;gap:12px}
+.saved{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--border);padding:12px;border-radius:12px}
+.saved img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.saved-info{flex:1;min-width:0}.saved-info strong{display:block;overflow-wrap:anywhere}
+.saved-info small{display:block;color:var(--muted);margin-top:5px}
+.empty{color:var(--muted);padding:12px 0}
+footer{border-top:1px solid var(--border);padding-top:18px;margin-top:40px;color:var(--muted);font-size:12px;line-height:1.7}
+@media(max-width:760px){
+.app{display:block}aside{width:100%;padding:16px;border:0;border-bottom:1px solid var(--border)}
+.logo{margin-bottom:12px}.navs{display:flex;flex-wrap:wrap;gap:4px}.nav{width:auto;margin:0;padding:9px}
+main{padding:18px 14px}.top{align-items:stretch;flex-direction:column}.hero{padding:22px}
+.searchrow{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.saved{flex-wrap:wrap}.saved img{width:90px}
+}
+</style>
 </head>
 <body>
-  <div class="app">
-    <aside>
-      <div class="logo">Afro<span>Vibe</span> 🎵</div>
-      <div class="nav-label">Your space</div>
-      <div class="nav-links">
-        <button class="nav-btn active" data-view="home">⌂ Home</button>
-        <button class="nav-btn" data-view="library">♫ My Music</button>
-        <button class="nav-btn" data-view="favourites">♥ Favourites</button>
-        <button class="nav-btn" data-view="player">▶ YouTube Player</button>
-      </div>
-    </aside>
+<div class="app">
+<aside>
+  <div class="logo">Afro<span>Vibe</span> 🎵</div>
+  <div class="navs">
+    <button class="nav active" data-target="home">⌂ Home</button>
+    <button class="nav" data-target="discover">🔎 Discover</button>
+    <button class="nav" data-target="playerSection">▶ Player</button>
+    <button class="nav" data-target="library">♫ My Music</button>
+    <button class="nav" data-target="favourites">♥ Favourites</button>
+  </div>
+</aside>
 
-    <main>
-      <div class="topbar">
-        <div>
-          <strong>Welcome to AfroVibe</strong>
-          <div class="muted">Your music, your vibe.</div>
-        </div>
-        <div class="search">
-          <input id="searchInput" type="search" placeholder="Search your saved music..." aria-label="Search saved music">
-        </div>
-      </div>
-
-      <section class="hero" id="homeSection">
-        <div class="eyebrow">Feel the rhythm</div>
-        <h1>Music brings us together.</h1>
-        <p>Play a YouTube music video or playlist, and build your own AfroVibe library with your favourites.</p>
-      </section>
-
-      <section class="section" id="playerSection">
-        <h2>🎧 YouTube Music Player</h2>
-        <p class="muted">Paste a YouTube video link or playlist link below, then select Load and Play.</p>
-
-        <div class="form-card">
-          <div class="form-grid">
-            <input id="youtubeUrl" type="url" placeholder="Paste YouTube video or playlist URL">
-            <input id="musicTitle" type="text" maxlength="100" placeholder="Song or playlist name (optional)">
-          </div>
-          <div class="form-actions">
-            <button id="loadButton">▶ Load and Play</button>
-            <button id="saveButton" class="secondary">＋ Save to My Music</button>
-          </div>
-          <div id="status" class="notice" role="status" aria-live="polite">Ready for a YouTube link.</div>
-        </div>
-
-        <div class="player-card" style="margin-top:15px">
-          <div id="playerArea">
-            <div class="player-placeholder">
-              <div>
-                <div style="font-size:42px">▶</div>
-                <strong>Your music will play here</strong>
-                <div>Paste a YouTube link above to get started.</div>
-              </div>
-            </div>
-          </div>
-          <p class="muted">Playback uses YouTube's official embedded player. Some videos may not be available for embedding.</p>
-        </div>
-      </section>
-
-      <section class="section" id="librarySection">
-        <h2>♫ My Music</h2>
-        <p class="muted">Save videos and playlists here for quick access on this browser.</p>
-        <div id="musicList" class="track-list"></div>
-      </section>
-
-      <section class="section" id="favouritesSection">
-        <h2>♥ Your Favourites</h2>
-        <div id="favouriteList" class="track-list"></div>
-      </section>
-
-      <footer>
-        AfroVibe uses YouTube's embedded player. Music is played from YouTube, not uploaded or hosted by AfroVibe. Respect copyright and YouTube's terms. Saved library and favourites are stored in this browser only.
-      </footer>
-    </main>
+<main>
+  <div class="top">
+    <div><strong>Welcome to AfroVibe</strong><div class="muted">Discover your next favourite song.</div></div>
   </div>
 
-  <script>
-    const STORAGE_KEY = "afrovibe-youtube-library-v1";
-    const FAV_KEY = "afrovibe-youtube-favourites-v1";
+  <section class="hero" id="home">
+    <div>YOUR SOUND. YOUR VIBE.</div>
+    <h1>Discover music on YouTube.</h1>
+    <p>Search African music, Afrobeats, Amapiano, gospel, hip-hop and music from around the world.</p>
+    <button onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">Discover music →</button>
+  </section>
 
-    const urlInput = document.getElementById("youtubeUrl");
-    const titleInput = document.getElementById("musicTitle");
-    const statusBox = document.getElementById("status");
-    const playerArea = document.getElementById("playerArea");
-    const searchInput = document.getElementById("searchInput");
+  <section class="section" id="discover">
+    <h2>🔎 Search YouTube</h2>
+    <p class="muted">Search for a song, artist, genre or playlist. Results are fetched directly from YouTube.</p>
+    <div class="panel">
+      <div class="searchrow">
+        <input id="query" type="search" maxlength="150" placeholder="Try: latest Afrobeats, Bien, Amapiano..." aria-label="Search YouTube">
+        <button id="searchBtn">Search</button>
+      </div>
+      <div class="filters">
+        <button class="secondary quick" data-query="latest Afrobeats music">Afrobeats</button>
+        <button class="secondary quick" data-query="Kenyan music hits">Kenyan Music</button>
+        <button class="secondary quick" data-query="Amapiano hits">Amapiano</button>
+        <button class="secondary quick" data-query="African gospel music">Gospel</button>
+        <button class="secondary quick" data-query="latest hip hop music">Hip-Hop</button>
+      </div>
+      <div id="status" role="status" aria-live="polite">Enter a search term to discover videos.</div>
+    </div>
+    <div id="results" class="grid" style="margin-top:16px"></div>
+  </section>
 
-    let currentItem = null;
-    let library = readStorage(STORAGE_KEY, []);
-    let favourites = readStorage(FAV_KEY, []);
+  <section class="section" id="playerSection">
+    <h2>▶ AfroVibe Player</h2>
+    <div class="panel">
+      <div id="player"><div class="placeholder">Select a video from your search results to play it here.</div></div>
+      <h3 id="playingTitle">Nothing playing yet</h3>
+      <p id="playingChannel" class="muted">Your selected YouTube video will appear above.</p>
+      <div class="actions">
+        <button id="recommendBtn" class="secondary" disabled>✨ Find similar music</button>
+        <button id="openYoutube" class="secondary" disabled>Open on YouTube ↗</button>
+      </div>
+    </div>
+  </section>
 
-    function readStorage(key, fallback) {
-      try {
-        const value = JSON.parse(localStorage.getItem(key));
-        return Array.isArray(value) ? value : fallback;
-      } catch {
-        return fallback;
-      }
-    }
+  <section class="section" id="library">
+    <h2>♫ My Music</h2>
+    <p class="muted">Videos you save are stored in this browser.</p>
+    <div id="libraryList" class="list"></div>
+  </section>
 
-    function saveStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(library));
-        localStorage.setItem(FAV_KEY, JSON.stringify(favourites));
-      } catch {
-        showStatus("Your browser could not save changes. Check its storage settings.", true);
-      }
-    }
+  <section class="section" id="favourites">
+    <h2>♥ Favourites</h2>
+    <div id="favouritesList" class="list"></div>
+  </section>
 
-    function showStatus(message, isError = false) {
-      statusBox.textContent = message;
-      statusBox.className = isError ? "notice error" : "notice";
-    }
+  <footer>
+    AfroVibe uses the YouTube Data API and official YouTube embedded player. Videos remain hosted by YouTube. Some videos may not be available for embedding. Search results depend on YouTube availability and your API quota. Saved music and favourites are stored in this browser, not synced across devices.
+  </footer>
+</main>
+</div>
 
-    // Accept regular YouTube videos, youtu.be links, Shorts, and playlists.
-    function parseYouTubeLink(raw) {
-      let url;
-      try {
-        url = new URL(raw.trim());
-      } catch {
-        return null;
-      }
+<script>
+/*
+  IMPORTANT:
+  Replace PASTE_YOUR_API_KEY_HERE with your own YouTube Data API key.
+  Do not send your key to anyone. Restrict it in Google Cloud to
+  YouTube Data API v3 and your GitHub Pages website.
+*/
+const API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
+const API_URL = "https://www.googleapis.com/youtube/v3/search";
+const LIBRARY_KEY = "afrovibe-youtube-library-v2";
+const FAV_KEY = "afrovibe-youtube-favourites-v2";
 
-      const host = url.hostname.toLowerCase().replace(/^www\./, "");
-      const allowedHosts = [
-        "youtube.com", "m.youtube.com", "music.youtube.com",
-        "youtu.be", "youtube-nocookie.com"
-      ];
+const queryInput = document.getElementById("query");
+const statusEl = document.getElementById("status");
+const resultsEl = document.getElementById("results");
+const playerEl = document.getElementById("player");
+const libraryEl = document.getElementById("libraryList");
+const favouritesEl = document.getElementById("favouritesList");
 
-      if (!allowedHosts.includes(host)) return null;
+let library = readArray(LIBRARY_KEY);
+let favourites = readArray(FAV_KEY);
+let currentVideo = null;
+let busy = false;
 
-      let videoId = "";
-      let playlistId = url.searchParams.get("list") || "";
+function readArray(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
 
-      if (host === "youtu.be") {
-        videoId = url.pathname.split("/").filter(Boolean)[0] || "";
-      } else {
-        const parts = url.pathname.split("/").filter(Boolean);
+function persist() {
+  try {
+    localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
+    localStorage.setItem(FAV_KEY, JSON.stringify(favourites));
+  } catch {
+    setStatus("Browser storage is unavailable. You can still search and play videos.", true);
+  }
+}
 
-        if (parts[0] === "watch") {
-          videoId = url.searchParams.get("v") || "";
-        } else if (["embed", "shorts", "live", "v"].includes(parts[0])) {
-          videoId = parts[1] || "";
-        }
-      }
+function setStatus(message, error = false) {
+  statusEl.textContent = message;
+  statusEl.className = error ? "error" : "";
+}
 
-      if (videoId && !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) return null;
-      if (playlistId && !/^[a-zA-Z0-9_-]+$/.test(playlistId)) return null;
-      if (!videoId && !playlistId) return null;
+function setBusy(value) {
+  busy = value;
+  document.getElementById("searchBtn").disabled = value;
+  document.getElementById("searchBtn").textContent = value ? "Searching…" : "Search";
+}
 
-      return { videoId, playlistId };
-    }
+function normalizeVideo(item) {
+  const snippet = item.snippet || {};
+  const id = typeof item.id === "string" ? item.id : item.id && item.id.videoId;
+  if (!id) return null;
 
-    function makeEmbedUrl(parsed) {
-      const params = new URLSearchParams({ playsinline: "1", rel: "0" });
+  return {
+    id,
+    title: snippet.title || "YouTube video",
+    channel: snippet.channelTitle || "YouTube channel",
+    thumbnail: (snippet.thumbnails && (
+      snippet.thumbnails.medium || snippet.thumbnails.high || snippet.thumbnails.default
+    ) || {}).url || "",
+    publishedAt: snippet.publishedAt || "",
+    url: "https://www.youtube.com/watch?v=" + encodeURIComponent(id)
+  };
+}
 
-      if (parsed.playlistId) params.set("list", parsed.playlistId);
+async function searchYouTube(term, mode = "search") {
+  const q = term.trim();
+  if (!q) {
+    setStatus("Type a song, artist or genre first.", true);
+    return;
+  }
+  if (API_KEY === "PASTE_YOUR_API_KEY_HERE" || !API_KEY.trim()) {
+    setStatus("Add your API key in the code first. Find const API_KEY near the bottom of index.html and replace PASTE_YOUR_API_KEY_HERE.", true);
+    return;
+  }
+  if (busy) return;
 
-      const path = parsed.videoId
-        ? "/embed/" + parsed.videoId
-        : "/embed/videoseries";
+  setBusy(true);
+  setStatus(mode === "recommend" ? "Finding similar music…" : "Searching YouTube…");
+  resultsEl.replaceChildren();
 
-      return "https://www.youtube.com" + path + "?" + params.toString();
-    }
-
-    function makeItem(rawUrl, title) {
-      const parsed = parseYouTubeLink(rawUrl);
-      if (!parsed) return null;
-
-      const cleanUrl = parsed.videoId
-        ? "https://www.youtube.com/watch?v=" + parsed.videoId +
-          (parsed.playlistId ? "&list=" + parsed.playlistId : "")
-        : "https://www.youtube.com/playlist?list=" + parsed.playlistId;
-
-      return {
-        id: parsed.videoId
-          ? "video:" + parsed.videoId + (parsed.playlistId ? ":list:" + parsed.playlistId : "")
-          : "playlist:" + parsed.playlistId,
-        title: (title || "").trim() || (parsed.playlistId && !parsed.videoId ? "YouTube Playlist" : "YouTube Music"),
-        url: cleanUrl,
-        videoId: parsed.videoId,
-        playlistId: parsed.playlistId
-      };
-    }
-
-    function playItem(item) {
-      const parsed = parseYouTubeLink(item.url);
-      if (!parsed) {
-        showStatus("That saved link is invalid. Please load it again.", true);
-        return;
-      }
-
-      currentItem = item;
-      urlInput.value = item.url;
-      titleInput.value = item.title;
-
-      const iframe = document.createElement("iframe");
-      iframe.className = "player-frame";
-      iframe.title = "YouTube player: " + item.title;
-      iframe.src = makeEmbedUrl(parsed);
-      iframe.allow = "encrypted-media; picture-in-picture; fullscreen";
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-      iframe.allowFullscreen = true;
-
-      playerArea.replaceChildren(iframe);
-      showStatus("Loaded: " + item.title + ". Press Play in the YouTube player if playback doesn't start.");
-      document.getElementById("playerSection").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    document.getElementById("loadButton").addEventListener("click", () => {
-      const item = makeItem(urlInput.value, titleInput.value);
-      if (!item) {
-        showStatus("Please paste a valid YouTube video or playlist link.", true);
-        return;
-      }
-      playItem(item);
+  try {
+    const params = new URLSearchParams({
+      part: "snippet",
+      type: "video",
+      q,
+      maxResults: "12",
+      videoEmbeddable: "true",
+      safeSearch: "moderate",
+      key: API_KEY
     });
 
-    document.getElementById("saveButton").addEventListener("click", () => {
-      const item = makeItem(urlInput.value, titleInput.value);
-      if (!item) {
-        showStatus("Paste a valid YouTube link before saving it.", true);
-        return;
-      }
+    const response = await fetch(API_URL + "?" + params.toString());
+    const data = await response.json();
 
-      const existingIndex = library.findIndex(entry => entry.id === item.id);
-      if (existingIndex >= 0) {
-        library[existingIndex] = item;
-        showStatus("Updated in My Music: " + item.title);
-      } else {
-        library.unshift(item);
-        showStatus("Saved to My Music: " + item.title);
-      }
-
-      saveStorage();
-      renderLists();
-    });
-
-    function toggleFavourite(id) {
-      if (favourites.includes(id)) {
-        favourites = favourites.filter(favId => favId !== id);
-      } else {
-        favourites.push(id);
-      }
-      saveStorage();
-      renderLists();
+    if (!response.ok || data.error) {
+      const apiMessage = data.error && data.error.message;
+      throw new Error(apiMessage || "YouTube search failed. Check your API key and restrictions.");
     }
 
-    function createTrack(item) {
-      const row = document.createElement("div");
-      row.className = "track";
+    const videos = (data.items || []).map(normalizeVideo).filter(Boolean);
+    if (!videos.length) {
+      setStatus("No videos found. Try another search phrase.");
+      return;
+    }
 
-      const icon = document.createElement("div");
-      icon.className = "track-icon";
-      icon.textContent = item.playlistId ? "📃" : "🎵";
+    renderVideoResults(videos);
+    setStatus(mode === "recommend"
+      ? "Here are some similar results for: " + q
+      : "Found " + videos.length + " videos for: " + q);
+  } catch (error) {
+    setStatus("Couldn't search YouTube: " + error.message + " Check your key, website restrictions and API quota.", true);
+  } finally {
+    setBusy(false);
+  }
+}
 
-      const info = document.createElement("div");
-      info.className = "track-info";
+function renderVideoResults(videos) {
+  resultsEl.replaceChildren();
 
-      const title = document.createElement("div");
-      title.className = "track-title";
-      title.textContent = item.title;
+  videos.forEach(video => {
+    const card = document.createElement("article");
+    card.className = "video";
 
-      const subtitle = document.createElement("small");
-      subtitle.textContent = item.playlistId ? "YouTube playlist or video + playlist" : "YouTube video";
+    const image = document.createElement("img");
+    image.className = "thumb";
+    image.alt = "Thumbnail for " + video.title;
+    image.loading = "lazy";
+    image.src = video.thumbnail;
 
-      info.append(title, subtitle);
+    const body = document.createElement("div");
+    body.className = "video-body";
 
-      const actions = document.createElement("div");
-      actions.className = "track-actions";
+    const title = document.createElement("h3");
+    title.textContent = video.title;
 
-      const play = document.createElement("button");
-      play.className = "play-track";
-      play.textContent = "▶ Play";
-      play.addEventListener("click", () => playItem(item));
+    const channel = document.createElement("div");
+    channel.className = "channel";
+    channel.textContent = video.channel;
 
-      const heart = document.createElement("button");
-      const isFavourite = favourites.includes(item.id);
-      heart.className = isFavourite ? "heart fav" : "heart";
-      heart.textContent = isFavourite ? "♥" : "♡";
-      heart.setAttribute("aria-label", isFavourite ? "Remove favourite" : "Add favourite");
-      heart.addEventListener("click", () => toggleFavourite(item.id));
+    const actions = document.createElement("div");
+    actions.className = "actions";
 
+    const play = document.createElement("button");
+    play.textContent = "▶ Play";
+    play.addEventListener("click", () => playVideo(video));
+
+    const save = document.createElement("button");
+    save.className = "secondary";
+    save.textContent = library.some(item => item.id === video.id) ? "✓ Saved" : "＋ Save";
+    save.addEventListener("click", () => saveVideo(video));
+
+    const heart = document.createElement("button");
+    heart.className = "secondary";
+    heart.textContent = favourites.includes(video.id) ? "♥" : "♡";
+    heart.setAttribute("aria-label", "Toggle favourite");
+    heart.addEventListener("click", () => toggleFavourite(video));
+
+    actions.append(play, save, heart);
+    body.append(title, channel, actions);
+    card.append(image, body);
+    resultsEl.append(card);
+  });
+}
+
+function playVideo(video) {
+  currentVideo = video;
+
+  const frame = document.createElement("iframe");
+  frame.className = "player";
+  frame.title = "YouTube player: " + video.title;
+  frame.src = "https://www.youtube.com/embed/" + encodeURIComponent(video.id) + "?playsinline=1&rel=0";
+  frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+  frame.allowFullscreen = true;
+
+  playerEl.replaceChildren(frame);
+  document.getElementById("playingTitle").textContent = video.title;
+  document.getElementById("playingChannel").textContent = video.channel;
+  document.getElementById("recommendBtn").disabled = false;
+  document.getElementById("openYoutube").disabled = false;
+  document.getElementById("playerSection").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function saveVideo(video) {
+  if (!library.some(item => item.id === video.id)) {
+    library.unshift(video);
+    persist();
+    renderSavedLists();
+  }
+}
+
+function toggleFavourite(video) {
+  if (favourites.includes(video.id)) {
+    favourites = favourites.filter(id => id !== video.id);
+  } else {
+    favourites.unshift(video.id);
+    if (!library.some(item => item.id === video.id)) library.unshift(video);
+  }
+  persist();
+  renderSavedLists();
+}
+
+function renderSavedLists() {
+  renderSavedSection(libraryEl, library, "Your music library is empty. Search YouTube and tap Save.");
+  const favVideos = favourites.map(id => library.find(video => video.id === id)).filter(Boolean);
+  renderSavedSection(favouritesEl, favVideos, "No favourites yet. Tap the heart on a video you like.");
+}
+
+function renderSavedSection(container, items, emptyMessage) {
+  container.replaceChildren();
+  if (!items.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = emptyMessage;
+    container.append(empty);
+    return;
+  }
+
+  items.forEach(video => {
+    const row = document.createElement("div");
+    row.className = "saved";
+
+    const image = document.createElement("img");
+    image.src = video.thumbnail || "";
+    image.alt = "";
+    image.loading = "lazy";
+
+    const info = document.createElement("div");
+    info.className = "saved-info";
+
+    const title = document.createElement("strong");
+    title.textContent = video.title;
+
+    const channel = document.createElement("small");
+    channel.textContent = video.channel;
+
+    info.append(title, channel);
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const play = document.createElement("button");
+    play.textContent = "▶ Play";
+    play.addEventListener("click", () => playVideo(video));
+    actions.append(play);
+
+    if (container === libraryEl) {
       const remove = document.createElement("button");
       remove.className = "secondary";
-      remove.textContent = "✕";
-      remove.setAttribute("aria-label", "Remove from My Music");
+      remove.textContent = "Remove";
       remove.addEventListener("click", () => {
-        library = library.filter(entry => entry.id !== item.id);
-        favourites = favourites.filter(favId => favId !== item.id);
-        saveStorage();
-        renderLists();
+        library = library.filter(item => item.id !== video.id);
+        favourites = favourites.filter(id => id !== video.id);
+        persist();
+        renderSavedLists();
       });
-
-      actions.append(play, heart, remove);
-      row.append(icon, info, actions);
-      return row;
+      actions.append(remove);
+    } else {
+      const removeFav = document.createElement("button");
+      removeFav.className = "secondary";
+      removeFav.textContent = "♥ Remove";
+      removeFav.addEventListener("click", () => {
+        favourites = favourites.filter(id => id !== video.id);
+        persist();
+        renderSavedLists();
+      });
+      actions.append(removeFav);
     }
 
-    function renderLists() {
-      const query = searchInput.value.trim().toLowerCase();
-      const musicList = document.getElementById("musicList");
-      const favouriteList = document.getElementById("favouriteList");
+    row.append(image, info, actions);
+    container.append(row);
+  });
+}
 
-      musicList.replaceChildren();
-      favouriteList.replaceChildren();
+document.getElementById("searchBtn").addEventListener("click", () => {
+  searchYouTube(queryInput.value);
+});
 
-      const visibleLibrary = library.filter(item => item.title.toLowerCase().includes(query));
+queryInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") searchYouTube(queryInput.value);
+});
 
-      if (visibleLibrary.length) {
-        visibleLibrary.forEach(item => musicList.appendChild(createTrack(item)));
-      } else {
-        const empty = document.createElement("p");
-        empty.className = "empty";
-        empty.textContent = library.length ? "No music matches your search." : "Your library is empty. Paste a YouTube link above and save it.";
-        musicList.appendChild(empty);
-      }
+document.querySelectorAll(".quick").forEach(button => {
+  button.addEventListener("click", () => {
+    queryInput.value = button.dataset.query;
+    searchYouTube(button.dataset.query);
+  });
+});
 
-      const visibleFavourites = library.filter(item =>
-        favourites.includes(item.id) && item.title.toLowerCase().includes(query)
-      );
+document.getElementById("recommendBtn").addEventListener("click", () => {
+  if (!currentVideo) return;
+  // One new YouTube search request for related videos.
+  searchYouTube(currentVideo.title + " " + currentVideo.channel + " similar music", "recommend");
+  document.getElementById("discover").scrollIntoView({ behavior: "smooth" });
+});
 
-      if (visibleFavourites.length) {
-        visibleFavourites.forEach(item => favouriteList.appendChild(createTrack(item)));
-      } else {
-        const empty = document.createElement("p");
-        empty.className = "empty";
-        empty.textContent = "No favourites yet. Tap the heart beside a saved item to add one.";
-        favouriteList.appendChild(empty);
-      }
-    }
+document.getElementById("openYoutube").addEventListener("click", () => {
+  if (currentVideo) window.open(currentVideo.url, "_blank", "noopener,noreferrer");
+});
 
-    searchInput.addEventListener("input", renderLists);
+document.querySelectorAll(".nav").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".nav").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    document.getElementById(button.dataset.target).scrollIntoView({ behavior: "smooth" });
+  });
+});
 
-    document.querySelectorAll(".nav-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-
-        const destinations = {
-          home: "homeSection",
-          library: "librarySection",
-          favourites: "favouritesSection",
-          player: "playerSection"
-        };
-        document.getElementById(destinations[button.dataset.view])
-          .scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-
-    renderLists();
-  </script>
+renderSavedLists();
+</script>
 </body>
 </html>
