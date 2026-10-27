@@ -1402,7 +1402,7 @@ function onYouTubeIframeAPIReady() {
         }
       },
 
-      onStateChange: function(event) {
+      onStateChange: function(event) {updatePlaybackButton(event.data);
         if (event.data === YT.PlayerState.ENDED) {
           playNext();
         }
