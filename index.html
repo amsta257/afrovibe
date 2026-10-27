@@ -323,17 +323,105 @@ footer {
   line-height:1.7;
 }
 
+
 @media(max-width:760px) {
-  .playlist-tools { grid-template-columns:1fr }
-  .playlist-track { flex-wrap:wrap }
-  .playlist-track .actions { width:100% }
-  .app { display:block; padding:0 }
-  .app>aside {
-    width:100%;
-    padding:16px;
-    border-radius:0;
-    border-bottom:1px solid var(--border);
+  .playlist-tools {
+    grid-template-columns: 1fr;
   }
+
+  .playlist-track {
+    flex-wrap: wrap;
+  }
+
+  .playlist-track .actions {
+    width: 100%;
+  }
+
+  .app {
+    display: block;
+    padding: 140px 0 24px;
+  }
+
+  .app > aside {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    max-height: 140px;
+    overflow-y: auto;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #303630;
+    padding: 8px 12px;
+  }
+
+  .logo-link {
+    margin-bottom: 6px;
+  }
+
+  .logo {
+    font-size: 23px;
+    padding: 4px 8px;
+  }
+
+  .navs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .nav {
+    width: auto;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  main {
+    padding: 20px 14px;
+    border-radius: 0;
+  }
+
+  .top {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero {
+    padding: 24px;
+  }
+
+  .searchrow {
+    flex-direction: column;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 10px;
+  }
+
+  .saved {
+    flex-wrap: wrap;
+  }
+
+  .saved img {
+    width: 90px;
+  }
+
+  .saved .actions {
+    width: 100%;
+  }
+
+  #player,
+  #player iframe,
+  #youtubePlayerHost,
+  .placeholder {
+    min-height: 250px;
+  }
+}
+
   .logo { margin-bottom:12px }
   .navs { display:flex; flex-wrap:wrap; gap:4px }
   .nav { width:auto; margin:0; padding:10px }
@@ -557,7 +645,7 @@ body {
 <body>
 <div class="app">
 <aside>
-  <div class="logo">Afro<span>Vibe</span> 🎵</div>
+   <a class="logo-link" href="#home" aria-label="AfroVibe Home">   <div class="logo">Afro<span>Vibe</span> 🎵</div> </a>
   <div class="navs">
     <button class="nav active" data-target="home">⌂ Home</button>
     <button class="nav" data-target="discover">🔎 Discover</button>
