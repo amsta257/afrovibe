@@ -1026,11 +1026,37 @@ function playPrevious() {
   }
 }
 
+
 function togglePlayback() {
   if (!playerReady || !ytPlayer) {
     alert("Please select a song and wait for the player to load.");
     return;
   }
+
+  const state = ytPlayer.getPlayerState();
+
+  if (state === YT.PlayerState.PLAYING) {
+    ytPlayer.pauseVideo();
+  } else {
+    ytPlayer.playVideo();
+  }
+}
+
+function updatePlaybackButton(state) {
+  const button = document.getElementById("playPauseButton");
+  if (!button) return;
+
+  if (state === YT.PlayerState.PLAYING) {
+    button.textContent = "⏸";
+    button.title = "Pause";
+    button.setAttribute("aria-label", "Pause");
+  } else {
+    button.textContent = "▶";
+    button.title = "Play";
+    button.setAttribute("aria-label", "Play");
+  }
+}
+
 
   const state = ytPlayer.getPlayerState();
 
