@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,22 +53,35 @@ input:focus { border-color:var(--purple); box-shadow:0 0 0 2px #1ed76030 }
   display:flex;
   min-height:100vh;
   gap:8px;
-  padding:8px 8px 24px;
+  padding:8px 8px 24px 243px;
 }
-aside {
-  width:235px;
+.app > aside {
+  position:fixed;
+  top:8px;
+  left:8px;
+  bottom:8px;
+  width:227px;
+  overflow-y:auto;
+  z-index:1000;
   flex-shrink:0;
   background:var(--sidebar);
+  border:1px solid #242824;
   border-radius:12px;
   padding:25px 14px;
-  align-self:stretch;
+}
+.logo-link {
+  display:block;
+  color:inherit;
+  text-decoration:none;
+  margin:0 0 32px;
 }
 .logo {
   font-size:27px;
   font-weight:900;
   letter-spacing:-1px;
-  margin:0 0 32px;
-  padding-left:10px;
+  margin:0;
+  padding:10px;
+  cursor:pointer;
 }
 .logo span { color:var(--purple) }
 .nav {
@@ -323,108 +337,31 @@ footer {
   line-height:1.7;
 }
 
-
 @media(max-width:760px) {
-  .playlist-tools {
-    grid-template-columns: 1fr;
-  }
-
-  .playlist-track {
-    flex-wrap: wrap;
-  }
-
-  .playlist-track .actions {
-    width: 100%;
-  }
-
-  .app {
-    display: block;
-    padding: 140px 0 24px;
-  }
-
+  .playlist-tools { grid-template-columns:1fr }
+  .playlist-track { flex-wrap:wrap }
+  .playlist-track .actions { width:100% }
+  .app { display:block; padding:140px 0 24px }
   .app > aside {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-    width: 100%;
-    height: auto;
-    max-height: 140px;
-    overflow-y: auto;
-    border-radius: 0;
-    border: 0;
-    border-bottom: 1px solid #303630;
-    padding: 8px 12px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:auto;
+    width:100%;
+    height:auto;
+    max-height:140px;
+    overflow-y:auto;
+    z-index:1100;
+    padding:8px 12px;
+    border-radius:0;
+    border:0;
+    border-bottom:1px solid var(--border);
   }
-
-  .logo-link {
-    margin-bottom: 6px;
-  }
-
-  .logo {
-    font-size: 23px;
-    padding: 4px 8px;
-  }
-
-  .navs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
-  }
-
-  .nav {
-    width: auto;
-    margin: 0;
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  main {
-    padding: 20px 14px;
-    border-radius: 0;
-  }
-
-  .top {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .hero {
-    padding: 24px;
-  }
-
-  .searchrow {
-    flex-direction: column;
-  }
-
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-    gap: 10px;
-  }
-
-  .saved {
-    flex-wrap: wrap;
-  }
-
-  .saved img {
-    width: 90px;
-  }
-
-  .saved .actions {
-    width: 100%;
-  }
-
-  #player,
-  #player iframe,
-  #youtubePlayerHost,
-  .placeholder {
-    min-height: 250px;
-  }
-}
-
-  .logo { margin-bottom:12px }
-  .navs { display:flex; flex-wrap:wrap; gap:4px }
-  .nav { width:auto; margin:0; padding:10px }
+  .logo-link { margin-bottom:6px }
+  .logo { font-size:23px; padding:4px 8px }
+  .navs { display:flex; flex-wrap:wrap; gap:3px }
+  .nav { width:auto; margin:0; padding:8px 10px; font-size:12px }
   main { padding:20px 14px; border-radius:0 }
   .top { align-items:stretch; flex-direction:column }
   .hero { padding:24px }
@@ -579,7 +516,7 @@ body {
   }
 }
 
-/* Player mode controls inside the fixed bottom player */
+/* Playback controls belong inside the fixed bottom player */
 #playerSection .panel {
   grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
   grid-template-rows: auto auto auto auto;
@@ -645,7 +582,7 @@ body {
 <body>
 <div class="app">
 <aside>
-   <a class="logo-link" href="#home" aria-label="AfroVibe Home">   <div class="logo">Afro<span>Vibe</span> 🎵</div> </a>
+  <a class="logo-link" href="#home" aria-label="AfroVibe Home"><div class="logo">Afro<span>Vibe</span> 🎵</div></a>
   <div class="navs">
     <button class="nav active" data-target="home">⌂ Home</button>
     <button class="nav" data-target="discover">🔎 Discover</button>
@@ -843,8 +780,8 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
     return;
   }
 
-  if (!API_KEY.trim()) {
-    setStatus("Add your YouTube API key first.", true);
+  if (!API_KEY.trim() || API_KEY === "PASTE_YOUR_YOUTUBE_API_KEY_HERE") {
+    setStatus("Add your YouTube API key in the API_KEY setting in the code first.", true);
     return;
   }
 
@@ -1106,63 +1043,48 @@ function createYouTubePlayer(video) {
   playerEl.replaceChildren(host);
 
   ytPlayer = new YT.Player("youtubePlayerHost", {
-    width:"100%",
-    height:"100%",
-    videoId:video.id,
-    playerVars:{
-      autoplay:1,
-      playsinline:1,
-      rel:0,
-      enablejsapi:1
+    width: "100%",
+    height: "100%",
+    videoId: video.id,
+    playerVars: {
+      autoplay: 1,
+      playsinline: 1,
+      rel: 0
     },
-    events:{
-      onReady:function(event) {
-        const targetVideo = pendingVideo;
-        pendingVideo = null;
-
-        if (targetVideo && targetVideo.id !== video.id) {
-          event.target.loadVideoById(targetVideo.id);
-        } else {
-          event.target.playVideo();
+    events: {
+      onReady: event => {
+        if (pendingVideo && pendingVideo.id !== video.id) {
+          event.target.loadVideoById(pendingVideo.id);
         }
+        pendingVideo = null;
       },
-      onStateChange:function(event) {
+      onStateChange: event => {
         if (event.data === YT.PlayerState.ENDED) {
           playNextVideo(true);
         }
       },
-      onError:function(event) {
-        const messages = {
-          2:"This video has an invalid ID.",
-          5:"This video could not be played in the HTML5 player.",
-          100:"This video is unavailable or private.",
-          101:"The video owner does not allow playback on other websites.",
-          150:"The video owner does not allow playback on other websites."
-        };
-        setStatus(
-          messages[event.data] ||
-          "YouTube could not play this video. Try another result.",
-          true
-        );
+      onError: () => {
+        setStatus("This video cannot be played in the embedded player. Try another result.", true);
       }
     }
   });
 }
 
 function playNextVideo(automatic = false) {
-  const nextIndex = currentQueueIndex + 1;
-
-  if (nextIndex < 0 || nextIndex >= playbackQueue.length) {
-    updateQueueStatus();
-
+  if (currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1) {
     if (automatic) {
-      setStatus("You've reached the end of this queue. Search for more music to continue.");
+      setStatus("You've reached the end of the loaded music queue.");
     }
     return;
   }
 
-  currentQueueIndex = nextIndex;
-  playVideo(playbackQueue[nextIndex], false);
+  const nextVideo = playbackQueue[currentQueueIndex + 1];
+  currentQueueIndex++;
+  playVideo(nextVideo, false);
+
+  if (automatic) {
+    setStatus("Playing the next track: " + nextVideo.title);
+  }
 }
 
 function saveVideo(video) {
@@ -1171,6 +1093,8 @@ function saveVideo(video) {
     persist();
     renderSavedLists();
   }
+  renderVideoResults([]);
+  setStatus("Saved to My Music: " + video.title);
 }
 
 function toggleFavourite(video) {
@@ -1178,83 +1102,81 @@ function toggleFavourite(video) {
     favourites = favourites.filter(id => id !== video.id);
   } else {
     favourites.unshift(video.id);
-
-    if (!library.some(item => item.id === video.id)) {
-      library.unshift(video);
-    }
+    if (!library.some(item => item.id === video.id)) library.unshift(video);
   }
 
   persist();
   renderSavedLists();
+  setStatus(favourites.includes(video.id) ? "Added to Favourites." : "Removed from Favourites.");
 }
 
-function setPlaylistStatus(message, error = false) {
-  playlistStatusEl.textContent = message;
-  playlistStatusEl.style.color = error ? "#ff9cae" : "";
+function addVideoToPlaylist(video, playlistId) {
+  if (!playlistId) {
+    playlistStatusEl.textContent = "Choose a playlist first, or create one above.";
+    return;
+  }
+
+  const playlist = playlists.find(item => item.id === playlistId);
+  if (!playlist) {
+    playlistStatusEl.textContent = "That playlist could not be found. Refresh and try again.";
+    return;
+  }
+
+  if (playlist.items.some(item => item.id === video.id)) {
+    playlistStatusEl.textContent = "That song is already in " + playlist.name + ".";
+    return;
+  }
+
+  playlist.items.push(video);
+
+  if (!library.some(item => item.id === video.id)) {
+    library.unshift(video);
+  }
+
+  persist();
+  renderPlaylists();
+  renderSavedLists();
+  playlistStatusEl.textContent = "Added “" + video.title + "” to " + playlist.name + ".";
 }
 
 function createPlaylist() {
   const name = playlistNameInput.value.trim();
 
   if (!name) {
-    setPlaylistStatus("Type a name for your playlist first.", true);
+    playlistStatusEl.textContent = "Enter a name for your playlist first.";
     playlistNameInput.focus();
     return;
   }
 
-  if (playlists.some(playlist => playlist.name.toLowerCase() === name.toLowerCase())) {
-    setPlaylistStatus("A playlist with that name already exists. Choose another name.", true);
+  if (playlists.some(item => item.name.toLowerCase() === name.toLowerCase())) {
+    playlistStatusEl.textContent = "A playlist with that name already exists.";
     return;
   }
 
   const playlist = {
-    id:"playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2,8),
+    id: "playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
     name,
-    items:[]
+    items: []
   };
 
-  playlists.unshift(playlist);
+  playlists.push(playlist);
   playlistNameInput.value = "";
   persist();
   renderPlaylists();
   playlistSelect.value = playlist.id;
-
-  setPlaylistStatus(
-    'Created "' + playlist.name +
-    '". Choose it in a song’s dropdown, then click Add to selected playlist.'
-  );
+  playlistStatusEl.textContent = "Created playlist: " + name;
 }
 
-function addVideoToPlaylist(video, playlistId) {
-  if (!playlistId) {
-    setPlaylistStatus("Choose the playlist for this song from the dropdown on its search result.", true);
-
-    if (!playlists.length) {
-      document.getElementById("playlists").scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
-      playlistNameInput.focus();
-    }
-    return;
-  }
-
+function deletePlaylist(playlistId) {
   const playlist = playlists.find(item => item.id === playlistId);
+  if (!playlist) return;
 
-  if (!playlist) {
-    setPlaylistStatus("Choose a playlist first.", true);
-    return;
-  }
+  if (!confirm('Delete the playlist "' + playlist.name + '"?')) return;
 
-  if (playlist.items.some(item => item.id === video.id)) {
-    setPlaylistStatus('"' + video.title + '" is already in "' + playlist.name + '".');
-    return;
-  }
-
-  playlist.items.push(video);
+  playlists = playlists.filter(item => item.id !== playlistId);
   persist();
   renderPlaylists();
-  setPlaylistStatus('Added "' + video.title + '" to "' + playlist.name + '".');
+  playlistStatusEl.textContent = "Playlist deleted.";
 }
 
 function removeTrackFromPlaylist(playlistId, videoId) {
@@ -1264,21 +1186,7 @@ function removeTrackFromPlaylist(playlistId, videoId) {
   playlist.items = playlist.items.filter(item => item.id !== videoId);
   persist();
   renderPlaylists();
-  setPlaylistStatus('Removed the track from "' + playlist.name + '".');
-}
-
-function deletePlaylist(playlistId) {
-  const playlist = playlists.find(item => item.id === playlistId);
-  if (!playlist) return;
-
-  if (!window.confirm('Delete the playlist "' + playlist.name + '"? This does not delete your saved songs.')) {
-    return;
-  }
-
-  playlists = playlists.filter(item => item.id !== playlistId);
-  persist();
-  renderPlaylists();
-  setPlaylistStatus('Deleted playlist "' + playlist.name + '".');
+  playlistStatusEl.textContent = "Song removed from playlist.";
 }
 
 function renderPlaylists() {
@@ -1509,6 +1417,7 @@ function openOfficialDownloadOptions(video) {
     "Opened the official YouTube page. Use YouTube's own Download option if available for this video and your account or region. AfroVibe does not extract or download YouTube media files."
   );
 }
+
 let mediaMode = "audio";
 
 function setMediaMode(mode) {
@@ -1516,6 +1425,7 @@ function setMediaMode(mode) {
 
   document.getElementById("audioModeBtn")
     .setAttribute("aria-pressed", String(mode === "audio"));
+
   document.getElementById("videoModeBtn")
     .setAttribute("aria-pressed", String(mode === "video"));
 
@@ -1527,8 +1437,10 @@ function setMediaMode(mode) {
 
 document.getElementById("audioModeBtn")
   .addEventListener("click", () => setMediaMode("audio"));
+
 document.getElementById("videoModeBtn")
   .addEventListener("click", () => setMediaMode("video"));
+
 document.getElementById("createPlaylistBtn").addEventListener("click", createPlaylist);
 
 playlistNameInput.addEventListener("keydown", event => {
@@ -1599,6 +1511,14 @@ document.querySelectorAll(".nav").forEach(button => {
       behavior:"smooth"
     });
   });
+});
+
+/* Make clicking the AfroVibe logo return to Home. */
+document.querySelector(".logo-link").addEventListener("click", event => {
+  event.preventDefault();
+  document.getElementById("home").scrollIntoView({ behavior:"smooth" });
+  document.querySelectorAll(".nav").forEach(item => item.classList.remove("active"));
+  document.querySelector('.nav[data-target="home"]').classList.add("active");
 });
 
 /* Infinite scrolling: load another page near the bottom of search results. */
