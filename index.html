@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AfroVibe | Discover Your Sound</title>
 <style>
-:root{
-  --bg:#090b0a;--panel:#151815;--panel2:#242824;--purple:#1ed760;--pink:#b7ffce;
-  --text:#f7f8f7;--muted:#a7afa8;--border:#303630;--sidebar:#000;
-}
+:root{--bg:#090b0a;--panel:#151815;--panel2:#242824;--purple:#1ed760;--pink:#b7ffce;--text:#f7f8f7;--muted:#a7afa8;--border:#303630;--sidebar:#000}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:22px}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
@@ -51,8 +48,12 @@ main{flex:1;min-width:0;padding:26px clamp(16px,3vw,38px);max-width:1600px;backg
 .actions{display:flex;gap:7px;flex-wrap:wrap}
 .actions button{font-size:12px;padding:9px 12px}
 .result-playlist-select{width:100%;min-width:0;padding:9px 10px;border:1px solid #414841;border-radius:9px;background:#242824;color:white;font:inherit;font-size:12px;margin-bottom:7px}
-.player{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#080a08;display:block;max-height:560px}
-.placeholder{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;background:#080a08;border-radius:12px;color:var(--muted)}
+
+/* Larger, responsive music player */
+#player{width:100%;aspect-ratio:16/9;min-height:420px;max-height:none;border-radius:14px;overflow:hidden;background:#080a08}
+#player iframe,#youtubePlayerHost{width:100%!important;height:100%!important;min-height:420px;border:0;display:block}
+.placeholder{width:100%;height:100%;min-height:420px;display:grid;place-items:center;text-align:center;padding:20px;background:#080a08;border-radius:12px;color:var(--muted)}
+.download-note{margin-top:12px;padding:12px 14px;border:1px solid #39433a;border-radius:10px;color:var(--muted);font-size:13px;line-height:1.6}
 .list{display:grid;gap:12px}
 .saved{display:flex;align-items:center;gap:14px;background:#171b17;border:1px solid #2c332d;padding:12px;border-radius:12px}
 .saved img{width:125px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
@@ -74,13 +75,11 @@ main{flex:1;min-width:0;padding:26px clamp(16px,3vw,38px);max-width:1600px;backg
 .playlist-track-info small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
 .playlist-track .actions{flex-shrink:0}
 .playlist-track .actions button{padding:8px 10px}
+footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(--muted);font-size:12px;line-height:1.7}
 @media(max-width:760px){
  .playlist-tools{grid-template-columns:1fr}
  .playlist-track{flex-wrap:wrap}
  .playlist-track .actions{width:100%}
-}
-footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(--muted);font-size:12px;line-height:1.7}
-@media(max-width:760px){
  .app{display:block;padding:0}
  .app>aside{width:100%;padding:16px;border-radius:0;border-bottom:1px solid var(--border)}
  .logo{margin-bottom:12px}
@@ -94,6 +93,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
  .saved{flex-wrap:wrap}
  .saved img{width:90px}
  .saved .actions{width:100%}
+ #player,#player iframe,#youtubePlayerHost,.placeholder{min-height:250px}
 }
 </style>
 </head>
@@ -154,7 +154,9 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
         <button id="nextBtn" class="secondary" disabled>⏭ Next track</button>
         <button id="recommendBtn" class="secondary" disabled>✨ Find similar music</button>
         <button id="openYoutube" class="secondary" disabled>Open on YouTube ↗</button>
+        <button id="downloadOptions" class="secondary" disabled>Download options ↗</button>
       </div>
+      <div class="download-note">YouTube videos cannot be downloaded directly by AfroVibe. “Download options” opens the official YouTube page, where a Download option may be available depending on the video, account and region. AfroVibe can support direct downloads for audio files you own or have permission to distribute.</div>
     </div>
   </section>
 
@@ -171,7 +173,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
 
   <section class="section" id="playlists">
     <h2>▤ Your Playlists</h2>
-    <p class="muted">African Mix is ready by default. For each search result, choose the playlist you want from that song’s own dropdown. Playlists are saved in this browser.</p>
+    <p class="muted">Create your own collections, then add songs from search results. Playlists are saved in this browser.</p>
     <div class="panel">
       <div class="playlist-tools">
         <input id="playlistName" type="text" maxlength="60" placeholder="Playlist name, e.g. Kenyan Hits" aria-label="New playlist name">
@@ -180,7 +182,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
         </select>
         <button id="createPlaylistBtn">＋ Create playlist</button>
       </div>
-      <p id="playlistStatus" class="muted" role="status" aria-live="polite">African Mix is ready. For each song, choose its destination from that song’s dropdown, then click “＋ Add to selected playlist.”</p>
+      <p id="playlistStatus" class="muted" role="status" aria-live="polite">Create a playlist, choose the destination from the dropdown on each search result, then click “＋ Add to selected playlist.”</p>
     </div>
     <div id="playlistsList" class="playlist-grid"></div>
   </section>
@@ -192,11 +194,6 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
 </div>
 
 <script>
-/*
-  DEVELOPMENT NOTE:
-  This API key is included as requested. Before public launch, replace it with
-  a fresh key restricted to YouTube Data API v3 and your GitHub Pages referrer.
-*/
 const API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
 const API_URL = "https://www.googleapis.com/youtube/v3/search";
 const LIBRARY_KEY = "afrovibe-youtube-library-v2";
@@ -217,14 +214,6 @@ const playlistStatusEl = document.getElementById("playlistStatus");
 let library = readArray(LIBRARY_KEY);
 let favourites = readArray(FAV_KEY);
 let playlists = readArray(PLAYLIST_KEY);
-
-// Ensure African Mix exists and make it the default for each song.
-let africanMix = playlists.find(playlist => playlist.name.toLowerCase() === "african mix");
-if (!africanMix) {
-  africanMix = { id: "playlist-african-mix", name: "African Mix", items: [] };
-  playlists.unshift(africanMix);
-}
-
 let currentVideo = null;
 let playbackQueue = [];
 let currentQueueIndex = -1;
@@ -376,14 +365,18 @@ function renderVideoResults(videos) {
     heart.setAttribute("aria-label", "Toggle favourite");
     heart.addEventListener("click", () => toggleFavourite(video));
 
-    // Each song gets its own independent playlist dropdown.
+    const downloadOptions = document.createElement("button");
+    downloadOptions.className = "secondary";
+    downloadOptions.textContent = "Download options ↗";
+    downloadOptions.addEventListener("click", () => openOfficialDownloadOptions(video));
+
     const playlistPicker = document.createElement("select");
     playlistPicker.className = "result-playlist-select";
     playlistPicker.setAttribute("aria-label", "Choose which playlist to add this song to");
 
     const choosePlaylist = document.createElement("option");
     choosePlaylist.value = "";
-    choosePlaylist.textContent = "Choose playlist for this song…";
+    choosePlaylist.textContent = playlists.length ? "Choose playlist for this song…" : "Create a playlist first";
     playlistPicker.append(choosePlaylist);
 
     playlists.forEach(playlist => {
@@ -393,16 +386,12 @@ function renderVideoResults(videos) {
       playlistPicker.append(option);
     });
 
-    // African Mix is preselected, but the user can choose another playlist.
-    const defaultPlaylist = playlists.find(playlist => playlist.name.toLowerCase() === "african mix");
-    if (defaultPlaylist) playlistPicker.value = defaultPlaylist.id;
-
     const addToPlaylist = document.createElement("button");
     addToPlaylist.className = "secondary";
     addToPlaylist.textContent = "＋ Add to selected playlist";
     addToPlaylist.addEventListener("click", () => addVideoToPlaylist(video, playlistPicker.value));
 
-    actions.append(play, save, heart);
+    actions.append(play, save, heart, downloadOptions);
     body.append(title, channel, playlistPicker, addToPlaylist, actions);
     card.append(image, body);
     resultsEl.append(card);
@@ -415,14 +404,9 @@ function updateQueueStatus() {
     queueStatus.textContent = "Queue: no tracks loaded. Search for music to create a queue.";
     return;
   }
-
-  const position = currentQueueIndex >= 0
-    ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}`
-    : `${playbackQueue.length} tracks ready`;
-
+  const position = currentQueueIndex >= 0 ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}` : `${playbackQueue.length} tracks ready`;
   queueStatus.textContent = `Queue: ${position}. AfroVibe will try to play the next result when the current video ends.`;
-  document.getElementById("nextBtn").disabled =
-    currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
+  document.getElementById("nextBtn").disabled = currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
 }
 
 function updatePlayingDetails(video) {
@@ -431,6 +415,7 @@ function updatePlayingDetails(video) {
   document.getElementById("playingChannel").textContent = video.channel;
   document.getElementById("recommendBtn").disabled = false;
   document.getElementById("openYoutube").disabled = false;
+  document.getElementById("downloadOptions").disabled = false;
   updateQueueStatus();
 }
 
@@ -442,7 +427,6 @@ function playVideo(video, scrollToPlayer = true) {
     playbackQueue.push(video);
     index = playbackQueue.length - 1;
   }
-
   currentQueueIndex = index;
   updatePlayingDetails(video);
   pendingVideo = video;
@@ -514,7 +498,6 @@ function playNextVideo(automatic = false) {
     if (automatic) setStatus("You've reached the end of this queue. Search for more music to continue.");
     return;
   }
-
   currentQueueIndex = nextIndex;
   playVideo(playbackQueue[nextIndex], false);
 }
@@ -545,13 +528,11 @@ function setPlaylistStatus(message, error = false) {
 
 function createPlaylist() {
   const name = playlistNameInput.value.trim();
-
   if (!name) {
     setPlaylistStatus("Type a name for your playlist first.", true);
     playlistNameInput.focus();
     return;
   }
-
   if (playlists.some(playlist => playlist.name.toLowerCase() === name.toLowerCase())) {
     setPlaylistStatus("A playlist with that name already exists. Choose another name.", true);
     return;
@@ -562,18 +543,21 @@ function createPlaylist() {
     name,
     items: []
   };
-
   playlists.unshift(playlist);
   playlistNameInput.value = "";
   persist();
   renderPlaylists();
   playlistSelect.value = playlist.id;
-  setPlaylistStatus('Created "' + playlist.name + '". You can now choose it from a song’s dropdown.');
+  setPlaylistStatus('Created "' + playlist.name + '". Choose it above, then add songs using the ＋ Playlist button.');
 }
 
 function addVideoToPlaylist(video, playlistId) {
   if (!playlistId) {
-    setPlaylistStatus("Choose the playlist for this song from its dropdown.", true);
+    setPlaylistStatus("Choose the playlist for this song from the dropdown on its search result.", true);
+    if (!playlists.length) {
+      document.getElementById("playlists").scrollIntoView({ behavior: "smooth", block: "start" });
+      playlistNameInput.focus();
+    }
     return;
   }
 
@@ -582,7 +566,6 @@ function addVideoToPlaylist(video, playlistId) {
     setPlaylistStatus("Choose a playlist first.", true);
     return;
   }
-
   if (playlist.items.some(item => item.id === video.id)) {
     setPlaylistStatus('"' + video.title + '" is already in "' + playlist.name + '".');
     return;
@@ -597,7 +580,6 @@ function addVideoToPlaylist(video, playlistId) {
 function removeTrackFromPlaylist(playlistId, videoId) {
   const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) return;
-
   playlist.items = playlist.items.filter(item => item.id !== videoId);
   persist();
   renderPlaylists();
@@ -607,9 +589,7 @@ function removeTrackFromPlaylist(playlistId, videoId) {
 function deletePlaylist(playlistId) {
   const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) return;
-
   if (!window.confirm('Delete the playlist "' + playlist.name + '"? This does not delete your saved songs.')) return;
-
   playlists = playlists.filter(item => item.id !== playlistId);
   persist();
   renderPlaylists();
@@ -622,7 +602,7 @@ function renderPlaylists() {
 
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
-  defaultOption.textContent = playlists.length ? "Choose a playlist" : "Create a playlist first";
+  defaultOption.textContent = playlists.length ? "Choose a playlist for new songs" : "Create a playlist first";
   playlistSelect.append(defaultOption);
 
   playlists.forEach(playlist => {
@@ -637,11 +617,10 @@ function renderPlaylists() {
   }
 
   playlistsEl.replaceChildren();
-
   if (!playlists.length) {
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.textContent = "No playlists yet. Create a playlist above to start collecting music.";
+    empty.textContent = "No playlists yet. Create one above, for example Kenyan Hits, Amapiano or Gospel.";
     playlistsEl.append(empty);
     return;
   }
@@ -661,13 +640,12 @@ function renderPlaylists() {
     deleteButton.className = "secondary";
     deleteButton.textContent = "Delete playlist";
     deleteButton.addEventListener("click", () => deletePlaylist(playlist.id));
-
     card.append(title, count, deleteButton);
 
     if (!playlist.items.length) {
       const empty = document.createElement("p");
       empty.className = "empty";
-      empty.textContent = "This playlist is empty. Search for music and use the song’s playlist dropdown to add tracks.";
+      empty.textContent = "This playlist is empty. Search for music and use ＋ Playlist to add tracks.";
       card.append(empty);
     }
 
@@ -688,7 +666,6 @@ function renderPlaylists() {
 
       const channel = document.createElement("small");
       channel.textContent = video.channel;
-
       info.append(trackTitle, channel);
 
       const actions = document.createElement("div");
@@ -718,14 +695,12 @@ function renderPlaylists() {
 
 function renderSavedLists() {
   renderSavedSection(libraryEl, library, "Your music library is empty. Search YouTube and tap Save.");
-
   const favVideos = favourites.map(id => library.find(video => video.id === id)).filter(Boolean);
   renderSavedSection(favouritesEl, favVideos, "No favourites yet. Tap the heart on a video you like.");
 }
 
 function renderSavedSection(container, items, emptyMessage) {
   container.replaceChildren();
-
   if (!items.length) {
     const empty = document.createElement("div");
     empty.className = "empty";
@@ -751,7 +726,6 @@ function renderSavedSection(container, items, emptyMessage) {
 
     const channel = document.createElement("small");
     channel.textContent = video.channel;
-
     info.append(title, channel);
 
     const actions = document.createElement("div");
@@ -791,7 +765,6 @@ function renderSavedSection(container, items, emptyMessage) {
 }
 
 document.getElementById("createPlaylistBtn").addEventListener("click", createPlaylist);
-
 playlistNameInput.addEventListener("keydown", event => {
   if (event.key === "Enter") createPlaylist();
 });
@@ -821,9 +794,18 @@ document.getElementById("openYoutube").addEventListener("click", () => {
   if (currentVideo) window.open(currentVideo.url, "_blank", "noopener,noreferrer");
 });
 
+function openOfficialDownloadOptions(video) {
+  if (!video || !video.url) return;
+  window.open(video.url, "_blank", "noopener,noreferrer");
+  setStatus("Opened the official YouTube page. Use YouTube's own Download option if it is offered for this video and your account/region. AfroVibe does not extract or download YouTube media files.");
+}
+
+document.getElementById("downloadOptions").addEventListener("click", () => {
+  if (currentVideo) openOfficialDownloadOptions(currentVideo);
+});
+
 document.getElementById("nextBtn").addEventListener("click", () => playNextVideo(false));
 
-// Load YouTube's official IFrame Player API so AfroVibe can detect when a video ends.
 window.onYouTubeIframeAPIReady = function() {
   youtubeApiReady = true;
   if (pendingVideo && !ytPlayer) createYouTubePlayer(pendingVideo);
@@ -844,7 +826,6 @@ document.querySelectorAll(".nav").forEach(button => {
 
 renderSavedLists();
 renderPlaylists();
-persist();
 updateQueueStatus();
 </script>
 </body>
