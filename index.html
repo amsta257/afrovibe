@@ -6,55 +6,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AfroVibe | Discover Your Sound</title>
 <style>
-:root{--bg:#100d18;--panel:#1d1729;--panel2:#29203a;--purple:#9b5cff;--pink:#ff4f9a;--text:#faf7ff;--muted:#bdb1ce;--border:#3b2d50}
+
+:root{
+  --bg:#090b0a;--panel:#151815;--panel2:#242824;--purple:#1ed760;--pink:#b7ffce;
+  --text:#f7f8f7;--muted:#a7afa8;--border:#303630;--sidebar:#000;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:22px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
 button,input{font:inherit}
-button{border:0;border-radius:10px;padding:12px 15px;background:var(--purple);color:white;font-weight:bold;cursor:pointer}
-button:hover{filter:brightness(1.12)}
-input{width:100%;padding:13px;border:1px solid var(--border);border-radius:10px;background:#171220;color:white}
-.app{display:flex;min-height:100vh}
-aside{width:220px;flex-shrink:0;background:#171220;border-right:1px solid var(--border);padding:25px 16px}
-.logo{font-size:25px;font-weight:900;margin:0 0 28px}.logo span{color:var(--pink)}
-.nav{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);margin:5px 0}
-.nav.active,.nav:hover{background:var(--panel2);color:white}
-main{flex:1;min-width:0;padding:28px;max-width:1400px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
-.muted{color:var(--muted);line-height:1.6}
-.hero{padding:30px;border-radius:20px;background:linear-gradient(120deg,#5b249b,#b42f78 70%,#e96b77);margin-bottom:28px}
-.hero h1{font-size:clamp(30px,4vw,46px);margin:12px 0}
-.section{margin:28px 0}.section h2{margin:0 0 15px}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
-.searchrow{display:flex;gap:10px}
-.searchrow input{flex:1;min-width:0}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.secondary{background:var(--panel2);border:1px solid var(--border)}
-#status{font-size:14px;color:var(--muted);margin-top:12px;overflow-wrap:anywhere}
-#status.error{color:#ff9cae}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
-.video{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;min-width:0}
-.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#08070c}
-.video-body{padding:13px}
+button{border:0;border-radius:999px;padding:12px 17px;background:var(--purple);color:#061008;font-weight:800;cursor:pointer;transition:transform .15s,filter .15s}
+button:hover{filter:brightness(1.08);transform:scale(1.02)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+input{width:100%;padding:14px 16px;border:1px solid #414841;border-radius:999px;background:#242824;color:white;outline:none}
+input:focus{border-color:var(--purple);box-shadow:0 0 0 2px #1ed76030}
+.app{display:flex;min-height:100vh;gap:8px;padding:8px 8px 24px}
+aside{width:235px;flex-shrink:0;background:var(--sidebar);border-radius:12px;padding:25px 14px;align-self:stretch}
+.logo{font-size:27px;font-weight:900;letter-spacing:-1px;margin:0 0 32px;padding-left:10px}.logo span{color:var(--purple)}
+.nav{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);margin:5px 0;padding:13px 12px;border-radius:8px}
+.nav.active,.nav:hover{background:#242824;color:white}
+main{flex:1;min-width:0;padding:26px clamp(16px,3vw,38px);max-width:1600px;background:linear-gradient(180deg,#202a22 0,#121612 340px,var(--bg) 620px);border-radius:12px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
+.top strong{font-size:19px}.muted{color:var(--muted);line-height:1.6}
+.hero{padding:clamp(24px,4vw,42px);border-radius:16px;background:linear-gradient(120deg,#1e5e36,#193c29 60%,#263b2c);margin-bottom:34px;position:relative;overflow:hidden}
+.hero:after{content:"♫";position:absolute;right:5%;top:0;font-size:clamp(100px,18vw,220px);line-height:1;color:#ffffff10;font-weight:900;pointer-events:none}
+.hero h1{font-size:clamp(30px,4vw,52px);letter-spacing:-1.5px;max-width:760px;margin:14px 0}
+.hero p{max-width:680px;line-height:1.7;color:#e0e9e1}
+.section{margin:34px 0}.section h2{margin:0 0 15px;font-size:24px;letter-spacing:-.5px}
+.panel{background:#171b17;border:1px solid #2c332d;border-radius:16px;padding:20px}
+.searchrow{display:flex;gap:10px}.searchrow input{flex:1;min-width:0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.secondary{background:#272d28;color:white;border:1px solid #3a433b}
+#status{font-size:14px;color:var(--muted);margin-top:14px;overflow-wrap:anywhere}#status.error{color:#ff9cae}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.video{background:#191d19;border:1px solid #292f2a;border-radius:12px;overflow:hidden;min-width:0;padding:10px;transition:background .2s,transform .2s}
+.video:hover{background:#252b25;transform:translateY(-3px)}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#080a08;border-radius:8px}
+.video-body{padding:12px 3px 3px}
 .video h3{font-size:15px;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere}
 .channel{font-size:13px;color:var(--muted);margin-bottom:12px}
-.actions{display:flex;gap:7px;flex-wrap:wrap}
-.actions button{font-size:13px;padding:9px 10px}
-.player{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#08070c;display:block}
-.placeholder{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;background:#08070c;border-radius:12px;color:var(--muted)}
+.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button{font-size:12px;padding:9px 12px}
+.player{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#080a08;display:block;max-height:560px}
+.placeholder{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;background:#080a08;border-radius:12px;color:var(--muted)}
 .list{display:grid;gap:12px}
-.saved{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--border);padding:12px;border-radius:12px}
-.saved img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
-.saved-info{flex:1;min-width:0}.saved-info strong{display:block;overflow-wrap:anywhere}
-.saved-info small{display:block;color:var(--muted);margin-top:5px}
+.saved{display:flex;align-items:center;gap:14px;background:#171b17;border:1px solid #2c332d;padding:12px;border-radius:12px}
+.saved img{width:125px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.saved-info{flex:1;min-width:0}.saved-info strong{display:block;overflow-wrap:anywhere}.saved-info small{display:block;color:var(--muted);margin-top:5px}
 .empty{color:var(--muted);padding:12px 0}
-footer{border-top:1px solid var(--border);padding-top:18px;margin-top:40px;color:var(--muted);font-size:12px;line-height:1.7}
+footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(--muted);font-size:12px;line-height:1.7}
 @media(max-width:760px){
-.app{display:block}aside{width:100%;padding:16px;border:0;border-bottom:1px solid var(--border)}
-.logo{margin-bottom:12px}.navs{display:flex;flex-wrap:wrap;gap:4px}.nav{width:auto;margin:0;padding:9px}
-main{padding:18px 14px}.top{align-items:stretch;flex-direction:column}.hero{padding:22px}
-.searchrow{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
-.saved{flex-wrap:wrap}.saved img{width:90px}
+ .app{display:block;padding:0}.app>aside{width:100%;padding:16px;border-radius:0;border-bottom:1px solid var(--border)}
+ .logo{margin-bottom:12px}.navs{display:flex;flex-wrap:wrap;gap:4px}.nav{width:auto;margin:0;padding:10px}
+ main{padding:20px 14px;border-radius:0}.top{align-items:stretch;flex-direction:column}.hero{padding:24px}
+ .searchrow{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+ .saved{flex-wrap:wrap}.saved img{width:90px}.saved .actions{width:100%}
 }
+
 </style>
 </head>
 <body>
@@ -135,11 +142,11 @@ main{padding:18px 14px}.top{align-items:stretch;flex-direction:column}.hero{padd
 <script>
 /*
   IMPORTANT:
-  Replace PASTE_YOUR_API_KEY_HERE with your own YouTube Data API key.
+  Replace PASTE_YOUR_NEW_API_KEY_HERE with a newly created YouTube Data API key.
   Do not send your key to anyone. Restrict it in Google Cloud to
   YouTube Data API v3 and your GitHub Pages website.
 */
-const API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
+const API_KEY = "PASTE_YOUR_NEW_API_KEY_HERE";
 const API_URL = "https://www.googleapis.com/youtube/v3/search";
 const LIBRARY_KEY = "afrovibe-youtube-library-v2";
 const FAV_KEY = "afrovibe-youtube-favourites-v2";
