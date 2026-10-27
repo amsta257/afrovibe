@@ -490,6 +490,68 @@ body {
     display: none;
   }
 }
+
+/* Player mode controls inside the fixed bottom player */
+#playerSection .panel {
+  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto;
+  gap: 6px 14px;
+}
+#playerSection .media-mode {
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 12px;
+}
+#playerSection .media-mode button {
+  padding: 7px 11px;
+  font-size: 12px;
+}
+#playerSection .media-mode button[aria-pressed="true"] {
+  background: var(--purple);
+  color: #061008;
+}
+#playerSection .media-mode button[aria-pressed="false"] {
+  background: #272d28;
+  color: white;
+  border: 1px solid #3a433b;
+}
+#playerSection #mediaModeHelp { font-size: 11px; }
+#playerSection #queueStatus { display: none; }
+#playerSection .actions {
+  grid-column: 2;
+  grid-row: 4;
+}
+@media (max-width: 760px) {
+  body { padding-bottom: 220px; }
+  #playerSection .panel {
+    grid-template-columns: 120px minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    gap: 5px 9px;
+  }
+  #playerSection .media-mode {
+    grid-column: 2;
+    grid-row: 3;
+    gap: 4px;
+  }
+  #playerSection .media-mode button {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  #playerSection #mediaModeHelp {
+    width: 100%;
+    font-size: 10px;
+  }
+  #playerSection .actions {
+    grid-column: 2;
+    grid-row: 4;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -516,7 +578,7 @@ body {
 
   <section class="hero" id="home">
     <div>YOUR SOUND. YOUR VIBE.</div>
-    <h1>Discover great music across Kenya and Africa.</h1>
+    <h1>Discover great mixes across Kenya and Africa.</h1>
     <p>Search African music, Afrobeats, Amapiano, gospel, hip-hop and music from around the world.</p>
     <button onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">Discover music →</button>
   </section>
@@ -529,13 +591,6 @@ body {
         <input id="query" type="search" maxlength="150" placeholder="Try: latest Afrobeats, Bien, Amapiano..." aria-label="Search YouTube">
         <button id="searchBtn">Search</button>
       </div>
-      <div class="media-mode" role="group" aria-label="Choose audio or video">
-  <button type="button" id="audioModeBtn" aria-pressed="true">♫ Audio</button>
-  <button type="button" id="videoModeBtn" aria-pressed="false">▶ Video</button>
-  <span class="muted" id="mediaModeHelp">
-    Audio searches prioritize official audio and lyric videos.
-  </span>
-</div>
       <div class="filters">
         <button class="secondary quick" data-query="latest Afrobeats music">Afrobeats</button>
         <button class="secondary quick" data-query="Kenyan music hits">Kenyan Music</button>
@@ -552,9 +607,14 @@ body {
   <section class="section" id="playerSection">
     <h2>▶ AfroVibe Player</h2>
     <div class="panel">
-      <div id="player"><div class="placeholder">Select a video from your search results to play it here.</div></div>
+      <div id="player"><div class="placeholder">Select a song from your search results to play it here.</div></div>
       <h3 id="playingTitle">Nothing playing yet</h3>
-      <p id="playingChannel" class="muted">Your selected YouTube video will appear above.</p>
+      <p id="playingChannel" class="muted">Your selected YouTube video will appear here.</p>
+      <div class="media-mode" role="group" aria-label="Playback mode">
+        <button type="button" id="audioModeBtn" aria-pressed="true">♫ Audio</button>
+        <button type="button" id="videoModeBtn" aria-pressed="false">▶ Video</button>
+        <span class="muted" id="mediaModeHelp">Audio mode selected. YouTube's video remains visible during playback.</span>
+      </div>
       <p id="queueStatus" class="muted">Queue: search for music, then play a result. The next result will play automatically when supported.</p>
       <div class="actions">
         <button id="nextBtn" class="secondary" disabled>⏭ Next track</button>
@@ -562,9 +622,7 @@ body {
         <button id="openYoutube" class="secondary" disabled>Open on YouTube ↗</button>
         <button id="downloadOptions" class="secondary" disabled>Download options ↗</button>
       </div>
-      <div class="download-note">
-        YouTube videos cannot be downloaded directly by AfroVibe. “Download options” opens the official YouTube page, where a Download option may be available depending on the video, account and region. AfroVibe can support direct downloads for audio files you own or have permission to distribute.
-      </div>
+      <div class="download-note">YouTube videos remain hosted by YouTube. Use YouTube's own Download option when available. AfroVibe can support audio playback from separate audio files you own or have permission to stream.</div>
     </div>
   </section>
 
@@ -704,13 +762,9 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
 
   if (busy || (loadMore && (!hasMoreResults || loadingMore))) return;
 
- if (!loadMore) {
-  const mediaSuffix = mediaMode === "audio"
-    ? " official audio audio song lyrics"
-    : " official music video";
-
-  activeSearchTerm = q + mediaSuffix;
-  activeSearchMode = mode;
+  if (!loadMore) {
+    activeSearchTerm = q;
+    activeSearchMode = mode;
     nextPageToken = "";
     hasMoreResults = false;
     loadedVideoIds = new Set();
@@ -1374,19 +1428,17 @@ function setMediaMode(mode) {
 
   document.getElementById("audioModeBtn")
     .setAttribute("aria-pressed", String(mode === "audio"));
-
   document.getElementById("videoModeBtn")
     .setAttribute("aria-pressed", String(mode === "video"));
 
   document.getElementById("mediaModeHelp").textContent =
     mode === "audio"
-      ? "Audio searches prioritize official audio and lyric videos."
-      : "Video searches prioritize official music videos and performances.";
+      ? "Audio mode selected. YouTube's video remains visible during playback."
+      : "Video mode selected. Play YouTube videos normally.";
 }
 
 document.getElementById("audioModeBtn")
   .addEventListener("click", () => setMediaMode("audio"));
-
 document.getElementById("videoModeBtn")
   .addEventListener("click", () => setMediaMode("video"));
 document.getElementById("createPlaylistBtn").addEventListener("click", createPlaylist);
