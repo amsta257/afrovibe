@@ -6,194 +6,346 @@
 <title>AfroVibe | Discover Your Sound</title>
 <style>
 :root {
-  --bg: #090b0a;
-  --panel: #151815;
-  --purple: #1ed760;
-  --text: #f7f8f7;
-  --muted: #a7afa8;
-  --border: #303630;
+  --bg:#090b0a;
+  --panel:#151815;
+  --panel2:#242824;
+  --purple:#1ed760;
+  --pink:#b7ffce;
+  --text:#f7f8f7;
+  --muted:#a7afa8;
+  --border:#303630;
+  --sidebar:#000;
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 22px; }
+* { box-sizing:border-box }
+html { scroll-behavior:smooth; scroll-padding-top:22px }
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
 }
-button, input { font: inherit; }
+button,input,select { font:inherit }
 button {
-  border: 0;
-  border-radius: 999px;
-  padding: 12px 17px;
-  background: var(--purple);
-  color: #061008;
-  font-weight: 800;
-  cursor: pointer;
-  transition: transform .15s, filter .15s;
+  border:0;
+  border-radius:999px;
+  padding:12px 17px;
+  background:var(--purple);
+  color:#061008;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .15s,filter .15s;
 }
-button:hover { filter: brightness(1.08); transform: scale(1.02); }
-button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+button:hover { filter:brightness(1.08); transform:scale(1.02) }
+button:disabled { opacity:.45; cursor:not-allowed; transform:none }
 input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid #414841;
-  border-radius: 999px;
-  background: #242824;
-  color: white;
-  outline: none;
+  width:100%;
+  padding:14px 16px;
+  border:1px solid #414841;
+  border-radius:999px;
+  background:#242824;
+  color:white;
+  outline:none;
 }
-input:focus { border-color: var(--purple); }
-.app { display: flex; min-height: 100vh; gap: 8px; padding: 8px 8px 24px; }
+input:focus { border-color:var(--purple); box-shadow:0 0 0 2px #1ed76030 }
+
+.app {
+  display:flex;
+  min-height:100vh;
+  gap:8px;
+  padding:8px 8px 24px;
+}
 aside {
-  width: 235px;
-  flex-shrink: 0;
-  background: #000;
-  border-radius: 12px;
-  padding: 25px 14px;
+  width:235px;
+  flex-shrink:0;
+  background:var(--sidebar);
+  border-radius:12px;
+  padding:25px 14px;
+  align-self:stretch;
 }
-.logo { font-size: 27px; font-weight: 900; margin: 0 0 32px; padding-left: 10px; }
-.logo span { color: var(--purple); }
+.logo {
+  font-size:27px;
+  font-weight:900;
+  letter-spacing:-1px;
+  margin:0 0 32px;
+  padding-left:10px;
+}
+.logo span { color:var(--purple) }
 .nav {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  color: var(--muted);
-  margin: 5px 0;
-  padding: 13px 12px;
-  border-radius: 8px;
+  display:block;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  color:var(--muted);
+  margin:5px 0;
+  padding:13px 12px;
+  border-radius:8px;
 }
-.nav.active, .nav:hover { background: #242824; color: white; }
+.nav.active,.nav:hover { background:#242824; color:white }
+
 main {
-  flex: 1;
-  min-width: 0;
-  padding: 26px clamp(16px, 3vw, 38px);
-  max-width: 1600px;
-  background: linear-gradient(180deg, #202a22 0, #121612 340px, var(--bg) 620px);
-  border-radius: 12px;
+  flex:1;
+  min-width:0;
+  padding:26px clamp(16px,3vw,38px);
+  max-width:1600px;
+  background:linear-gradient(180deg,#202a22 0,#121612 340px,var(--bg) 620px);
+  border-radius:12px;
 }
-.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 26px; }
-.top strong { font-size: 19px; }
-.muted { color: var(--muted); line-height: 1.6; }
+.top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:26px;
+}
+.top strong { font-size:19px }
+.muted { color:var(--muted); line-height:1.6 }
+
 .hero {
-  padding: clamp(24px, 4vw, 42px);
-  border-radius: 16px;
-  background: linear-gradient(120deg, #1e5e36, #193c29 60%, #263b2c);
-  margin-bottom: 34px;
-  position: relative;
-  overflow: hidden;
+  padding:clamp(24px,4vw,42px);
+  border-radius:16px;
+  background:linear-gradient(120deg,#1e5e36,#193c29 60%,#263b2c);
+  margin-bottom:34px;
+  position:relative;
+  overflow:hidden;
 }
 .hero:after {
-  content: "♫";
-  position: absolute;
-  right: 5%;
-  top: 0;
-  font-size: clamp(100px, 18vw, 220px);
-  line-height: 1;
-  color: #ffffff10;
-  font-weight: 900;
-  pointer-events: none;
+  content:"♫";
+  position:absolute;
+  right:5%;
+  top:0;
+  font-size:clamp(100px,18vw,220px);
+  line-height:1;
+  color:#ffffff10;
+  font-weight:900;
+  pointer-events:none;
 }
-.hero h1 { font-size: clamp(30px, 4vw, 52px); letter-spacing: -1.5px; max-width: 760px; margin: 14px 0; }
-.hero p { max-width: 680px; line-height: 1.7; color: #e0e9e1; }
-.section { margin: 34px 0; }
-.section h2 { margin: 0 0 15px; font-size: 24px; }
-.panel { background: #171b17; border: 1px solid #2c332d; border-radius: 16px; padding: 20px; }
-.searchrow { display: flex; gap: 10px; }
-.searchrow input { flex: 1; min-width: 0; }
-.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-.secondary { background: #272d28; color: white; border: 1px solid #3a433b; }
-#status { font-size: 14px; color: var(--muted); margin-top: 14px; overflow-wrap: anywhere; }
-#status.error { color: #ff9cae; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
-.video { background: #191d19; border: 1px solid #292f2a; border-radius: 12px; overflow: hidden; min-width: 0; padding: 10px; }
-.video:hover { background: #252b25; }
-.thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #080a08; border-radius: 8px; }
-.video-body { padding: 12px 3px 3px; }
-.video h3 { font-size: 15px; line-height: 1.4; margin: 0 0 8px; overflow-wrap: anywhere; }
-.channel { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-.actions { display: flex; gap: 7px; flex-wrap: wrap; }
-.actions button { font-size: 12px; padding: 9px 12px; }
+.hero h1 {
+  font-size:clamp(30px,4vw,52px);
+  letter-spacing:-1.5px;
+  max-width:760px;
+  margin:14px 0;
+}
+.hero p { max-width:680px; line-height:1.7; color:#e0e9e1 }
+.section { margin:34px 0 }
+.section h2 { margin:0 0 15px; font-size:24px; letter-spacing:-.5px }
+.panel { background:#171b17; border:1px solid #2c332d; border-radius:16px; padding:20px }
+.searchrow { display:flex; gap:10px }
+.searchrow input { flex:1; min-width:0 }
+.filters { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px }
+.secondary { background:#272d28; color:white; border:1px solid #3a433b }
+
+#status {
+  font-size:14px;
+  color:var(--muted);
+  margin-top:14px;
+  overflow-wrap:anywhere;
+}
+#status.error { color:#ff9cae }
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:16px;
+}
+.video {
+  background:#191d19;
+  border:1px solid #292f2a;
+  border-radius:12px;
+  overflow:hidden;
+  min-width:0;
+  padding:10px;
+  transition:background .2s,transform .2s;
+}
+.video:hover { background:#252b25; transform:translateY(-3px) }
+.thumb {
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  display:block;
+  background:#080a08;
+  border-radius:8px;
+}
+.video-body { padding:12px 3px 3px }
+.video h3 {
+  font-size:15px;
+  line-height:1.4;
+  margin:0 0 8px;
+  overflow-wrap:anywhere;
+}
+.channel { font-size:13px; color:var(--muted); margin-bottom:12px }
+.actions { display:flex; gap:7px; flex-wrap:wrap }
+.actions button { font-size:12px; padding:9px 12px }
+
 .result-playlist-select {
-  width: 100%;
-  min-width: 0;
-  padding: 9px 10px;
-  border: 1px solid #414841;
-  border-radius: 9px;
-  background: #242824;
-  color: white;
-  font: inherit;
-  font-size: 12px;
-  margin-bottom: 7px;
+  width:100%;
+  min-width:0;
+  padding:9px 10px;
+  border:1px solid #414841;
+  border-radius:9px;
+  background:#242824;
+  color:white;
+  font:inherit;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+/* Larger responsive video player */
+#player {
+  width:100%;
+  aspect-ratio:16/9;
+  min-height:420px;
+  max-height:none;
+  border-radius:14px;
+  overflow:hidden;
+  background:#080a08;
+}
+#player iframe,#youtubePlayerHost {
+  width:100%!important;
+  height:100%!important;
+  min-height:420px;
+  border:0;
+  display:block;
 }
 .placeholder {
-  aspect-ratio: 16/9;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 20px;
-  background: #080a08;
-  border-radius: 12px;
-  color: var(--muted);
+  width:100%;
+  height:100%;
+  min-height:420px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:20px;
+  background:#080a08;
+  border-radius:12px;
+  color:var(--muted);
 }
-.list { display: grid; gap: 12px; }
-.saved { display: flex; align-items: center; gap: 14px; background: #171b17; border: 1px solid #2c332d; padding: 12px; border-radius: 12px; }
-.saved img { width: 125px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; }
-.saved-info { flex: 1; min-width: 0; }
-.saved-info strong { display: block; overflow-wrap: anywhere; }
-.saved-info small { display: block; color: var(--muted); margin-top: 5px; }
-.empty { color: var(--muted); padding: 12px 0; }
-.playlist-tools {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(190px, 260px) auto;
-  gap: 10px;
-  align-items: center;
+.download-note {
+  margin-top:12px;
+  padding:12px 14px;
+  border:1px solid #39433a;
+  border-radius:10px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
 }
-.playlist-tools input, .playlist-tools select {
-  width: 100%;
-  padding: 13px 15px;
-  border: 1px solid #414841;
-  border-radius: 999px;
-  background: #242824;
-  color: white;
-  outline: none;
+.list { display:grid; gap:12px }
+.saved {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:#171b17;
+  border:1px solid #2c332d;
+  padding:12px;
+  border-radius:12px;
 }
-.playlist-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-  margin-top: 16px;
+.saved img {
+  width:125px;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:8px;
 }
-.playlist-card { background: #171b17; border: 1px solid #2c332d; border-radius: 14px; padding: 16px; min-width: 0; }
-.playlist-card h3 { margin: 0 0 6px; overflow-wrap: anywhere; }
-.playlist-count { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
-.playlist-track { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #303630; min-width: 0; }
-.playlist-track img { width: 76px; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
-.playlist-track-info { flex: 1; min-width: 0; }
-.playlist-track-info strong { display: block; font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; }
-.playlist-track-info small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
-.playlist-track .actions { flex-shrink: 0; }
-.playlist-track .actions button { padding: 8px 10px; }
-footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.saved-info { flex:1; min-width:0 }
+.saved-info strong { display:block; overflow-wrap:anywhere }
+.saved-info small { display:block; color:var(--muted); margin-top:5px }
+.empty { color:var(--muted); padding:12px 0 }
 
-@media (max-width: 760px) {
-  .app { display: block; padding: 0; }
-  .app > aside { width: 100%; padding: 16px; border-radius: 0; border-bottom: 1px solid var(--border); }
-  .logo { margin-bottom: 12px; }
-  .navs { display: flex; flex-wrap: wrap; gap: 4px; }
-  .nav { width: auto; margin: 0; padding: 10px; }
-  main { padding: 20px 14px; border-radius: 0; }
-  .top { align-items: stretch; flex-direction: column; }
-  .hero { padding: 24px; }
-  .searchrow { flex-direction: column; }
-  .grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px; }
-  .saved { flex-wrap: wrap; }
-  .saved img { width: 90px; }
-  .saved .actions { width: 100%; }
-  .playlist-tools { grid-template-columns: 1fr; }
-  .playlist-track { flex-wrap: wrap; }
-  .playlist-track .actions { width: 100%; }
+.playlist-tools {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(190px,260px) auto;
+  gap:10px;
+  align-items:center;
+}
+.playlist-tools input,.playlist-tools select {
+  width:100%;
+  padding:13px 15px;
+  border:1px solid #414841;
+  border-radius:999px;
+  background:#242824;
+  color:white;
+  outline:none;
+}
+.playlist-tools select:focus,.playlist-tools input:focus { border-color:var(--purple) }
+.playlist-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+  margin-top:16px;
+}
+.playlist-card {
+  background:#171b17;
+  border:1px solid #2c332d;
+  border-radius:14px;
+  padding:16px;
+  min-width:0;
+}
+.playlist-card h3 { margin:0 0 6px; overflow-wrap:anywhere }
+.playlist-card .playlist-count { font-size:13px; color:var(--muted); margin:0 0 12px }
+.playlist-track {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-top:1px solid #303630;
+  min-width:0;
+}
+.playlist-track img {
+  width:76px;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:6px;
+  flex-shrink:0;
+}
+.playlist-track-info { flex:1; min-width:0 }
+.playlist-track-info strong {
+  display:block;
+  font-size:13px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+.playlist-track-info small { display:block; color:var(--muted); font-size:12px; margin-top:4px }
+.playlist-track .actions { flex-shrink:0 }
+.playlist-track .actions button { padding:8px 10px }
+
+#loadMoreSentinel {
+  min-height:32px;
+  margin-top:16px;
+  padding:10px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+footer {
+  border-top:1px solid #303630;
+  padding-top:18px;
+  margin-top:44px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+}
+
+@media(max-width:760px) {
+  .playlist-tools { grid-template-columns:1fr }
+  .playlist-track { flex-wrap:wrap }
+  .playlist-track .actions { width:100% }
+  .app { display:block; padding:0 }
+  .app>aside {
+    width:100%;
+    padding:16px;
+    border-radius:0;
+    border-bottom:1px solid var(--border);
+  }
+  .logo { margin-bottom:12px }
+  .navs { display:flex; flex-wrap:wrap; gap:4px }
+  .nav { width:auto; margin:0; padding:10px }
+  main { padding:20px 14px; border-radius:0 }
+  .top { align-items:stretch; flex-direction:column }
+  .hero { padding:24px }
+  .searchrow { flex-direction:column }
+  .grid { grid-template-columns:repeat(auto-fill,minmax(145px,1fr)); gap:10px }
+  .saved { flex-wrap:wrap }
+  .saved img { width:90px }
+  .saved .actions { width:100% }
+  #player,#player iframe,#youtubePlayerHost,.placeholder { min-height:250px }
 }
 </style>
 </head>
@@ -213,7 +365,10 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
 
 <main>
   <div class="top">
-    <div><strong>Welcome to AfroVibe</strong><div class="muted">Discover your next favourite song.</div></div>
+    <div>
+      <strong>Welcome to AfroVibe</strong>
+      <div class="muted">Discover your next favourite song.</div>
+    </div>
   </div>
 
   <section class="hero" id="home">
@@ -225,7 +380,7 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
 
   <section class="section" id="discover">
     <h2>🔎 Search YouTube</h2>
-    <p class="muted">Search for a song, artist, genre or playlist. Results are fetched directly from YouTube.</p>
+    <p class="muted">Search for a song, artist, genre or playlist. Scroll down to keep loading more results for the same search.</p>
     <div class="panel">
       <div class="searchrow">
         <input id="query" type="search" maxlength="150" placeholder="Try: latest Afrobeats, Bien, Amapiano..." aria-label="Search YouTube">
@@ -241,7 +396,7 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
       <div id="status" role="status" aria-live="polite">Enter a search term to discover videos.</div>
     </div>
     <div id="results" class="grid" style="margin-top:16px"></div>
-    <div id="loadMoreSentinel" style="height:24px;margin-top:12px;text-align:center;color:var(--muted)" aria-live="polite"></div>
+    <div id="loadMoreSentinel" aria-live="polite">Search for music to begin.</div>
   </section>
 
   <section class="section" id="playerSection">
@@ -255,6 +410,10 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
         <button id="nextBtn" class="secondary" disabled>⏭ Next track</button>
         <button id="recommendBtn" class="secondary" disabled>✨ Find similar music</button>
         <button id="openYoutube" class="secondary" disabled>Open on YouTube ↗</button>
+        <button id="downloadOptions" class="secondary" disabled>Download options ↗</button>
+      </div>
+      <div class="download-note">
+        YouTube videos cannot be downloaded directly by AfroVibe. “Download options” opens the official YouTube page, where a Download option may be available depending on the video, account and region. AfroVibe can support direct downloads for audio files you own or have permission to distribute.
       </div>
     </div>
   </section>
@@ -272,7 +431,7 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
 
   <section class="section" id="playlists">
     <h2>▤ Your Playlists</h2>
-    <p class="muted">African Mix is ready by default. For each search result, choose the playlist you want from that song’s own dropdown. Playlists are saved in this browser.</p>
+    <p class="muted">Create your own collections, then add songs from search results. Playlists are saved in this browser.</p>
     <div class="panel">
       <div class="playlist-tools">
         <input id="playlistName" type="text" maxlength="60" placeholder="Playlist name, e.g. Kenyan Hits" aria-label="New playlist name">
@@ -281,7 +440,7 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
         </select>
         <button id="createPlaylistBtn">＋ Create playlist</button>
       </div>
-      <p id="playlistStatus" class="muted" role="status" aria-live="polite">African Mix is ready. For each song, choose its destination from that song’s dropdown, then click “＋ Add to selected playlist.”</p>
+      <p id="playlistStatus" class="muted" role="status" aria-live="polite">Create a playlist, choose the destination from the dropdown on each search result, then click “＋ Add to selected playlist.”</p>
     </div>
     <div id="playlistsList" class="playlist-grid"></div>
   </section>
@@ -309,17 +468,11 @@ const playlistsEl = document.getElementById("playlistsList");
 const playlistSelect = document.getElementById("playlistSelect");
 const playlistNameInput = document.getElementById("playlistName");
 const playlistStatusEl = document.getElementById("playlistStatus");
+const loadMoreSentinel = document.getElementById("loadMoreSentinel");
 
 let library = readArray(LIBRARY_KEY);
 let favourites = readArray(FAV_KEY);
 let playlists = readArray(PLAYLIST_KEY);
-
-let africanMix = playlists.find(p => p.name.toLowerCase() === "african mix");
-if (!africanMix) {
-  africanMix = { id: "playlist-african-mix", name: "African Mix", items: [] };
-  playlists.unshift(africanMix);
-}
-
 let currentVideo = null;
 let playbackQueue = [];
 let currentQueueIndex = -1;
@@ -327,14 +480,14 @@ let ytPlayer = null;
 let youtubeApiReady = false;
 let pendingVideo = null;
 let busy = false;
+let loadingMore = false;
 let activeSearchTerm = "";
 let activeSearchMode = "search";
 let nextPageToken = "";
 let hasMoreResults = false;
 let loadedVideoIds = new Set();
-let loadingMore = false;
 let searchGeneration = 0;
-const loadMoreSentinel = document.getElementById("loadMoreSentinel");
+
 function readArray(key) {
   try {
     const value = JSON.parse(localStorage.getItem(key) || "[]");
@@ -362,7 +515,8 @@ function setStatus(message, error = false) {
 function setBusy(value) {
   busy = value;
   document.getElementById("searchBtn").disabled = value;
-  document.getElementById("searchBtn").textContent = value ? "Searching…" : "Search";
+  document.getElementById("searchBtn").textContent =
+    value ? (loadingMore ? "Loading…" : "Searching…") : "Search";
 }
 
 function normalizeVideo(item) {
@@ -375,13 +529,16 @@ function normalizeVideo(item) {
     title: snippet.title || "YouTube video",
     channel: snippet.channelTitle || "YouTube channel",
     thumbnail: (snippet.thumbnails && (
-      snippet.thumbnails.medium || snippet.thumbnails.high || snippet.thumbnails.default
+      snippet.thumbnails.medium ||
+      snippet.thumbnails.high ||
+      snippet.thumbnails.default
     ) || {}).url || "",
     publishedAt: snippet.publishedAt || "",
     url: "https://www.youtube.com/watch?v=" + encodeURIComponent(id)
   };
 }
 
+/* Search YouTube and fetch further pages for the same search term. */
 async function searchYouTube(term, mode = "search", loadMore = false) {
   const q = loadMore ? activeSearchTerm : term.trim();
 
@@ -404,7 +561,6 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
     hasMoreResults = false;
     loadedVideoIds = new Set();
     searchGeneration++;
-
     resultsEl.replaceChildren();
     playbackQueue = [];
     currentQueueIndex = -1;
@@ -419,9 +575,7 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
   if (loadMore) {
     loadMoreSentinel.textContent = "Loading more results…";
   } else {
-    setStatus(mode === "recommend"
-      ? "Finding similar music…"
-      : "Searching YouTube…");
+    setStatus(mode === "recommend" ? "Finding similar music…" : "Searching YouTube…");
   }
 
   try {
@@ -447,18 +601,15 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
 
     if (!response.ok || data.error) {
       throw new Error(
-        data.error?.message ||
+        (data.error && data.error.message) ||
         "YouTube search failed. Check your API key and restrictions."
       );
     }
 
-    const videos = (data.items || [])
-      .map(normalizeVideo)
-      .filter(Boolean);
+    const videos = (data.items || []).map(normalizeVideo).filter(Boolean);
 
     const uniqueVideos = videos.filter(video => {
       if (loadedVideoIds.has(video.id)) return false;
-
       loadedVideoIds.add(video.id);
       return true;
     });
@@ -475,41 +626,37 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
     playbackQueue = playbackQueue.concat(uniqueVideos);
 
     if (currentVideo) {
-      currentQueueIndex = playbackQueue.findIndex(
-        item => item.id === currentVideo.id
-      );
+      currentQueueIndex = playbackQueue.findIndex(item => item.id === currentVideo.id);
     }
 
     updateQueueStatus();
-
-    // Add new videos without removing the results already displayed.
     renderVideoResults(uniqueVideos);
 
     if (hasMoreResults) {
       loadMoreSentinel.textContent =
-        `Showing ${playbackQueue.length} results. Keep scrolling for more…`;
+        `Showing ${playbackQueue.length} results. Scroll down to load more…`;
     } else {
       loadMoreSentinel.textContent =
-        `You've reached the end of the available YouTube results (${playbackQueue.length} videos).`;
+        `You've reached the end of the available YouTube search results (${playbackQueue.length} videos).`;
     }
 
     setStatus(
-      `Results for: ${activeSearchTerm} — ${playbackQueue.length} videos loaded.`
+      (activeSearchMode === "recommend" ? "Similar music for: " : "Results for: ") +
+      activeSearchTerm + ` — ${playbackQueue.length} videos loaded.`
     );
 
   } catch (error) {
     if (thisSearchGeneration === searchGeneration) {
       setStatus(
         "Couldn't search YouTube: " + error.message +
-        " Check your API key, website restrictions and API quota.",
+        " Check your key, website restrictions and API quota.",
         true
       );
 
       loadMoreSentinel.textContent = loadMore
-        ? "Couldn't load more results. Try scrolling again."
+        ? "Couldn't load more results. Scroll again to retry."
         : "";
     }
-
   } finally {
     if (thisSearchGeneration === searchGeneration) {
       setBusy(false);
@@ -517,9 +664,8 @@ async function searchYouTube(term, mode = "search", loadMore = false) {
     }
   }
 }
-function renderVideoResults(videos) {
-  resultsEl.replaceChildren();
 
+function renderVideoResults(videos) {
   videos.forEach(video => {
     const card = document.createElement("article");
     card.className = "video";
@@ -558,34 +704,36 @@ function renderVideoResults(videos) {
     heart.setAttribute("aria-label", "Toggle favourite");
     heart.addEventListener("click", () => toggleFavourite(video));
 
-    // Each song has its own playlist selector.
-    const picker = document.createElement("select");
-    picker.className = "result-playlist-select";
-    picker.setAttribute("aria-label", "Choose playlist for this song");
+    const downloadOptions = document.createElement("button");
+    downloadOptions.className = "secondary";
+    downloadOptions.textContent = "Download options ↗";
+    downloadOptions.addEventListener("click", () => openOfficialDownloadOptions(video));
 
-    const placeholder = document.createElement("option");
-    placeholder.value = "";
-    placeholder.textContent = "Choose playlist for this song…";
-    picker.append(placeholder);
+    const playlistPicker = document.createElement("select");
+    playlistPicker.className = "result-playlist-select";
+    playlistPicker.setAttribute("aria-label", "Choose which playlist to add this song to");
+
+    const choosePlaylist = document.createElement("option");
+    choosePlaylist.value = "";
+    choosePlaylist.textContent = playlists.length
+      ? "Choose playlist for this song…"
+      : "Create a playlist first";
+    playlistPicker.append(choosePlaylist);
 
     playlists.forEach(playlist => {
       const option = document.createElement("option");
       option.value = playlist.id;
       option.textContent = playlist.name;
-      picker.append(option);
+      playlistPicker.append(option);
     });
 
-    // African Mix is selected by default.
-    const defaultPlaylist = playlists.find(p => p.name.toLowerCase() === "african mix");
-    if (defaultPlaylist) picker.value = defaultPlaylist.id;
+    const addToPlaylist = document.createElement("button");
+    addToPlaylist.className = "secondary";
+    addToPlaylist.textContent = "＋ Add to selected playlist";
+    addToPlaylist.addEventListener("click", () => addVideoToPlaylist(video, playlistPicker.value));
 
-    const add = document.createElement("button");
-    add.className = "secondary";
-    add.textContent = "＋ Add to selected playlist";
-    add.addEventListener("click", () => addVideoToPlaylist(video, picker.value));
-
-    actions.append(play, save, heart);
-    body.append(title, channel, picker, add, actions);
+    actions.append(play, save, heart, downloadOptions);
+    body.append(title, channel, playlistPicker, addToPlaylist, actions);
     card.append(image, body);
     resultsEl.append(card);
   });
@@ -593,9 +741,9 @@ function renderVideoResults(videos) {
 
 function updateQueueStatus() {
   const queueStatus = document.getElementById("queueStatus");
+
   if (!playbackQueue.length) {
     queueStatus.textContent = "Queue: no tracks loaded. Search for music to create a queue.";
-    document.getElementById("nextBtn").disabled = true;
     return;
   }
 
@@ -603,7 +751,9 @@ function updateQueueStatus() {
     ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}`
     : `${playbackQueue.length} tracks ready`;
 
-  queueStatus.textContent = `Queue: ${position}. The next result will play automatically when supported.`;
+  queueStatus.textContent =
+    `Queue: ${position}. AfroVibe will try to play the next result when the current video ends.`;
+
   document.getElementById("nextBtn").disabled =
     currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
 }
@@ -614,6 +764,7 @@ function updatePlayingDetails(video) {
   document.getElementById("playingChannel").textContent = video.channel;
   document.getElementById("recommendBtn").disabled = false;
   document.getElementById("openYoutube").disabled = false;
+  document.getElementById("downloadOptions").disabled = false;
   updateQueueStatus();
 }
 
@@ -621,6 +772,7 @@ function playVideo(video, scrollToPlayer = true) {
   if (!video || !video.id) return;
 
   let index = playbackQueue.findIndex(item => item.id === video.id);
+
   if (index === -1) {
     playbackQueue.push(video);
     index = playbackQueue.length - 1;
@@ -632,7 +784,10 @@ function playVideo(video, scrollToPlayer = true) {
 
   if (youtubeApiReady && window.YT && window.YT.Player) {
     if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
-      ytPlayer.loadVideoById({ videoId: video.id, suggestedQuality: "large" });
+      ytPlayer.loadVideoById({
+        videoId: video.id,
+        suggestedQuality: "large"
+      });
       pendingVideo = null;
     } else {
       createYouTubePlayer(video);
@@ -642,7 +797,10 @@ function playVideo(video, scrollToPlayer = true) {
   }
 
   if (scrollToPlayer) {
-    document.getElementById("playerSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("playerSection").scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
   }
 }
 
@@ -652,32 +810,44 @@ function createYouTubePlayer(video) {
   playerEl.replaceChildren(host);
 
   ytPlayer = new YT.Player("youtubePlayerHost", {
-    width: "100%",
-    height: "100%",
-    videoId: video.id,
-    playerVars: { autoplay: 1, playsinline: 1, rel: 0, enablejsapi: 1 },
-    events: {
-      onReady: function(event) {
+    width:"100%",
+    height:"100%",
+    videoId:video.id,
+    playerVars:{
+      autoplay:1,
+      playsinline:1,
+      rel:0,
+      enablejsapi:1
+    },
+    events:{
+      onReady:function(event) {
         const targetVideo = pendingVideo;
         pendingVideo = null;
+
         if (targetVideo && targetVideo.id !== video.id) {
           event.target.loadVideoById(targetVideo.id);
         } else {
           event.target.playVideo();
         }
       },
-      onStateChange: function(event) {
-        if (event.data === YT.PlayerState.ENDED) playNextVideo(true);
+      onStateChange:function(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          playNextVideo(true);
+        }
       },
-      onError: function(event) {
+      onError:function(event) {
         const messages = {
-          2: "This video has an invalid ID.",
-          5: "This video could not be played in the HTML5 player.",
-          100: "This video is unavailable or private.",
-          101: "The owner does not allow playback on other websites.",
-          150: "The owner does not allow playback on other websites."
+          2:"This video has an invalid ID.",
+          5:"This video could not be played in the HTML5 player.",
+          100:"This video is unavailable or private.",
+          101:"The video owner does not allow playback on other websites.",
+          150:"The video owner does not allow playback on other websites."
         };
-        setStatus(messages[event.data] || "YouTube could not play this video. Try another result.", true);
+        setStatus(
+          messages[event.data] ||
+          "YouTube could not play this video. Try another result.",
+          true
+        );
       }
     }
   });
@@ -685,9 +855,13 @@ function createYouTubePlayer(video) {
 
 function playNextVideo(automatic = false) {
   const nextIndex = currentQueueIndex + 1;
+
   if (nextIndex < 0 || nextIndex >= playbackQueue.length) {
     updateQueueStatus();
-    if (automatic) setStatus("You've reached the end of this queue. Search for more music to continue.");
+
+    if (automatic) {
+      setStatus("You've reached the end of this queue. Search for more music to continue.");
+    }
     return;
   }
 
@@ -708,8 +882,12 @@ function toggleFavourite(video) {
     favourites = favourites.filter(id => id !== video.id);
   } else {
     favourites.unshift(video.id);
-    if (!library.some(item => item.id === video.id)) library.unshift(video);
+
+    if (!library.some(item => item.id === video.id)) {
+      library.unshift(video);
+    }
   }
+
   persist();
   renderSavedLists();
 }
@@ -728,15 +906,15 @@ function createPlaylist() {
     return;
   }
 
-  if (playlists.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+  if (playlists.some(playlist => playlist.name.toLowerCase() === name.toLowerCase())) {
     setPlaylistStatus("A playlist with that name already exists. Choose another name.", true);
     return;
   }
 
   const playlist = {
-    id: "playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+    id:"playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2,8),
     name,
-    items: []
+    items:[]
   };
 
   playlists.unshift(playlist);
@@ -744,77 +922,67 @@ function createPlaylist() {
   persist();
   renderPlaylists();
   playlistSelect.value = playlist.id;
-  setPlaylistStatus(`Created "${playlist.name}". You can now select it on a song's dropdown.`);
+
+  setPlaylistStatus(
+    'Created "' + playlist.name +
+    '". Choose it in a song’s dropdown, then click Add to selected playlist.'
+  );
 }
 
-/* UPDATED: immediately saves and redraws the selected playlist. */
 function addVideoToPlaylist(video, playlistId) {
   if (!playlistId) {
-    setPlaylistStatus("Choose a playlist for this song first.", true);
+    setPlaylistStatus("Choose the playlist for this song from the dropdown on its search result.", true);
+
+    if (!playlists.length) {
+      document.getElementById("playlists").scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+      playlistNameInput.focus();
+    }
     return;
   }
 
-  const playlist = playlists.find(p => p.id === playlistId);
+  const playlist = playlists.find(item => item.id === playlistId);
 
   if (!playlist) {
-    setPlaylistStatus("Please select a valid playlist.", true);
+    setPlaylistStatus("Choose a playlist first.", true);
     return;
   }
 
   if (playlist.items.some(item => item.id === video.id)) {
-    setPlaylistStatus(`"${video.title}" is already in "${playlist.name}".`);
+    setPlaylistStatus('"' + video.title + '" is already in "' + playlist.name + '".');
     return;
   }
 
-  // Add the song immediately to the chosen playlist only.
   playlist.items.push(video);
-
-  // Save changes and redraw the playlist without refreshing the page.
   persist();
   renderPlaylists();
-
-  // Confirm the change immediately.
-  setPlaylistStatus(`✓ "${video.title}" added to "${playlist.name}".`);
-
-  // Briefly highlight the updated playlist card.
-  requestAnimationFrame(() => {
-    const cards = playlistsEl.querySelectorAll(".playlist-card");
-
-    cards.forEach(card => {
-      const heading = card.querySelector("h3");
-
-      if (heading && heading.textContent === playlist.name) {
-        card.style.borderColor = "#1ed760";
-        card.style.transition = "border-color 0.3s ease";
-
-        setTimeout(() => {
-          card.style.borderColor = "";
-        }, 1500);
-      }
-    });
-  });
+  setPlaylistStatus('Added "' + video.title + '" to "' + playlist.name + '".');
 }
 
 function removeTrackFromPlaylist(playlistId, videoId) {
-  const playlist = playlists.find(p => p.id === playlistId);
+  const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) return;
 
   playlist.items = playlist.items.filter(item => item.id !== videoId);
   persist();
   renderPlaylists();
-  setPlaylistStatus(`Removed the track from "${playlist.name}".`);
+  setPlaylistStatus('Removed the track from "' + playlist.name + '".');
 }
 
 function deletePlaylist(playlistId) {
-  const playlist = playlists.find(p => p.id === playlistId);
+  const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) return;
 
-  if (!confirm(`Delete the playlist "${playlist.name}"? This does not delete your saved songs.`)) return;
+  if (!window.confirm('Delete the playlist "' + playlist.name + '"? This does not delete your saved songs.')) {
+    return;
+  }
 
-  playlists = playlists.filter(p => p.id !== playlistId);
+  playlists = playlists.filter(item => item.id !== playlistId);
   persist();
   renderPlaylists();
-  setPlaylistStatus(`Deleted playlist "${playlist.name}".`);
+  setPlaylistStatus('Deleted playlist "' + playlist.name + '".');
 }
 
 function renderPlaylists() {
@@ -824,7 +992,9 @@ function renderPlaylists() {
 
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
-  defaultOption.textContent = playlists.length ? "Choose a playlist" : "Create a playlist first";
+  defaultOption.textContent = playlists.length
+    ? "Choose a playlist for new songs"
+    : "Create a playlist first";
   playlistSelect.append(defaultOption);
 
   playlists.forEach(playlist => {
@@ -834,16 +1004,41 @@ function renderPlaylists() {
     playlistSelect.append(option);
   });
 
-  if (playlists.some(p => p.id === previousSelection)) {
+  if (playlists.some(playlist => playlist.id === previousSelection)) {
     playlistSelect.value = previousSelection;
   }
+
+  /* Update the playlist dropdowns on search results already on screen. */
+  document.querySelectorAll(".result-playlist-select").forEach(select => {
+    const selected = select.value;
+    select.replaceChildren();
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = playlists.length
+      ? "Choose playlist for this song…"
+      : "Create a playlist first";
+    select.append(placeholder);
+
+    playlists.forEach(playlist => {
+      const option = document.createElement("option");
+      option.value = playlist.id;
+      option.textContent = playlist.name;
+      select.append(option);
+    });
+
+    if (playlists.some(playlist => playlist.id === selected)) {
+      select.value = selected;
+    }
+  });
 
   playlistsEl.replaceChildren();
 
   if (!playlists.length) {
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.textContent = "No playlists yet. Create a playlist above to start collecting music.";
+    empty.textContent =
+      "No playlists yet. Create one above, for example Kenyan Hits, Amapiano or Gospel.";
     playlistsEl.append(empty);
     return;
   }
@@ -857,7 +1052,8 @@ function renderPlaylists() {
 
     const count = document.createElement("p");
     count.className = "playlist-count";
-    count.textContent = playlist.items.length + (playlist.items.length === 1 ? " track" : " tracks");
+    count.textContent = playlist.items.length +
+      (playlist.items.length === 1 ? " track" : " tracks");
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "secondary";
@@ -869,7 +1065,8 @@ function renderPlaylists() {
     if (!playlist.items.length) {
       const empty = document.createElement("p");
       empty.className = "empty";
-      empty.textContent = "This playlist is empty. Search for music and add tracks using a song's dropdown.";
+      empty.textContent =
+        "This playlist is empty. Search for music and use the playlist controls to add tracks.";
       card.append(empty);
     }
 
@@ -919,13 +1116,21 @@ function renderPlaylists() {
 }
 
 function renderSavedLists() {
-  renderSavedSection(libraryEl, library, "Your music library is empty. Search YouTube and tap Save.");
+  renderSavedSection(
+    libraryEl,
+    library,
+    "Your music library is empty. Search YouTube and tap Save."
+  );
 
   const favVideos = favourites
     .map(id => library.find(video => video.id === id))
     .filter(Boolean);
 
-  renderSavedSection(favouritesEl, favVideos, "No favourites yet. Tap the heart on a video you like.");
+  renderSavedSection(
+    favouritesEl,
+    favVideos,
+    "No favourites yet. Tap the heart on a video you like."
+  );
 }
 
 function renderSavedSection(container, items, emptyMessage) {
@@ -971,28 +1176,42 @@ function renderSavedSection(container, items, emptyMessage) {
       const remove = document.createElement("button");
       remove.className = "secondary";
       remove.textContent = "Remove";
+
       remove.addEventListener("click", () => {
         library = library.filter(item => item.id !== video.id);
         favourites = favourites.filter(id => id !== video.id);
         persist();
         renderSavedLists();
       });
+
       actions.append(remove);
     } else {
       const removeFav = document.createElement("button");
       removeFav.className = "secondary";
       removeFav.textContent = "♥ Remove";
+
       removeFav.addEventListener("click", () => {
         favourites = favourites.filter(id => id !== video.id);
         persist();
         renderSavedLists();
       });
+
       actions.append(removeFav);
     }
 
     row.append(image, info, actions);
     container.append(row);
   });
+}
+
+function openOfficialDownloadOptions(video) {
+  if (!video || !video.url) return;
+
+  window.open(video.url, "_blank", "noopener,noreferrer");
+
+  setStatus(
+    "Opened the official YouTube page. Use YouTube's own Download option if available for this video and your account or region. AfroVibe does not extract or download YouTube media files."
+  );
 }
 
 document.getElementById("createPlaylistBtn").addEventListener("click", createPlaylist);
@@ -1024,18 +1243,30 @@ document.getElementById("recommendBtn").addEventListener("click", () => {
     "recommend"
   );
 
-  document.getElementById("discover").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("discover").scrollIntoView({ behavior:"smooth" });
 });
 
 document.getElementById("openYoutube").addEventListener("click", () => {
-  if (currentVideo) window.open(currentVideo.url, "_blank", "noopener,noreferrer");
+  if (currentVideo) {
+    window.open(currentVideo.url, "_blank", "noopener,noreferrer");
+  }
 });
 
-document.getElementById("nextBtn").addEventListener("click", () => playNextVideo(false));
+document.getElementById("downloadOptions").addEventListener("click", () => {
+  if (currentVideo) openOfficialDownloadOptions(currentVideo);
+});
 
+document.getElementById("nextBtn").addEventListener("click", () => {
+  playNextVideo(false);
+});
+
+/* Load YouTube's official IFrame Player API for automatic next-track playback. */
 window.onYouTubeIframeAPIReady = function() {
   youtubeApiReady = true;
-  if (pendingVideo && !ytPlayer) createYouTubePlayer(pendingVideo);
+
+  if (pendingVideo && !ytPlayer) {
+    createYouTubePlayer(pendingVideo);
+  }
 };
 
 const youtubeIframeApi = document.createElement("script");
@@ -1043,17 +1274,39 @@ youtubeIframeApi.src = "https://www.youtube.com/iframe_api";
 youtubeIframeApi.async = true;
 document.head.appendChild(youtubeIframeApi);
 
+/* Navigation */
 document.querySelectorAll(".nav").forEach(button => {
   button.addEventListener("click", () => {
     document.querySelectorAll(".nav").forEach(item => item.classList.remove("active"));
     button.classList.add("active");
-    document.getElementById(button.dataset.target).scrollIntoView({ behavior: "smooth" });
+
+    document.getElementById(button.dataset.target).scrollIntoView({
+      behavior:"smooth"
+    });
   });
 });
 
+/* Infinite scrolling: load another page near the bottom of search results. */
+const infiniteScrollObserver = new IntersectionObserver(entries => {
+  if (
+    entries.some(entry => entry.isIntersecting) &&
+    hasMoreResults &&
+    !busy &&
+    !loadingMore
+  ) {
+    searchYouTube(activeSearchTerm, activeSearchMode, true);
+  }
+}, {
+  root:null,
+  rootMargin:"700px 0px",
+  threshold:0
+});
+
+infiniteScrollObserver.observe(loadMoreSentinel);
+
+/* Initial page setup */
 renderSavedLists();
 renderPlaylists();
-persist();
 updateQueueStatus();
 </script>
 </body>
