@@ -476,9 +476,23 @@ body {
     padding-bottom: 190px;
   }
 
-  #playerSection {
-    padding: 8px;
-  }
+  
+#playerSection {
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  width: min(760px, calc(100% - 32px));
+  margin: 0;
+  padding: 14px 18px;
+  background: rgba(8, 10, 8, 0.97);
+  border: 1px solid #394139;
+  border-radius: 18px;
+  box-shadow: 0 8px 35px #000b;
+  backdrop-filter: blur(12px);
+}
+
 
   #playerSection .panel {
     grid-template-columns: 120px minmax(0, 1fr);
@@ -1002,6 +1016,8 @@ function updatePlayingDetails(video) {
 
 function playVideo(video, scrollToPlayer = true) {
   if (!video || !video.id) return;
+  document.getElementById("playerSection").classList.add("player-visible");
+document.body.style.paddingBottom = "230px";
 
   let index = playbackQueue.findIndex(item => item.id === video.id);
 
@@ -1090,6 +1106,8 @@ function saveVideo(video) {
   if (!library.some(item => item.id === video.id)) {
     library.unshift(video);
     persist();
+    document.getElementById("playerSection").classList.remove("player-visible");
+document.body.style.paddingBottom = "24px";
     renderSavedLists();
   }
   renderVideoResults([]);
