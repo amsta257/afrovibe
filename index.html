@@ -241,6 +241,7 @@ footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; col
       <div id="status" role="status" aria-live="polite">Enter a search term to discover videos.</div>
     </div>
     <div id="results" class="grid" style="margin-top:16px"></div>
+    <div id="loadMoreSentinel" style="height:24px;margin-top:12px;text-align:center;color:var(--muted)" aria-live="polite"></div>
   </section>
 
   <section class="section" id="playerSection">
@@ -326,7 +327,14 @@ let ytPlayer = null;
 let youtubeApiReady = false;
 let pendingVideo = null;
 let busy = false;
-
+let activeSearchTerm = "";
+let activeSearchMode = "search";
+let nextPageToken = "";
+let hasMoreResults = false;
+let loadedVideoIds = new Set();
+let loadingMore = false;
+let searchGeneration = 0;
+const loadMoreSentinel = document.getElementById("loadMoreSentinel");
 function readArray(key) {
   try {
     const value = JSON.parse(localStorage.getItem(key) || "[]");
@@ -374,61 +382,141 @@ function normalizeVideo(item) {
   };
 }
 
-async function searchYouTube(term, mode = "search") {
-  const q = term.trim();
+async function searchYouTube(term, mode = "search", loadMore = false) {
+  const q = loadMore ? activeSearchTerm : term.trim();
+
   if (!q) {
     setStatus("Type a song, artist or genre first.", true);
     return;
   }
+
   if (!API_KEY.trim()) {
     setStatus("Add your YouTube API key first.", true);
     return;
   }
-  if (busy) return;
 
+  if (busy || (loadMore && (!hasMoreResults || loadingMore))) return;
+
+  if (!loadMore) {
+    activeSearchTerm = q;
+    activeSearchMode = mode;
+    nextPageToken = "";
+    hasMoreResults = false;
+    loadedVideoIds = new Set();
+    searchGeneration++;
+
+    resultsEl.replaceChildren();
+    playbackQueue = [];
+    currentQueueIndex = -1;
+    loadMoreSentinel.textContent = "";
+  }
+
+  const thisSearchGeneration = searchGeneration;
+
+  loadingMore = loadMore;
   setBusy(true);
-  setStatus(mode === "recommend" ? "Finding similar music…" : "Searching YouTube…");
-  resultsEl.replaceChildren();
+
+  if (loadMore) {
+    loadMoreSentinel.textContent = "Loading more results…";
+  } else {
+    setStatus(mode === "recommend"
+      ? "Finding similar music…"
+      : "Searching YouTube…");
+  }
 
   try {
-    const params = new URLSearchParams({
+    const requestParams = {
       part: "snippet",
       type: "video",
-      q,
-      maxResults: "12",
+      q: activeSearchTerm,
+      maxResults: "50",
       videoEmbeddable: "true",
       safeSearch: "moderate",
       key: API_KEY
-    });
+    };
 
+    if (loadMore && nextPageToken) {
+      requestParams.pageToken = nextPageToken;
+    }
+
+    const params = new URLSearchParams(requestParams);
     const response = await fetch(API_URL + "?" + params.toString());
     const data = await response.json();
 
+    if (thisSearchGeneration !== searchGeneration) return;
+
     if (!response.ok || data.error) {
-      throw new Error((data.error && data.error.message) || "YouTube search failed.");
+      throw new Error(
+        data.error?.message ||
+        "YouTube search failed. Check your API key and restrictions."
+      );
     }
 
-    const videos = (data.items || []).map(normalizeVideo).filter(Boolean);
-    if (!videos.length) {
+    const videos = (data.items || [])
+      .map(normalizeVideo)
+      .filter(Boolean);
+
+    const uniqueVideos = videos.filter(video => {
+      if (loadedVideoIds.has(video.id)) return false;
+
+      loadedVideoIds.add(video.id);
+      return true;
+    });
+
+    nextPageToken = data.nextPageToken || "";
+    hasMoreResults = Boolean(nextPageToken);
+
+    if (!uniqueVideos.length && !loadMore) {
       setStatus("No videos found. Try another search phrase.");
+      loadMoreSentinel.textContent = "No results found.";
       return;
     }
 
-    playbackQueue = videos.slice();
-    currentQueueIndex = currentVideo
-      ? playbackQueue.findIndex(item => item.id === currentVideo.id)
-      : -1;
+    playbackQueue = playbackQueue.concat(uniqueVideos);
+
+    if (currentVideo) {
+      currentQueueIndex = playbackQueue.findIndex(
+        item => item.id === currentVideo.id
+      );
+    }
 
     updateQueueStatus();
-    renderVideoResults(videos);
-    setStatus("Found " + videos.length + " videos for: " + q);
+
+    // Add new videos without removing the results already displayed.
+    renderVideoResults(uniqueVideos);
+
+    if (hasMoreResults) {
+      loadMoreSentinel.textContent =
+        `Showing ${playbackQueue.length} results. Keep scrolling for more…`;
+    } else {
+      loadMoreSentinel.textContent =
+        `You've reached the end of the available YouTube results (${playbackQueue.length} videos).`;
+    }
+
+    setStatus(
+      `Results for: ${activeSearchTerm} — ${playbackQueue.length} videos loaded.`
+    );
+
   } catch (error) {
-    setStatus("Couldn't search YouTube: " + error.message + " Check your API key, website restrictions and API quota.", true);
+    if (thisSearchGeneration === searchGeneration) {
+      setStatus(
+        "Couldn't search YouTube: " + error.message +
+        " Check your API key, website restrictions and API quota.",
+        true
+      );
+
+      loadMoreSentinel.textContent = loadMore
+        ? "Couldn't load more results. Try scrolling again."
+        : "";
+    }
+
   } finally {
-    setBusy(false);
+    if (thisSearchGeneration === searchGeneration) {
+      setBusy(false);
+      loadingMore = false;
+    }
   }
 }
-
 function renderVideoResults(videos) {
   resultsEl.replaceChildren();
 
