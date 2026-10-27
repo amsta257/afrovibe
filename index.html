@@ -1388,9 +1388,10 @@ function onYouTubeIframeAPIReady() {
     height: "100%",
     videoId: "",
     playerVars: {
-      playsinline: 1,
-      rel: 0
-    },
+  playsinline: 1,
+  controls: 0,
+  rel: 0
+},
     events: {
       onReady: function() {
         playerReady = true;
