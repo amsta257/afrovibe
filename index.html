@@ -3,128 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<meta name="description" content="AfroVibe — discover African and global music via YouTube.">
 <title>AfroVibe | Discover Your Sound</title>
 <style>
-:root{
-  color-scheme: dark;
-  --bg:#090b0a;--panel:#151815;--panel2:#242824;
-  --accent:#1ed760;--accent-soft:#b7ffce;
-  --text:#f7f8f7;--muted:#a7afa8;--border:#303630;--sidebar:#000;
+:root {
+  --bg: #090b0a;
+  --panel: #151815;
+  --purple: #1ed760;
+  --text: #f7f8f7;
+  --muted: #a7afa8;
+  --border: #303630;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:22px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-button,input,select{font:inherit}
-button{border:0;border-radius:999px;padding:12px 17px;background:var(--accent);color:#061008;font-weight:800;cursor:pointer;transition:transform .15s,filter .15s}
-button:hover:not(:disabled){filter:brightness(1.08);transform:scale(1.02)}
-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-input{width:100%;padding:14px 16px;border:1px solid #414841;border-radius:999px;background:#242824;color:white;outline:none}
-input:focus{border-color:var(--accent);box-shadow:0 0 0 2px #1ed76030}
-.app{display:flex;min-height:100vh;gap:8px;padding:8px 8px 24px}
-aside{width:235px;flex-shrink:0;background:var(--sidebar);border-radius:12px;padding:25px 14px;align-self:stretch}
-.logo{font-size:27px;font-weight:900;letter-spacing:-1px;margin:0 0 32px;padding-left:10px}
-.logo span{color:var(--accent)}
-.nav{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);margin:5px 0;padding:13px 12px;border-radius:8px}
-.nav.active,.nav:hover,.nav[aria-current="true"]{background:#242824;color:white}
-main{flex:1;min-width:0;padding:26px clamp(16px,3vw,38px);max-width:1600px;background:linear-gradient(180deg,#202a22 0,#121612 340px,var(--bg) 620px);border-radius:12px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
-.top strong{font-size:19px}
-.muted{color:var(--muted);line-height:1.6}
-.hero{padding:clamp(24px,4vw,42px);border-radius:16px;background:linear-gradient(120deg,#1e5e36,#193c29 60%,#263b2c);margin-bottom:34px;position:relative;overflow:hidden}
-.hero:after{content:"♫";position:absolute;right:5%;top:0;font-size:clamp(100px,18vw,220px);line-height:1;color:#ffffff10;font-weight:900;pointer-events:none}
-.hero h1{font-size:clamp(30px,4vw,52px);letter-spacing:-1.5px;max-width:760px;margin:14px 0}
-.hero p{max-width:680px;line-height:1.7;color:#e0e9e1}
-.section{margin:34px 0}
-.section h2{margin:0 0 15px;font-size:24px;letter-spacing:-.5px}
-.panel{background:#171b17;border:1px solid #2c332d;border-radius:16px;padding:20px}
-.searchrow{display:flex;gap:10px}
-.searchrow input{flex:1;min-width:0}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.secondary{background:#272d28;color:white;border:1px solid #3a433b}
-#status{font-size:14px;color:var(--muted);margin-top:14px;overflow-wrap:anywhere}
-#status.error{color:#ff9cae}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
-.video{background:#191d19;border:1px solid #292f2a;border-radius:12px;overflow:hidden;min-width:0;padding:10px;transition:background .2s,transform .2s}
-.video:hover{background:#252b25;transform:translateY(-3px)}
-.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#080a08;border-radius:8px}
-.video-body{padding:12px 3px 3px}
-.video h3{font-size:15px;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere}
-.channel{font-size:13px;color:var(--muted);margin-bottom:12px}
-.actions{display:flex;gap:7px;flex-wrap:wrap}
-.actions button{font-size:12px;padding:9px 12px}
-.result-playlist-select{width:100%;min-width:0;padding:9px 10px;border:1px solid #414841;border-radius:9px;background:#242824;color:white;font-size:12px;margin-bottom:7px}
-.player{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#080a08;display:block;max-height:560px;overflow:hidden}
-.player iframe,#youtubePlayerHost{display:block;width:100%;height:100%;border:0}
-.placeholder{width:100%;height:100%;display:grid;place-items:center;text-align:center;padding:20px;background:#080a08;border-radius:12px;color:var(--muted)}
-#playerError{color:#ff9cae;margin:8px 0 0;font-size:13px;min-height:1em}
-.list{display:grid;gap:12px}
-.saved{display:flex;align-items:center;gap:14px;background:#171b17;border:1px solid #2c332d;padding:12px;border-radius:12px}
-.saved img{width:125px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:#080a08}
-.saved-info{flex:1;min-width:0}
-.saved-info strong{display:block;overflow-wrap:anywhere}
-.saved-info small{display:block;color:var(--muted);margin-top:5px}
-.empty{color:var(--muted);padding:12px 0}
-.playlist-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
-.playlist-tools input{width:100%;padding:13px 15px;border:1px solid #414841;border-radius:999px;background:#242824;color:white;outline:none}
-.playlist-tools input:focus{border-color:var(--accent)}
-.playlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:16px}
-.playlist-card{background:#171b17;border:1px solid #2c332d;border-radius:14px;padding:16px;min-width:0}
-.playlist-card h3{margin:0 0 6px;overflow-wrap:anywhere}
-.playlist-card .playlist-count{font-size:13px;color:var(--muted);margin:0 0 12px}
-.playlist-card .playlist-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.playlist-track{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #303630;min-width:0}
-.playlist-track img{width:76px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;flex-shrink:0;background:#080a08}
-.playlist-track-info{flex:1;min-width:0}
-.playlist-track-info strong{display:block;font-size:13px;line-height:1.35;overflow-wrap:anywhere}
-.playlist-track-info small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-.playlist-track .actions{flex-shrink:0}
-.playlist-track .actions button{padding:8px 10px}
-footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(--muted);font-size:12px;line-height:1.7}
-footer button{margin-top:8px;font-size:12px;padding:8px 12px}
-@media(max-width:760px){
- .app{display:block;padding:0}
- .app>aside{width:100%;padding:16px;border-radius:0;border-bottom:1px solid var(--border)}
- .logo{margin-bottom:12px}
- .navs{display:flex;flex-wrap:wrap;gap:4px}
- .nav{width:auto;margin:0;padding:10px}
- main{padding:20px 14px;border-radius:0}
- .top{align-items:stretch;flex-direction:column}
- .hero{padding:24px}
- .searchrow{flex-direction:column}
- .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
- .saved{flex-wrap:wrap}
- .saved img{width:90px}
- .saved .actions{width:100%}
- .playlist-tools{grid-template-columns:1fr}
- .playlist-track{flex-wrap:wrap}
- .playlist-track .actions{width:100%}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 22px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
 }
-@media(prefers-reduced-motion: reduce){
- html{scroll-behavior:auto}
- *{transition:none !important;animation:none !important}
+button, input { font: inherit; }
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 17px;
+  background: var(--purple);
+  color: #061008;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .15s, filter .15s;
+}
+button:hover { filter: brightness(1.08); transform: scale(1.02); }
+button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #414841;
+  border-radius: 999px;
+  background: #242824;
+  color: white;
+  outline: none;
+}
+input:focus { border-color: var(--purple); }
+.app { display: flex; min-height: 100vh; gap: 8px; padding: 8px 8px 24px; }
+aside {
+  width: 235px;
+  flex-shrink: 0;
+  background: #000;
+  border-radius: 12px;
+  padding: 25px 14px;
+}
+.logo { font-size: 27px; font-weight: 900; margin: 0 0 32px; padding-left: 10px; }
+.logo span { color: var(--purple); }
+.nav {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: var(--muted);
+  margin: 5px 0;
+  padding: 13px 12px;
+  border-radius: 8px;
+}
+.nav.active, .nav:hover { background: #242824; color: white; }
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 26px clamp(16px, 3vw, 38px);
+  max-width: 1600px;
+  background: linear-gradient(180deg, #202a22 0, #121612 340px, var(--bg) 620px);
+  border-radius: 12px;
+}
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 26px; }
+.top strong { font-size: 19px; }
+.muted { color: var(--muted); line-height: 1.6; }
+.hero {
+  padding: clamp(24px, 4vw, 42px);
+  border-radius: 16px;
+  background: linear-gradient(120deg, #1e5e36, #193c29 60%, #263b2c);
+  margin-bottom: 34px;
+  position: relative;
+  overflow: hidden;
+}
+.hero:after {
+  content: "♫";
+  position: absolute;
+  right: 5%;
+  top: 0;
+  font-size: clamp(100px, 18vw, 220px);
+  line-height: 1;
+  color: #ffffff10;
+  font-weight: 900;
+  pointer-events: none;
+}
+.hero h1 { font-size: clamp(30px, 4vw, 52px); letter-spacing: -1.5px; max-width: 760px; margin: 14px 0; }
+.hero p { max-width: 680px; line-height: 1.7; color: #e0e9e1; }
+.section { margin: 34px 0; }
+.section h2 { margin: 0 0 15px; font-size: 24px; }
+.panel { background: #171b17; border: 1px solid #2c332d; border-radius: 16px; padding: 20px; }
+.searchrow { display: flex; gap: 10px; }
+.searchrow input { flex: 1; min-width: 0; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.secondary { background: #272d28; color: white; border: 1px solid #3a433b; }
+#status { font-size: 14px; color: var(--muted); margin-top: 14px; overflow-wrap: anywhere; }
+#status.error { color: #ff9cae; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+.video { background: #191d19; border: 1px solid #292f2a; border-radius: 12px; overflow: hidden; min-width: 0; padding: 10px; }
+.video:hover { background: #252b25; }
+.thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #080a08; border-radius: 8px; }
+.video-body { padding: 12px 3px 3px; }
+.video h3 { font-size: 15px; line-height: 1.4; margin: 0 0 8px; overflow-wrap: anywhere; }
+.channel { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+.actions { display: flex; gap: 7px; flex-wrap: wrap; }
+.actions button { font-size: 12px; padding: 9px 12px; }
+.result-playlist-select {
+  width: 100%;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid #414841;
+  border-radius: 9px;
+  background: #242824;
+  color: white;
+  font: inherit;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+.placeholder {
+  aspect-ratio: 16/9;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 20px;
+  background: #080a08;
+  border-radius: 12px;
+  color: var(--muted);
+}
+.list { display: grid; gap: 12px; }
+.saved { display: flex; align-items: center; gap: 14px; background: #171b17; border: 1px solid #2c332d; padding: 12px; border-radius: 12px; }
+.saved img { width: 125px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; }
+.saved-info { flex: 1; min-width: 0; }
+.saved-info strong { display: block; overflow-wrap: anywhere; }
+.saved-info small { display: block; color: var(--muted); margin-top: 5px; }
+.empty { color: var(--muted); padding: 12px 0; }
+.playlist-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 260px) auto;
+  gap: 10px;
+  align-items: center;
+}
+.playlist-tools input, .playlist-tools select {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #414841;
+  border-radius: 999px;
+  background: #242824;
+  color: white;
+  outline: none;
+}
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.playlist-card { background: #171b17; border: 1px solid #2c332d; border-radius: 14px; padding: 16px; min-width: 0; }
+.playlist-card h3 { margin: 0 0 6px; overflow-wrap: anywhere; }
+.playlist-count { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+.playlist-track { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #303630; min-width: 0; }
+.playlist-track img { width: 76px; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+.playlist-track-info { flex: 1; min-width: 0; }
+.playlist-track-info strong { display: block; font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; }
+.playlist-track-info small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+.playlist-track .actions { flex-shrink: 0; }
+.playlist-track .actions button { padding: 8px 10px; }
+footer { border-top: 1px solid #303630; padding-top: 18px; margin-top: 44px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+@media (max-width: 760px) {
+  .app { display: block; padding: 0; }
+  .app > aside { width: 100%; padding: 16px; border-radius: 0; border-bottom: 1px solid var(--border); }
+  .logo { margin-bottom: 12px; }
+  .navs { display: flex; flex-wrap: wrap; gap: 4px; }
+  .nav { width: auto; margin: 0; padding: 10px; }
+  main { padding: 20px 14px; border-radius: 0; }
+  .top { align-items: stretch; flex-direction: column; }
+  .hero { padding: 24px; }
+  .searchrow { flex-direction: column; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px; }
+  .saved { flex-wrap: wrap; }
+  .saved img { width: 90px; }
+  .saved .actions { width: 100%; }
+  .playlist-tools { grid-template-columns: 1fr; }
+  .playlist-track { flex-wrap: wrap; }
+  .playlist-track .actions { width: 100%; }
 }
 </style>
 </head>
 <body>
-<noscript>
-  <p style="padding:16px;background:#1b0d10;color:#ff9cae;text-align:center">
-    AfroVibe needs JavaScript enabled to search and play music.
-  </p>
-</noscript>
 <div class="app">
 <aside>
   <div class="logo">Afro<span>Vibe</span> 🎵</div>
-  <nav class="navs" aria-label="Sections">
-    <button class="nav active" data-target="home" aria-current="true">⌂ Home</button>
+  <div class="navs">
+    <button class="nav active" data-target="home">⌂ Home</button>
     <button class="nav" data-target="discover">🔎 Discover</button>
     <button class="nav" data-target="playerSection">▶ Player</button>
     <button class="nav" data-target="library">♫ My Music</button>
     <button class="nav" data-target="favourites">♥ Favourites</button>
     <button class="nav" data-target="playlists">▤ Playlists</button>
-  </nav>
+  </div>
 </aside>
 
 <main>
@@ -136,7 +220,7 @@ footer button{margin-top:8px;font-size:12px;padding:8px 12px}
     <div>YOUR SOUND. YOUR VIBE.</div>
     <h1>Discover great music across Kenya and Africa.</h1>
     <p>Search African music, Afrobeats, Amapiano, gospel, hip-hop and music from around the world.</p>
-    <button type="button" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">Discover music →</button>
+    <button onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">Discover music →</button>
   </section>
 
   <section class="section" id="discover">
@@ -145,35 +229,31 @@ footer button{margin-top:8px;font-size:12px;padding:8px 12px}
     <div class="panel">
       <div class="searchrow">
         <input id="query" type="search" maxlength="150" placeholder="Try: latest Afrobeats, Bien, Amapiano..." aria-label="Search YouTube">
-        <button id="searchBtn" type="button">Search</button>
+        <button id="searchBtn">Search</button>
       </div>
       <div class="filters">
-        <button class="secondary quick" type="button" data-query="latest Afrobeats music">Afrobeats</button>
-        <button class="secondary quick" type="button" data-query="Kenyan music hits">Kenyan Music</button>
-        <button class="secondary quick" type="button" data-query="Amapiano hits">Amapiano</button>
-        <button class="secondary quick" type="button" data-query="African gospel music">Gospel</button>
-        <button class="secondary quick" type="button" data-query="latest hip hop music">Hip-Hop</button>
+        <button class="secondary quick" data-query="latest Afrobeats music">Afrobeats</button>
+        <button class="secondary quick" data-query="Kenyan music hits">Kenyan Music</button>
+        <button class="secondary quick" data-query="Amapiano hits">Amapiano</button>
+        <button class="secondary quick" data-query="African gospel music">Gospel</button>
+        <button class="secondary quick" data-query="latest hip hop music">Hip-Hop</button>
       </div>
       <div id="status" role="status" aria-live="polite">Enter a search term to discover videos.</div>
     </div>
     <div id="results" class="grid" style="margin-top:16px"></div>
-    <div style="margin-top:16px;text-align:center">
-      <button id="loadMoreBtn" class="secondary" type="button" hidden>Load more</button>
-    </div>
   </section>
 
   <section class="section" id="playerSection">
     <h2>▶ AfroVibe Player</h2>
     <div class="panel">
-      <div id="player" class="player"><div class="placeholder">Select a video from your search results to play it here.</div></div>
-      <p id="playerError" role="alert"></p>
-      <h3 id="playingTitle" aria-live="polite">Nothing playing yet</h3>
+      <div id="player"><div class="placeholder">Select a video from your search results to play it here.</div></div>
+      <h3 id="playingTitle">Nothing playing yet</h3>
       <p id="playingChannel" class="muted">Your selected YouTube video will appear above.</p>
-      <p id="queueStatus" class="muted" aria-live="polite">Queue: search for music, then play a result. The next result will play automatically when supported.</p>
+      <p id="queueStatus" class="muted">Queue: search for music, then play a result. The next result will play automatically when supported.</p>
       <div class="actions">
-        <button id="nextBtn" class="secondary" type="button" disabled>⏭ Next track</button>
-        <button id="recommendBtn" class="secondary" type="button" disabled>✨ Find similar music</button>
-        <button id="openYoutube" class="secondary" type="button" disabled>Open on YouTube ↗</button>
+        <button id="nextBtn" class="secondary" disabled>⏭ Next track</button>
+        <button id="recommendBtn" class="secondary" disabled>✨ Find similar music</button>
+        <button id="openYoutube" class="secondary" disabled>Open on YouTube ↗</button>
       </div>
     </div>
   </section>
@@ -191,100 +271,52 @@ footer button{margin-top:8px;font-size:12px;padding:8px 12px}
 
   <section class="section" id="playlists">
     <h2>▤ Your Playlists</h2>
-    <p class="muted">For each search result, choose the playlist you want from that song's own dropdown. Playlists are saved in this browser.</p>
+    <p class="muted">African Mix is ready by default. For each search result, choose the playlist you want from that song’s own dropdown. Playlists are saved in this browser.</p>
     <div class="panel">
       <div class="playlist-tools">
         <input id="playlistName" type="text" maxlength="60" placeholder="Playlist name, e.g. Kenyan Hits" aria-label="New playlist name">
-        <button id="createPlaylistBtn" type="button">＋ Create playlist</button>
+        <select id="playlistSelect" aria-label="Choose playlist for adding songs">
+          <option value="">Choose a playlist for new songs</option>
+        </select>
+        <button id="createPlaylistBtn">＋ Create playlist</button>
       </div>
-      <p id="playlistStatus" class="muted" role="status" aria-live="polite">African Mix is ready. For each song, choose its destination from that song's dropdown, then click "＋ Add to playlist."</p>
+      <p id="playlistStatus" class="muted" role="status" aria-live="polite">African Mix is ready. For each song, choose its destination from that song’s dropdown, then click “＋ Add to selected playlist.”</p>
     </div>
     <div id="playlistsList" class="playlist-grid"></div>
   </section>
 
   <footer>
     AfroVibe uses the YouTube Data API and official YouTube IFrame Player API. Videos remain hosted by YouTube. Automatic next-track playback works when the embedded player reports that a video has ended and the next video permits embedding. Search results depend on YouTube availability and your API quota. Saved music, favourites and playlists are stored in this browser, not synced across devices.
-    <br>
-    <button id="clearDataBtn" class="secondary" type="button">Clear all saved data</button>
   </footer>
 </main>
 </div>
 
 <script>
-/* ============================================================
-   CONFIG
-   ============================================================ */
 const API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
 const API_URL = "https://www.googleapis.com/youtube/v3/search";
 const LIBRARY_KEY = "afrovibe-youtube-library-v2";
 const FAV_KEY = "afrovibe-youtube-favourites-v2";
 const PLAYLIST_KEY = "afrovibe-playlists-v1";
-const SEARCH_CACHE_KEY = "afrovibe-search-cache-v1";
-const SEARCH_CACHE_TTL = 5 * 60 * 1000;
-const MAX_AUTO_SKIPS = 2;
 
-/* ============================================================
-   DOM
-   ============================================================ */
 const queryInput = document.getElementById("query");
 const statusEl = document.getElementById("status");
 const resultsEl = document.getElementById("results");
 const playerEl = document.getElementById("player");
-const playerErrorEl = document.getElementById("playerError");
 const libraryEl = document.getElementById("libraryList");
 const favouritesEl = document.getElementById("favouritesList");
 const playlistsEl = document.getElementById("playlistsList");
+const playlistSelect = document.getElementById("playlistSelect");
 const playlistNameInput = document.getElementById("playlistName");
 const playlistStatusEl = document.getElementById("playlistStatus");
-const loadMoreBtn = document.getElementById("loadMoreBtn");
 
-/* ============================================================
-   STORAGE HELPERS
-   ============================================================ */
-function safeGet(key) {
-  try { return localStorage.getItem(key); } catch { return null; }
-}
-function safeSet(key, value) {
-  try { localStorage.setItem(key, value); return true; } catch { return false; }
-}
-function readArray(key) {
-  try {
-    const value = JSON.parse(safeGet(key) || "[]");
-    return Array.isArray(value) ? value : [];
-  } catch { return []; }
-}
+let library = readArray(LIBRARY_KEY);
+let favourites = readArray(FAV_KEY);
+let playlists = readArray(PLAYLIST_KEY);
 
-function readLibrary() {
-  return readArray(LIBRARY_KEY).filter(v => v && typeof v.id === "string");
-}
-function readFavourites(lib) {
-  return readArray(FAV_KEY)
-    .map(f => typeof f === "string"
-      ? lib.find(v => v.id === f) || null
-      : (f && typeof f.id === "string" ? f : null))
-    .filter(Boolean);
-}
-function readPlaylists() {
-  return readArray(PLAYLIST_KEY)
-    .filter(p => p && typeof p.id === "string" && typeof p.name === "string")
-    .map(p => ({
-      id: p.id,
-      name: p.name,
-      items: Array.isArray(p.items) ? p.items.filter(v => v && typeof v.id === "string") : []
-    }));
-}
-
-/* ============================================================
-   STATE
-   ============================================================ */
-let library = readLibrary();
-let favourites = readFavourites(library);
-
-let playlists;
-if (safeGet(PLAYLIST_KEY) === null) {
-  playlists = [{ id: "playlist-african-mix", name: "African Mix", items: [] }];
-} else {
-  playlists = readPlaylists();
+let africanMix = playlists.find(p => p.name.toLowerCase() === "african mix");
+if (!africanMix) {
+  africanMix = { id: "playlist-african-mix", name: "African Mix", items: [] };
+  playlists.unshift(africanMix);
 }
 
 let currentVideo = null;
@@ -292,55 +324,44 @@ let playbackQueue = [];
 let currentQueueIndex = -1;
 let ytPlayer = null;
 let youtubeApiReady = false;
-let youtubeApiLoading = false;
 let pendingVideo = null;
 let busy = false;
-let searchController = null;
-let currentQuery = "";
-let nextPageToken = null;
-let seenIds = new Set();
-let resultVideoMap = new Map();
-let consecutiveErrorCount = 0;
-let autoSkipDisabled = false;
 
-function persist() {
-  const a = safeSet(LIBRARY_KEY, JSON.stringify(library));
-  const b = safeSet(FAV_KEY, JSON.stringify(favourites));
-  const c = safeSet(PLAYLIST_KEY, JSON.stringify(playlists));
-  if (!a || !b || !c) {
-    setStatus("Browser storage is unavailable. Changes will be lost when you close this tab.", true);
+function readArray(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
   }
 }
 
-/* ============================================================
-   STATUS / BUSY
-   ============================================================ */
+function persist() {
+  try {
+    localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
+    localStorage.setItem(FAV_KEY, JSON.stringify(favourites));
+    localStorage.setItem(PLAYLIST_KEY, JSON.stringify(playlists));
+  } catch {
+    setStatus("Browser storage is unavailable. You can still search and play videos.", true);
+  }
+}
+
 function setStatus(message, error = false) {
   statusEl.textContent = message;
   statusEl.className = error ? "error" : "";
 }
 
-function setPlaylistStatus(message, error = false) {
-  playlistStatusEl.textContent = message;
-  playlistStatusEl.style.color = error ? "#ff9cae" : "";
-}
-
 function setBusy(value) {
   busy = value;
-  const searchBtn = document.getElementById("searchBtn");
-  searchBtn.disabled = value;
-  searchBtn.textContent = value ? "Searching…" : "Search";
-  document.querySelectorAll(".quick").forEach(b => { b.disabled = value; });
-  loadMoreBtn.disabled = value;
+  document.getElementById("searchBtn").disabled = value;
+  document.getElementById("searchBtn").textContent = value ? "Searching…" : "Search";
 }
 
-/* ============================================================
-   YOUTUBE SEARCH (with caching, pagination, abort)
-   ============================================================ */
 function normalizeVideo(item) {
   const snippet = item.snippet || {};
   const id = typeof item.id === "string" ? item.id : item.id && item.id.videoId;
   if (!id) return null;
+
   return {
     id,
     title: snippet.title || "YouTube video",
@@ -353,255 +374,135 @@ function normalizeVideo(item) {
   };
 }
 
-function getCachedPage(key) {
-  try {
-    const all = JSON.parse(sessionStorage.getItem(SEARCH_CACHE_KEY) || "{}");
-    const entry = all[key];
-    if (entry && Date.now() - entry.t < SEARCH_CACHE_TTL) return entry.data;
-  } catch {}
-  return null;
-}
-function setCachedPage(key, data) {
-  try {
-    const all = JSON.parse(sessionStorage.getItem(SEARCH_CACHE_KEY) || "{}");
-    all[key] = { t: Date.now(), data };
-    const cutoff = Date.now() - SEARCH_CACHE_TTL;
-    for (const k in all) if (all[k].t < cutoff) delete all[k];
-    sessionStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(all));
-  } catch {}
-}
-
-async function searchYouTube(term, options = {}) {
-  const { mode = "search", append = false } = options;
+async function searchYouTube(term, mode = "search") {
   const q = term.trim();
-
-  if (!q) { setStatus("Type a song, artist or genre first.", true); return; }
-  if (!API_KEY.trim()) { setStatus("Add your YouTube API key first.", true); return; }
-  if (busy) return;
-  if (append && !nextPageToken) return;
-
-  if (searchController) searchController.abort();
-  const controller = new AbortController();
-  searchController = controller;
-  const signal = controller.signal;
-  const pageToken = append ? nextPageToken : null;
-
-  if (!append) {
-    currentQuery = q;
-    nextPageToken = null;
-    seenIds = new Set();
-    resultsEl.replaceChildren();
-    resultVideoMap.clear();
-    loadMoreBtn.hidden = true;
+  if (!q) {
+    setStatus("Type a song, artist or genre first.", true);
+    return;
   }
+  if (!API_KEY.trim()) {
+    setStatus("Add your YouTube API key first.", true);
+    return;
+  }
+  if (busy) return;
 
   setBusy(true);
-  setStatus(append
-    ? "Loading more…"
-    : (mode === "recommend" ? "Finding similar music…" : "Searching YouTube…"));
+  setStatus(mode === "recommend" ? "Finding similar music…" : "Searching YouTube…");
+  resultsEl.replaceChildren();
 
   try {
-    const cacheKey = q + "|" + (pageToken || "first");
-    let page = getCachedPage(cacheKey);
-
-    if (!page) {
-      const params = new URLSearchParams({
-        part: "snippet",
-        type: "video",
-        q,
-        maxResults: "12",
-        videoEmbeddable: "true",
-        safeSearch: "moderate",
-        videoCategoryId: "10",
-        regionCode: "KE",
-        relevanceLanguage: "en",
-        key: API_KEY
-      });
-      if (pageToken) params.set("pageToken", pageToken);
-
-      const response = await fetch(API_URL + "?" + params.toString(), { signal });
-      const data = await response.json();
-
-      if (!response.ok || data.error) {
-        const apiMessage = data.error && data.error.message;
-        throw new Error(apiMessage || "YouTube search failed. Check your API key and restrictions.");
-      }
-
-      const videos = (data.items || []).map(normalizeVideo).filter(Boolean);
-      page = { videos, nextPageToken: data.nextPageToken || null };
-      setCachedPage(cacheKey, page);
-    }
-
-    const fresh = page.videos.filter(v => {
-      if (seenIds.has(v.id)) return false;
-      seenIds.add(v.id);
-      return true;
+    const params = new URLSearchParams({
+      part: "snippet",
+      type: "video",
+      q,
+      maxResults: "12",
+      videoEmbeddable: "true",
+      safeSearch: "moderate",
+      key: API_KEY
     });
 
-    if (!fresh.length && !append) {
+    const response = await fetch(API_URL + "?" + params.toString());
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+      throw new Error((data.error && data.error.message) || "YouTube search failed.");
+    }
+
+    const videos = (data.items || []).map(normalizeVideo).filter(Boolean);
+    if (!videos.length) {
       setStatus("No videos found. Try another search phrase.");
-      loadMoreBtn.hidden = true;
       return;
     }
 
-    nextPageToken = page.nextPageToken || null;
+    playbackQueue = videos.slice();
+    currentQueueIndex = currentVideo
+      ? playbackQueue.findIndex(item => item.id === currentVideo.id)
+      : -1;
 
-    if (append) {
-      playbackQueue.push(...fresh);
-    } else {
-      playbackQueue = fresh.slice();
-      currentQueueIndex = currentVideo
-        ? playbackQueue.findIndex(i => i.id === currentVideo.id)
-        : -1;
-      updateQueueStatus();
-    }
-
-    renderVideoResults(fresh, append);
-    loadMoreBtn.hidden = !nextPageToken;
-
-    if (append) {
-      setStatus("Loaded " + fresh.length + " more result" + (fresh.length === 1 ? "" : "s") + ".");
-    } else {
-      setStatus(mode === "recommend"
-        ? "Similar results for: " + q
-        : "Found " + fresh.length + " video" + (fresh.length === 1 ? "" : "s") + " for: " + q);
-    }
+    updateQueueStatus();
+    renderVideoResults(videos);
+    setStatus("Found " + videos.length + " videos for: " + q);
   } catch (error) {
-    if (error.name === "AbortError") return;
-    setStatus("Couldn't search YouTube: " + error.message, true);
+    setStatus("Couldn't search YouTube: " + error.message + " Check your API key, website restrictions and API quota.", true);
   } finally {
-    if (searchController === controller) setBusy(false);
+    setBusy(false);
   }
 }
 
-/* ============================================================
-   RENDER: SEARCH RESULTS
-   ============================================================ */
-function renderVideoResults(videos, append = false) {
-  if (!append) {
-    resultsEl.replaceChildren();
-    resultVideoMap.clear();
-  }
+function renderVideoResults(videos) {
+  resultsEl.replaceChildren();
+
   videos.forEach(video => {
-    resultVideoMap.set(video.id, video);
-    resultsEl.append(createVideoCard(video));
+    const card = document.createElement("article");
+    card.className = "video";
+
+    const image = document.createElement("img");
+    image.className = "thumb";
+    image.alt = "Thumbnail for " + video.title;
+    image.loading = "lazy";
+    image.src = video.thumbnail;
+
+    const body = document.createElement("div");
+    body.className = "video-body";
+
+    const title = document.createElement("h3");
+    title.textContent = video.title;
+
+    const channel = document.createElement("div");
+    channel.className = "channel";
+    channel.textContent = video.channel;
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const play = document.createElement("button");
+    play.textContent = "▶ Play";
+    play.addEventListener("click", () => playVideo(video));
+
+    const save = document.createElement("button");
+    save.className = "secondary";
+    save.textContent = library.some(item => item.id === video.id) ? "✓ Saved" : "＋ Save";
+    save.addEventListener("click", () => saveVideo(video));
+
+    const heart = document.createElement("button");
+    heart.className = "secondary";
+    heart.textContent = favourites.includes(video.id) ? "♥" : "♡";
+    heart.setAttribute("aria-label", "Toggle favourite");
+    heart.addEventListener("click", () => toggleFavourite(video));
+
+    // Each song has its own playlist selector.
+    const picker = document.createElement("select");
+    picker.className = "result-playlist-select";
+    picker.setAttribute("aria-label", "Choose playlist for this song");
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Choose playlist for this song…";
+    picker.append(placeholder);
+
+    playlists.forEach(playlist => {
+      const option = document.createElement("option");
+      option.value = playlist.id;
+      option.textContent = playlist.name;
+      picker.append(option);
+    });
+
+    // African Mix is selected by default.
+    const defaultPlaylist = playlists.find(p => p.name.toLowerCase() === "african mix");
+    if (defaultPlaylist) picker.value = defaultPlaylist.id;
+
+    const add = document.createElement("button");
+    add.className = "secondary";
+    add.textContent = "＋ Add to selected playlist";
+    add.addEventListener("click", () => addVideoToPlaylist(video, picker.value));
+
+    actions.append(play, save, heart);
+    body.append(title, channel, picker, add, actions);
+    card.append(image, body);
+    resultsEl.append(card);
   });
 }
 
-function createVideoCard(video) {
-  const card = document.createElement("article");
-  card.className = "video";
-
-  const image = document.createElement("img");
-  image.className = "thumb";
-  image.alt = "Thumbnail for " + video.title;
-  image.loading = "lazy";
-  image.referrerPolicy = "no-referrer";
-  if (video.thumbnail) image.src = video.thumbnail;
-
-  const body = document.createElement("div");
-  body.className = "video-body";
-
-  const title = document.createElement("h3");
-  title.textContent = video.title;
-
-  const channel = document.createElement("div");
-  channel.className = "channel";
-  channel.textContent = video.channel;
-
-  const actions = document.createElement("div");
-  actions.className = "actions";
-
-  const play = document.createElement("button");
-  play.type = "button";
-  play.textContent = "▶ Play";
-  play.addEventListener("click", () => playVideo(video));
-
-  const save = document.createElement("button");
-  save.type = "button";
-  save.className = "secondary";
-  save.dataset.videoId = video.id;
-  save.dataset.role = "save";
-  save.addEventListener("click", () => toggleLibrary(video));
-  updateSaveButton(save, video);
-
-  const heart = document.createElement("button");
-  heart.type = "button";
-  heart.className = "secondary";
-  heart.dataset.videoId = video.id;
-  heart.dataset.role = "fav";
-  heart.addEventListener("click", () => toggleFavourite(video));
-  updateFavouriteButton(heart, video);
-
-  // Per-song playlist dropdown
-  const playlistPicker = document.createElement("select");
-  playlistPicker.className = "result-playlist-select";
-  playlistPicker.setAttribute("aria-label", "Choose which playlist to add this song to");
-  refreshPlaylistPickerOptions(playlistPicker);
-
-  const addToPlaylist = document.createElement("button");
-  addToPlaylist.type = "button";
-  addToPlaylist.className = "secondary";
-  addToPlaylist.textContent = "＋ Add to playlist";
-  addToPlaylist.addEventListener("click", () => addVideoToPlaylist(video, playlistPicker.value));
-
-  actions.append(play, save, heart);
-  body.append(title, channel, playlistPicker, addToPlaylist, actions);
-  card.append(image, body);
-  return card;
-}
-
-function updateSaveButton(btn, video) {
-  const on = library.some(v => v.id === video.id);
-  btn.textContent = on ? "✓ Saved" : "＋ Save";
-  btn.setAttribute("aria-pressed", on ? "true" : "false");
-}
-function updateFavouriteButton(btn, video) {
-  const on = favourites.some(f => f.id === video.id);
-  btn.textContent = on ? "♥" : "♡";
-  btn.setAttribute("aria-pressed", on ? "true" : "false");
-  btn.setAttribute("aria-label", (on ? "Remove from" : "Add to") + " favourites: " + video.title);
-}
-function refreshResultButtons() {
-  resultsEl.querySelectorAll("button[data-role]").forEach(btn => {
-    const video = resultVideoMap.get(btn.dataset.videoId);
-    if (!video) return;
-    if (btn.dataset.role === "fav") updateFavouriteButton(btn, video);
-    else if (btn.dataset.role === "save") updateSaveButton(btn, video);
-  });
-}
-
-function refreshPlaylistPickerOptions(select) {
-  const prev = select.value;
-  select.replaceChildren();
-
-  const placeholder = document.createElement("option");
-  placeholder.value = "";
-  placeholder.textContent = playlists.length ? "Choose playlist…" : "Create a playlist first";
-  select.append(placeholder);
-
-  playlists.forEach(pl => {
-    const opt = document.createElement("option");
-    opt.value = pl.id;
-    opt.textContent = pl.name;
-    select.append(opt);
-  });
-
-  if (playlists.some(p => p.id === prev)) select.value = prev;
-  else select.value = getDefaultPlaylistId();
-}
-function refreshAllPlaylistPickers() {
-  resultsEl.querySelectorAll(".result-playlist-select").forEach(refreshPlaylistPickerOptions);
-}
-function getDefaultPlaylistId() {
-  const africanMix = playlists.find(p => p.name.toLowerCase() === "african mix");
-  if (africanMix) return africanMix.id;
-  return playlists[0] ? playlists[0].id : "";
-}
-
-/* ============================================================
-   PLAYER
-   ============================================================ */
 function updateQueueStatus() {
   const queueStatus = document.getElementById("queueStatus");
   if (!playbackQueue.length) {
@@ -609,10 +510,12 @@ function updateQueueStatus() {
     document.getElementById("nextBtn").disabled = true;
     return;
   }
+
   const position = currentQueueIndex >= 0
-    ? "Track " + (currentQueueIndex + 1) + " of " + playbackQueue.length
-    : playbackQueue.length + " tracks ready";
-  queueStatus.textContent = "Queue: " + position + ". AfroVibe will try to play the next result when the current video ends.";
+    ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}`
+    : `${playbackQueue.length} tracks ready`;
+
+  queueStatus.textContent = `Queue: ${position}. The next result will play automatically when supported.`;
   document.getElementById("nextBtn").disabled =
     currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
 }
@@ -638,7 +541,6 @@ function playVideo(video, scrollToPlayer = true) {
   currentQueueIndex = index;
   updatePlayingDetails(video);
   pendingVideo = video;
-  playerErrorEl.textContent = "";
 
   if (youtubeApiReady && window.YT && window.YT.Player) {
     if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
@@ -649,7 +551,6 @@ function playVideo(video, scrollToPlayer = true) {
     }
   } else {
     playerEl.innerHTML = '<div class="placeholder">Loading the YouTube player…</div>';
-    loadYouTubeApi();
   }
 
   if (scrollToPlayer) {
@@ -657,77 +558,38 @@ function playVideo(video, scrollToPlayer = true) {
   }
 }
 
-function loadYouTubeApi() {
-  if (youtubeApiLoading || youtubeApiReady) return;
-  youtubeApiLoading = true;
-  const s = document.createElement("script");
-  s.src = "https://www.youtube.com/iframe_api";
-  s.async = true;
-  document.head.appendChild(s);
-}
-
-window.onYouTubeIframeAPIReady = function() {
-  youtubeApiReady = true;
-  youtubeApiLoading = false;
-  if (pendingVideo) createYouTubePlayer(pendingVideo);
-};
-
 function createYouTubePlayer(video) {
   const host = document.createElement("div");
   host.id = "youtubePlayerHost";
   playerEl.replaceChildren(host);
 
-  const startVideo = video;
-  pendingVideo = null;
-
   ytPlayer = new YT.Player("youtubePlayerHost", {
     width: "100%",
     height: "100%",
-    videoId: startVideo.id,
-    host: "https://www.youtube-nocookie.com",
-    playerVars: {
-      autoplay: 1,
-      playsinline: 1,
-      rel: 0,
-      enablejsapi: 1,
-      origin: window.location.origin
-    },
+    videoId: video.id,
+    playerVars: { autoplay: 1, playsinline: 1, rel: 0, enablejsapi: 1 },
     events: {
       onReady: function(event) {
-        if (pendingVideo && pendingVideo.id !== startVideo.id) {
-          const target = pendingVideo;
-          pendingVideo = null;
-          event.target.loadVideoById(target.id);
+        const targetVideo = pendingVideo;
+        pendingVideo = null;
+        if (targetVideo && targetVideo.id !== video.id) {
+          event.target.loadVideoById(targetVideo.id);
         } else {
-          pendingVideo = null;
           event.target.playVideo();
         }
       },
       onStateChange: function(event) {
-        if (event.data === YT.PlayerState.PLAYING) {
-          consecutiveErrorCount = 0;
-          autoSkipDisabled = false;
-        }
-        if (event.data === YT.PlayerState.ENDED) {
-          playNextVideo(true);
-        }
+        if (event.data === YT.PlayerState.ENDED) playNextVideo(true);
       },
       onError: function(event) {
         const messages = {
           2: "This video has an invalid ID.",
           5: "This video could not be played in the HTML5 player.",
           100: "This video is unavailable or private.",
-          101: "The video owner does not allow playback on other websites.",
-          150: "The video owner does not allow playback on other websites."
+          101: "The owner does not allow playback on other websites.",
+          150: "The owner does not allow playback on other websites."
         };
-        playerErrorEl.textContent = messages[event.data] || "YouTube could not play this video. Try another result.";
-        consecutiveErrorCount++;
-        if (!autoSkipDisabled && consecutiveErrorCount <= MAX_AUTO_SKIPS) {
-          setTimeout(() => playNextVideo(true), 1200);
-        } else {
-          autoSkipDisabled = true;
-          setStatus("Several videos in this queue can't be embedded. Try a different search.", true);
-        }
+        setStatus(messages[event.data] || "YouTube could not play this video. Try another result.", true);
       }
     }
   });
@@ -740,96 +602,35 @@ function playNextVideo(automatic = false) {
     if (automatic) setStatus("You've reached the end of this queue. Search for more music to continue.");
     return;
   }
+
   currentQueueIndex = nextIndex;
   playVideo(playbackQueue[nextIndex], false);
 }
 
-/* ============================================================
-   LIBRARY / FAVOURITES
-   ============================================================ */
-function toggleLibrary(video) {
-  if (library.some(v => v.id === video.id)) {
-    library = library.filter(v => v.id !== video.id);
-  } else {
+function saveVideo(video) {
+  if (!library.some(item => item.id === video.id)) {
     library.unshift(video);
+    persist();
+    renderSavedLists();
   }
-  persist();
-  renderSavedLists();
 }
 
 function toggleFavourite(video) {
-  if (favourites.some(f => f.id === video.id)) {
-    favourites = favourites.filter(f => f.id !== video.id);
+  if (favourites.includes(video.id)) {
+    favourites = favourites.filter(id => id !== video.id);
   } else {
-    favourites.unshift(video);
+    favourites.unshift(video.id);
+    if (!library.some(item => item.id === video.id)) library.unshift(video);
   }
   persist();
   renderSavedLists();
 }
 
-function renderSavedLists() {
-  renderSavedSection(libraryEl, library, "Your music library is empty. Search YouTube and tap Save.", "library");
-  renderSavedSection(favouritesEl, favourites, "No favourites yet. Tap the heart on a video you like.", "favourites");
-  refreshResultButtons();
+function setPlaylistStatus(message, error = false) {
+  playlistStatusEl.textContent = message;
+  playlistStatusEl.style.color = error ? "#ff9cae" : "";
 }
 
-function renderSavedSection(container, items, emptyMessage, kind) {
-  container.replaceChildren();
-
-  if (!items.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.textContent = emptyMessage;
-    container.append(empty);
-    return;
-  }
-
-  items.forEach(video => {
-    const row = document.createElement("div");
-    row.className = "saved";
-
-    const image = document.createElement("img");
-    image.alt = "";
-    image.loading = "lazy";
-    image.referrerPolicy = "no-referrer";
-    if (video.thumbnail) image.src = video.thumbnail;
-
-    const info = document.createElement("div");
-    info.className = "saved-info";
-    const title = document.createElement("strong");
-    title.textContent = video.title;
-    const channel = document.createElement("small");
-    channel.textContent = video.channel;
-    info.append(title, channel);
-
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    const play = document.createElement("button");
-    play.type = "button";
-    play.textContent = "▶ Play";
-    play.addEventListener("click", () => playVideo(video));
-
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "secondary";
-    remove.textContent = kind === "library" ? "Remove" : "♥ Remove";
-    remove.addEventListener("click", () => {
-      if (kind === "library") library = library.filter(v => v.id !== video.id);
-      else favourites = favourites.filter(v => v.id !== video.id);
-      persist();
-      renderSavedLists();
-    });
-
-    actions.append(play, remove);
-    row.append(image, info, actions);
-    container.append(row);
-  });
-}
-
-/* ============================================================
-   PLAYLISTS
-   ============================================================ */
 function createPlaylist() {
   const name = playlistNameInput.value.trim();
 
@@ -838,6 +639,7 @@ function createPlaylist() {
     playlistNameInput.focus();
     return;
   }
+
   if (playlists.some(p => p.name.toLowerCase() === name.toLowerCase())) {
     setPlaylistStatus("A playlist with that name already exists. Choose another name.", true);
     return;
@@ -853,187 +655,270 @@ function createPlaylist() {
   playlistNameInput.value = "";
   persist();
   renderPlaylists();
-  refreshAllPlaylistPickers();
-  setPlaylistStatus('Created "' + playlist.name + '". It is now selectable from each song.');
+  playlistSelect.value = playlist.id;
+  setPlaylistStatus(`Created "${playlist.name}". You can now select it on a song's dropdown.`);
 }
 
+/* UPDATED: immediately saves and redraws the selected playlist. */
 function addVideoToPlaylist(video, playlistId) {
   if (!playlistId) {
     setPlaylistStatus("Choose a playlist for this song first.", true);
     return;
   }
+
   const playlist = playlists.find(p => p.id === playlistId);
+
   if (!playlist) {
-    setPlaylistStatus("Choose a playlist first.", true);
+    setPlaylistStatus("Please select a valid playlist.", true);
     return;
   }
+
   if (playlist.items.some(item => item.id === video.id)) {
-    setPlaylistStatus('"' + video.title + '" is already in "' + playlist.name + '".');
+    setPlaylistStatus(`"${video.title}" is already in "${playlist.name}".`);
     return;
   }
+
+  // Add the song immediately to the chosen playlist only.
   playlist.items.push(video);
+
+  // Save changes and redraw the playlist without refreshing the page.
   persist();
   renderPlaylists();
-  setPlaylistStatus('Added "' + video.title + '" to "' + playlist.name + '".');
-  setStatus('Added "' + video.title + '" to "' + playlist.name + '".');
+
+  // Confirm the change immediately.
+  setPlaylistStatus(`✓ "${video.title}" added to "${playlist.name}".`);
+
+  // Briefly highlight the updated playlist card.
+  requestAnimationFrame(() => {
+    const cards = playlistsEl.querySelectorAll(".playlist-card");
+
+    cards.forEach(card => {
+      const heading = card.querySelector("h3");
+
+      if (heading && heading.textContent === playlist.name) {
+        card.style.borderColor = "#1ed760";
+        card.style.transition = "border-color 0.3s ease";
+
+        setTimeout(() => {
+          card.style.borderColor = "";
+        }, 1500);
+      }
+    });
+  });
 }
 
 function removeTrackFromPlaylist(playlistId, videoId) {
   const playlist = playlists.find(p => p.id === playlistId);
   if (!playlist) return;
+
   playlist.items = playlist.items.filter(item => item.id !== videoId);
   persist();
   renderPlaylists();
-  setPlaylistStatus('Removed the track from "' + playlist.name + '".');
+  setPlaylistStatus(`Removed the track from "${playlist.name}".`);
 }
 
 function deletePlaylist(playlistId) {
   const playlist = playlists.find(p => p.id === playlistId);
   if (!playlist) return;
-  if (!window.confirm('Delete the playlist "' + playlist.name + '"? This does not delete your saved songs.')) return;
+
+  if (!confirm(`Delete the playlist "${playlist.name}"? This does not delete your saved songs.`)) return;
 
   playlists = playlists.filter(p => p.id !== playlistId);
   persist();
   renderPlaylists();
-  refreshAllPlaylistPickers();
-  setPlaylistStatus('Deleted playlist "' + playlist.name + '".');
+  setPlaylistStatus(`Deleted playlist "${playlist.name}".`);
 }
 
 function renderPlaylists() {
+  const previousSelection = playlistSelect.value;
+
+  playlistSelect.replaceChildren();
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = playlists.length ? "Choose a playlist" : "Create a playlist first";
+  playlistSelect.append(defaultOption);
+
+  playlists.forEach(playlist => {
+    const option = document.createElement("option");
+    option.value = playlist.id;
+    option.textContent = playlist.name;
+    playlistSelect.append(option);
+  });
+
+  if (playlists.some(p => p.id === previousSelection)) {
+    playlistSelect.value = previousSelection;
+  }
+
   playlistsEl.replaceChildren();
 
   if (!playlists.length) {
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.textContent = "No playlists yet. Create one above to start collecting music.";
+    empty.textContent = "No playlists yet. Create a playlist above to start collecting music.";
     playlistsEl.append(empty);
     return;
   }
 
   playlists.forEach(playlist => {
-    playlistsEl.append(renderPlaylistCard(playlist));
-  });
-}
+    const card = document.createElement("article");
+    card.className = "playlist-card";
 
-function renderPlaylistCard(playlist) {
-  const card = document.createElement("article");
-  card.className = "playlist-card";
+    const title = document.createElement("h3");
+    title.textContent = playlist.name;
 
-  const title = document.createElement("h3");
-  title.textContent = playlist.name;
+    const count = document.createElement("p");
+    count.className = "playlist-count";
+    count.textContent = playlist.items.length + (playlist.items.length === 1 ? " track" : " tracks");
 
-  const count = document.createElement("p");
-  count.className = "playlist-count";
-  count.textContent = playlist.items.length + (playlist.items.length === 1 ? " track" : " tracks");
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "secondary";
+    deleteButton.textContent = "Delete playlist";
+    deleteButton.addEventListener("click", () => deletePlaylist(playlist.id));
 
-  const actions = document.createElement("div");
-  actions.className = "playlist-actions";
+    card.append(title, count, deleteButton);
 
-  if (playlist.items.length) {
-    const playAll = document.createElement("button");
-    playAll.type = "button";
-    playAll.textContent = "▶ Play all";
-    playAll.addEventListener("click", () => {
-      playbackQueue = playlist.items.slice();
-      currentQueueIndex = 0;
-      playVideo(playbackQueue[0]);
+    if (!playlist.items.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty";
+      empty.textContent = "This playlist is empty. Search for music and add tracks using a song's dropdown.";
+      card.append(empty);
+    }
+
+    playlist.items.forEach(video => {
+      const row = document.createElement("div");
+      row.className = "playlist-track";
+
+      const image = document.createElement("img");
+      image.src = video.thumbnail || "";
+      image.alt = "";
+      image.loading = "lazy";
+
+      const info = document.createElement("div");
+      info.className = "playlist-track-info";
+
+      const trackTitle = document.createElement("strong");
+      trackTitle.textContent = video.title;
+
+      const channel = document.createElement("small");
+      channel.textContent = video.channel;
+
+      info.append(trackTitle, channel);
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+
+      const play = document.createElement("button");
+      play.textContent = "▶ Play";
+      play.addEventListener("click", () => {
+        playbackQueue = playlist.items.slice();
+        currentQueueIndex = playbackQueue.findIndex(item => item.id === video.id);
+        playVideo(video);
+      });
+
+      const remove = document.createElement("button");
+      remove.className = "secondary";
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => removeTrackFromPlaylist(playlist.id, video.id));
+
+      actions.append(play, remove);
+      row.append(image, info, actions);
+      card.append(row);
     });
-    actions.append(playAll);
-  }
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.type = "button";
-  deleteBtn.className = "secondary";
-  deleteBtn.textContent = "Delete playlist";
-  deleteBtn.addEventListener("click", () => deletePlaylist(playlist.id));
-  actions.append(deleteBtn);
+    playlistsEl.append(card);
+  });
+}
 
-  card.append(title, count, actions);
+function renderSavedLists() {
+  renderSavedSection(libraryEl, library, "Your music library is empty. Search YouTube and tap Save.");
 
-  if (!playlist.items.length) {
-    const empty = document.createElement("p");
+  const favVideos = favourites
+    .map(id => library.find(video => video.id === id))
+    .filter(Boolean);
+
+  renderSavedSection(favouritesEl, favVideos, "No favourites yet. Tap the heart on a video you like.");
+}
+
+function renderSavedSection(container, items, emptyMessage) {
+  container.replaceChildren();
+
+  if (!items.length) {
+    const empty = document.createElement("div");
     empty.className = "empty";
-    empty.textContent = "This playlist is empty. Use a song's playlist dropdown in the search results to add tracks.";
-    card.append(empty);
+    empty.textContent = emptyMessage;
+    container.append(empty);
+    return;
   }
 
-  playlist.items.forEach(video => {
-    card.append(renderPlaylistTrack(playlist, video));
+  items.forEach(video => {
+    const row = document.createElement("div");
+    row.className = "saved";
+
+    const image = document.createElement("img");
+    image.src = video.thumbnail || "";
+    image.alt = "";
+    image.loading = "lazy";
+
+    const info = document.createElement("div");
+    info.className = "saved-info";
+
+    const title = document.createElement("strong");
+    title.textContent = video.title;
+
+    const channel = document.createElement("small");
+    channel.textContent = video.channel;
+
+    info.append(title, channel);
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const play = document.createElement("button");
+    play.textContent = "▶ Play";
+    play.addEventListener("click", () => playVideo(video));
+    actions.append(play);
+
+    if (container === libraryEl) {
+      const remove = document.createElement("button");
+      remove.className = "secondary";
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => {
+        library = library.filter(item => item.id !== video.id);
+        favourites = favourites.filter(id => id !== video.id);
+        persist();
+        renderSavedLists();
+      });
+      actions.append(remove);
+    } else {
+      const removeFav = document.createElement("button");
+      removeFav.className = "secondary";
+      removeFav.textContent = "♥ Remove";
+      removeFav.addEventListener("click", () => {
+        favourites = favourites.filter(id => id !== video.id);
+        persist();
+        renderSavedLists();
+      });
+      actions.append(removeFav);
+    }
+
+    row.append(image, info, actions);
+    container.append(row);
   });
-
-  return card;
 }
 
-function renderPlaylistTrack(playlist, video) {
-  const row = document.createElement("div");
-  row.className = "playlist-track";
-
-  const image = document.createElement("img");
-  image.alt = "";
-  image.loading = "lazy";
-  image.referrerPolicy = "no-referrer";
-  if (video.thumbnail) image.src = video.thumbnail;
-
-  const info = document.createElement("div");
-  info.className = "playlist-track-info";
-
-  const trackTitle = document.createElement("strong");
-  trackTitle.textContent = video.title;
-
-  const channel = document.createElement("small");
-  channel.textContent = video.channel;
-
-  info.append(trackTitle, channel);
-
-  const actions = document.createElement("div");
-  actions.className = "actions";
-
-  const play = document.createElement("button");
-  play.type = "button";
-  play.textContent = "▶ Play";
-  play.addEventListener("click", () => {
-    playbackQueue = playlist.items.slice();
-    playVideo(video);
-  });
-
-  const remove = document.createElement("button");
-  remove.type = "button";
-  remove.className = "secondary";
-  remove.textContent = "Remove";
-  remove.addEventListener("click", () => removeTrackFromPlaylist(playlist.id, video.id));
-
-  actions.append(play, remove);
-  row.append(image, info, actions);
-  return row;
-}
-
-/* ============================================================
-   CLEAR DATA
-   ============================================================ */
-function clearAllData() {
-  if (!window.confirm("Clear all saved songs, favourites and playlists? This cannot be undone.")) return;
-  library = [];
-  favourites = [];
-  playlists = [{ id: "playlist-african-mix", name: "African Mix", items: [] }];
-  persist();
-  renderSavedLists();
-  renderPlaylists();
-  refreshAllPlaylistPickers();
-  setPlaylistStatus("All saved data cleared. African Mix is ready again.");
-  setStatus("Saved data cleared.");
-}
-
-/* ============================================================
-   EVENT WIRING
-   ============================================================ */
 document.getElementById("createPlaylistBtn").addEventListener("click", createPlaylist);
-playlistNameInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") { e.preventDefault(); createPlaylist(); }
+
+playlistNameInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") createPlaylist();
 });
 
-document.getElementById("searchBtn").addEventListener("click", () => searchYouTube(queryInput.value));
-queryInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") searchYouTube(queryInput.value);
+document.getElementById("searchBtn").addEventListener("click", () => {
+  searchYouTube(queryInput.value);
+});
+
+queryInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") searchYouTube(queryInput.value);
 });
 
 document.querySelectorAll(".quick").forEach(button => {
@@ -1043,13 +928,14 @@ document.querySelectorAll(".quick").forEach(button => {
   });
 });
 
-loadMoreBtn.addEventListener("click", () => {
-  if (currentQuery) searchYouTube(currentQuery, { append: true });
-});
-
 document.getElementById("recommendBtn").addEventListener("click", () => {
   if (!currentVideo) return;
-  searchYouTube(currentVideo.title + " " + currentVideo.channel + " similar music", { mode: "recommend" });
+
+  searchYouTube(
+    currentVideo.title + " " + currentVideo.channel + " similar music",
+    "recommend"
+  );
+
   document.getElementById("discover").scrollIntoView({ behavior: "smooth" });
 });
 
@@ -1059,56 +945,28 @@ document.getElementById("openYoutube").addEventListener("click", () => {
 
 document.getElementById("nextBtn").addEventListener("click", () => playNextVideo(false));
 
-document.getElementById("clearDataBtn").addEventListener("click", clearAllData);
+window.onYouTubeIframeAPIReady = function() {
+  youtubeApiReady = true;
+  if (pendingVideo && !ytPlayer) createYouTubePlayer(pendingVideo);
+};
 
-// Navigation
+const youtubeIframeApi = document.createElement("script");
+youtubeIframeApi.src = "https://www.youtube.com/iframe_api";
+youtubeIframeApi.async = true;
+document.head.appendChild(youtubeIframeApi);
+
 document.querySelectorAll(".nav").forEach(button => {
   button.addEventListener("click", () => {
-    const target = document.getElementById(button.dataset.target);
-    if (target) target.scrollIntoView({ behavior: "smooth" });
+    document.querySelectorAll(".nav").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    document.getElementById(button.dataset.target).scrollIntoView({ behavior: "smooth" });
   });
 });
 
-// Active nav on scroll
-(function setupScrollSpy() {
-  const sections = ["home", "discover", "playerSection", "library", "favourites", "playlists"]
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
-
-  if (!("IntersectionObserver" in window) || !sections.length) return;
-
-  const observer = new IntersectionObserver(entries => {
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-    if (!visible.length) return;
-
-    const id = visible[0].target.id;
-    document.querySelectorAll(".nav").forEach(nav => {
-      const active = nav.dataset.target === id;
-      nav.classList.toggle("active", active);
-      if (active) nav.setAttribute("aria-current", "true");
-      else nav.removeAttribute("aria-current");
-    });
-  }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
-
-  sections.forEach(s => observer.observe(s));
-})();
-
-// Cross-tab sync
-window.addEventListener("storage", e => {
-  if (![LIBRARY_KEY, FAV_KEY, PLAYLIST_KEY].includes(e.key)) return;
-  library = readLibrary();
-  favourites = readFavourites(library);
-  playlists = readPlaylists();
-  renderSavedLists();
-  renderPlaylists();
-  refreshAllPlaylistPickers();
-});
-
-/* ============================================================
-   INITIAL RENDER
-   ============================================================ */
 renderSavedLists();
 renderPlaylists();
-updateQueueStatus
+persist();
+updateQueueStatus();
+</script>
+</body>
+</html>
