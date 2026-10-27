@@ -115,7 +115,9 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
       <div id="player"><div class="placeholder">Select a video from your search results to play it here.</div></div>
       <h3 id="playingTitle">Nothing playing yet</h3>
       <p id="playingChannel" class="muted">Your selected YouTube video will appear above.</p>
+      <p id="queueStatus" class="muted">Queue: search for music, then play a result. The next result will play automatically when supported.</p>
       <div class="actions">
+        <button id="nextBtn" class="secondary" disabled>⏭ Next track</button>
         <button id="recommendBtn" class="secondary" disabled>✨ Find similar music</button>
         <button id="openYoutube" class="secondary" disabled>Open on YouTube ↗</button>
       </div>
@@ -134,7 +136,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
   </section>
 
   <footer>
-    AfroVibe uses the YouTube Data API and official YouTube embedded player. Videos remain hosted by YouTube. Some videos may not be available for embedding. Search results depend on YouTube availability and your API quota. Saved music and favourites are stored in this browser, not synced across devices.
+    AfroVibe uses the YouTube Data API and official YouTube IFrame Player API. Videos remain hosted by YouTube. Automatic next-track playback works when the embedded player reports that a video has ended and the next video permits embedding. Search results depend on YouTube availability and your API quota. Saved music and favourites are stored in this browser, not synced across devices.
   </footer>
 </main>
 </div>
@@ -146,7 +148,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
   Do not send your key to anyone. Restrict it in Google Cloud to
   YouTube Data API v3 and your GitHub Pages website.
 */
-const API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
+const API_KEY = "PASTE_YOUR_NEW_API_KEY_HERE";
 const API_URL = "https://www.googleapis.com/youtube/v3/search";
 const LIBRARY_KEY = "afrovibe-youtube-library-v2";
 const FAV_KEY = "afrovibe-youtube-favourites-v2";
@@ -161,6 +163,11 @@ const favouritesEl = document.getElementById("favouritesList");
 let library = readArray(LIBRARY_KEY);
 let favourites = readArray(FAV_KEY);
 let currentVideo = null;
+let playbackQueue = [];
+let currentQueueIndex = -1;
+let ytPlayer = null;
+let youtubeApiReady = false;
+let pendingVideo = null;
 let busy = false;
 
 function readArray(key) {
@@ -215,8 +222,8 @@ async function searchYouTube(term, mode = "search") {
     setStatus("Type a song, artist or genre first.", true);
     return;
   }
-  if (API_KEY === "PASTE_YOUR_API_KEY_HERE" || !API_KEY.trim()) {
-    setStatus("Add your API key in the code first. Find const API_KEY near the bottom of index.html and replace PASTE_YOUR_API_KEY_HERE.", true);
+  if (API_KEY === "PASTE_YOUR_NEW_API_KEY_HERE" || !API_KEY.trim()) {
+    setStatus("Add your new YouTube API key first. Find const API_KEY near the bottom of index.html and replace PASTE_YOUR_NEW_API_KEY_HERE.", true);
     return;
   }
   if (busy) return;
@@ -250,6 +257,9 @@ async function searchYouTube(term, mode = "search") {
       return;
     }
 
+    playbackQueue = videos.slice();
+    currentQueueIndex = currentVideo ? playbackQueue.findIndex(item => item.id === currentVideo.id) : -1;
+    updateQueueStatus();
     renderVideoResults(videos);
     setStatus(mode === "recommend"
       ? "Here are some similar results for: " + q
@@ -309,24 +319,108 @@ function renderVideoResults(videos) {
   });
 }
 
-function playVideo(video) {
+function updateQueueStatus() {
+  const queueStatus = document.getElementById("queueStatus");
+  if (!playbackQueue.length) {
+    queueStatus.textContent = "Queue: no tracks loaded. Search for music to create a queue.";
+    return;
+  }
+  const position = currentQueueIndex >= 0 ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}` : `${playbackQueue.length} tracks ready`;
+  queueStatus.textContent = `Queue: ${position}. AfroVibe will try to play the next result when the current video ends.`;
+  document.getElementById("nextBtn").disabled = currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
+}
+
+function updatePlayingDetails(video) {
   currentVideo = video;
-
-  const frame = document.createElement("iframe");
-  frame.className = "player";
-  frame.title = "YouTube player: " + video.title;
-frame.src = "https://www.youtube.com/embed/" +
-  encodeURIComponent(video.id) +
-  "?autoplay=1&playsinline=1&rel=0";  frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-  frame.referrerPolicy = "strict-origin-when-cross-origin";
-  frame.allowFullscreen = true;
-
-  playerEl.replaceChildren(frame);
   document.getElementById("playingTitle").textContent = video.title;
   document.getElementById("playingChannel").textContent = video.channel;
   document.getElementById("recommendBtn").disabled = false;
   document.getElementById("openYoutube").disabled = false;
-  document.getElementById("playerSection").scrollIntoView({ behavior: "smooth", block: "start" });
+  updateQueueStatus();
+}
+
+function playVideo(video, scrollToPlayer = true) {
+  if (!video || !video.id) return;
+
+  // Keep the selected track inside the queue, including tracks played from My Music.
+  let index = playbackQueue.findIndex(item => item.id === video.id);
+  if (index === -1) {
+    playbackQueue.push(video);
+    index = playbackQueue.length - 1;
+  }
+  currentQueueIndex = index;
+  updatePlayingDetails(video);
+  pendingVideo = video;
+
+  if (youtubeApiReady && window.YT && window.YT.Player) {
+    if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
+      ytPlayer.loadVideoById({ videoId: video.id, suggestedQuality: "large" });
+      pendingVideo = null;
+    } else {
+      createYouTubePlayer(video);
+    }
+  } else {
+    playerEl.innerHTML = '<div class="placeholder">Loading the YouTube player…</div>';
+  }
+
+  if (scrollToPlayer) {
+    document.getElementById("playerSection").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function createYouTubePlayer(video) {
+  const host = document.createElement("div");
+  host.id = "youtubePlayerHost";
+  playerEl.replaceChildren(host);
+
+  ytPlayer = new YT.Player("youtubePlayerHost", {
+    width: "100%",
+    height: "100%",
+    videoId: video.id,
+    playerVars: {
+      autoplay: 1,
+      playsinline: 1,
+      rel: 0,
+      enablejsapi: 1
+    },
+    events: {
+      onReady: function(event) {
+        const targetVideo = pendingVideo;
+        pendingVideo = null;
+        if (targetVideo && targetVideo.id !== video.id) {
+          event.target.loadVideoById(targetVideo.id);
+        } else {
+          event.target.playVideo();
+        }
+      },
+      onStateChange: function(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          playNextVideo(true);
+        }
+      },
+      onError: function(event) {
+        const messages = {
+          2: "This video has an invalid ID.",
+          5: "This video could not be played in the HTML5 player.",
+          100: "This video is unavailable or private.",
+          101: "The video owner does not allow playback on other websites.",
+          150: "The video owner does not allow playback on other websites."
+        };
+        setStatus(messages[event.data] || "YouTube could not play this video. Try another result.", true);
+      }
+    }
+  });
+}
+
+function playNextVideo(automatic = false) {
+  const nextIndex = currentQueueIndex + 1;
+  if (nextIndex < 0 || nextIndex >= playbackQueue.length) {
+    updateQueueStatus();
+    if (automatic) setStatus("You've reached the end of this queue. Search for more music to continue.");
+    return;
+  }
+  currentQueueIndex = nextIndex;
+  playVideo(playbackQueue[nextIndex], false);
 }
 
 function saveVideo(video) {
@@ -446,6 +540,18 @@ document.getElementById("openYoutube").addEventListener("click", () => {
   if (currentVideo) window.open(currentVideo.url, "_blank", "noopener,noreferrer");
 });
 
+document.getElementById("nextBtn").addEventListener("click", () => playNextVideo(false));
+
+// Load YouTube's official IFrame Player API so AfroVibe can detect when a video ends.
+window.onYouTubeIframeAPIReady = function() {
+  youtubeApiReady = true;
+  if (pendingVideo && !ytPlayer) createYouTubePlayer(pendingVideo);
+};
+const youtubeIframeApi = document.createElement("script");
+youtubeIframeApi.src = "https://www.youtube.com/iframe_api";
+youtubeIframeApi.async = true;
+document.head.appendChild(youtubeIframeApi);
+
 document.querySelectorAll(".nav").forEach(button => {
   button.addEventListener("click", () => {
     document.querySelectorAll(".nav").forEach(item => item.classList.remove("active"));
@@ -455,6 +561,7 @@ document.querySelectorAll(".nav").forEach(button => {
 });
 
 renderSavedLists();
+updateQueueStatus();
 </script>
 </body>
 </html>
