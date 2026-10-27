@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AfroVibe | Discover Your Sound</title>
 <style>
-
 :root{
   --bg:#090b0a;--panel:#151815;--panel2:#242824;--purple:#1ed760;--pink:#b7ffce;
   --text:#f7f8f7;--muted:#a7afa8;--border:#303630;--sidebar:#000;
@@ -21,22 +20,27 @@ input{width:100%;padding:14px 16px;border:1px solid #414841;border-radius:999px;
 input:focus{border-color:var(--purple);box-shadow:0 0 0 2px #1ed76030}
 .app{display:flex;min-height:100vh;gap:8px;padding:8px 8px 24px}
 aside{width:235px;flex-shrink:0;background:var(--sidebar);border-radius:12px;padding:25px 14px;align-self:stretch}
-.logo{font-size:27px;font-weight:900;letter-spacing:-1px;margin:0 0 32px;padding-left:10px}.logo span{color:var(--purple)}
+.logo{font-size:27px;font-weight:900;letter-spacing:-1px;margin:0 0 32px;padding-left:10px}
+.logo span{color:var(--purple)}
 .nav{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);margin:5px 0;padding:13px 12px;border-radius:8px}
 .nav.active,.nav:hover{background:#242824;color:white}
 main{flex:1;min-width:0;padding:26px clamp(16px,3vw,38px);max-width:1600px;background:linear-gradient(180deg,#202a22 0,#121612 340px,var(--bg) 620px);border-radius:12px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
-.top strong{font-size:19px}.muted{color:var(--muted);line-height:1.6}
+.top strong{font-size:19px}
+.muted{color:var(--muted);line-height:1.6}
 .hero{padding:clamp(24px,4vw,42px);border-radius:16px;background:linear-gradient(120deg,#1e5e36,#193c29 60%,#263b2c);margin-bottom:34px;position:relative;overflow:hidden}
 .hero:after{content:"♫";position:absolute;right:5%;top:0;font-size:clamp(100px,18vw,220px);line-height:1;color:#ffffff10;font-weight:900;pointer-events:none}
 .hero h1{font-size:clamp(30px,4vw,52px);letter-spacing:-1.5px;max-width:760px;margin:14px 0}
 .hero p{max-width:680px;line-height:1.7;color:#e0e9e1}
-.section{margin:34px 0}.section h2{margin:0 0 15px;font-size:24px;letter-spacing:-.5px}
+.section{margin:34px 0}
+.section h2{margin:0 0 15px;font-size:24px;letter-spacing:-.5px}
 .panel{background:#171b17;border:1px solid #2c332d;border-radius:16px;padding:20px}
-.searchrow{display:flex;gap:10px}.searchrow input{flex:1;min-width:0}
+.searchrow{display:flex;gap:10px}
+.searchrow input{flex:1;min-width:0}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .secondary{background:#272d28;color:white;border:1px solid #3a433b}
-#status{font-size:14px;color:var(--muted);margin-top:14px;overflow-wrap:anywhere}#status.error{color:#ff9cae}
+#status{font-size:14px;color:var(--muted);margin-top:14px;overflow-wrap:anywhere}
+#status.error{color:#ff9cae}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 .video{background:#191d19;border:1px solid #292f2a;border-radius:12px;overflow:hidden;min-width:0;padding:10px;transition:background .2s,transform .2s}
 .video:hover{background:#252b25;transform:translateY(-3px)}
@@ -44,36 +48,53 @@ main{flex:1;min-width:0;padding:26px clamp(16px,3vw,38px);max-width:1600px;backg
 .video-body{padding:12px 3px 3px}
 .video h3{font-size:15px;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere}
 .channel{font-size:13px;color:var(--muted);margin-bottom:12px}
-.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button{font-size:12px;padding:9px 12px}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{font-size:12px;padding:9px 12px}
+.result-playlist-select{width:100%;min-width:0;padding:9px 10px;border:1px solid #414841;border-radius:9px;background:#242824;color:white;font:inherit;font-size:12px;margin-bottom:7px}
 .player{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#080a08;display:block;max-height:560px}
 .placeholder{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;background:#080a08;border-radius:12px;color:var(--muted)}
 .list{display:grid;gap:12px}
 .saved{display:flex;align-items:center;gap:14px;background:#171b17;border:1px solid #2c332d;padding:12px;border-radius:12px}
 .saved img{width:125px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
-.saved-info{flex:1;min-width:0}.saved-info strong{display:block;overflow-wrap:anywhere}.saved-info small{display:block;color:var(--muted);margin-top:5px}
+.saved-info{flex:1;min-width:0}
+.saved-info strong{display:block;overflow-wrap:anywhere}
+.saved-info small{display:block;color:var(--muted);margin-top:5px}
 .empty{color:var(--muted);padding:12px 0}
-
 .playlist-tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,260px) auto;gap:10px;align-items:center}
 .playlist-tools input,.playlist-tools select{width:100%;padding:13px 15px;border:1px solid #414841;border-radius:999px;background:#242824;color:white;outline:none}
 .playlist-tools select:focus,.playlist-tools input:focus{border-color:var(--purple)}
 .playlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:16px}
 .playlist-card{background:#171b17;border:1px solid #2c332d;border-radius:14px;padding:16px;min-width:0}
-.playlist-card h3{margin:0 0 6px;overflow-wrap:anywhere}.playlist-card .playlist-count{font-size:13px;color:var(--muted);margin:0 0 12px}
+.playlist-card h3{margin:0 0 6px;overflow-wrap:anywhere}
+.playlist-card .playlist-count{font-size:13px;color:var(--muted);margin:0 0 12px}
 .playlist-track{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #303630;min-width:0}
 .playlist-track img{width:76px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;flex-shrink:0}
-.playlist-track-info{flex:1;min-width:0}.playlist-track-info strong{display:block;font-size:13px;line-height:1.35;overflow-wrap:anywhere}.playlist-track-info small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-.playlist-track .actions{flex-shrink:0}.playlist-track .actions button{padding:8px 10px}
-@media(max-width:760px){.playlist-tools{grid-template-columns:1fr}.playlist-track{flex-wrap:wrap}.playlist-track .actions{width:100%}}
-
+.playlist-track-info{flex:1;min-width:0}
+.playlist-track-info strong{display:block;font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+.playlist-track-info small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.playlist-track .actions{flex-shrink:0}
+.playlist-track .actions button{padding:8px 10px}
+@media(max-width:760px){
+ .playlist-tools{grid-template-columns:1fr}
+ .playlist-track{flex-wrap:wrap}
+ .playlist-track .actions{width:100%}
+}
 footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(--muted);font-size:12px;line-height:1.7}
 @media(max-width:760px){
- .app{display:block;padding:0}.app>aside{width:100%;padding:16px;border-radius:0;border-bottom:1px solid var(--border)}
- .logo{margin-bottom:12px}.navs{display:flex;flex-wrap:wrap;gap:4px}.nav{width:auto;margin:0;padding:10px}
- main{padding:20px 14px;border-radius:0}.top{align-items:stretch;flex-direction:column}.hero{padding:24px}
- .searchrow{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
- .saved{flex-wrap:wrap}.saved img{width:90px}.saved .actions{width:100%}
+ .app{display:block;padding:0}
+ .app>aside{width:100%;padding:16px;border-radius:0;border-bottom:1px solid var(--border)}
+ .logo{margin-bottom:12px}
+ .navs{display:flex;flex-wrap:wrap;gap:4px}
+ .nav{width:auto;margin:0;padding:10px}
+ main{padding:20px 14px;border-radius:0}
+ .top{align-items:stretch;flex-direction:column}
+ .hero{padding:24px}
+ .searchrow{flex-direction:column}
+ .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+ .saved{flex-wrap:wrap}
+ .saved img{width:90px}
+ .saved .actions{width:100%}
 }
-
 </style>
 </head>
 <body>
@@ -150,7 +171,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
 
   <section class="section" id="playlists">
     <h2>▤ Your Playlists</h2>
-    <p class="muted">Create your own collections, then add songs from search results. Playlists are saved in this browser.</p>
+    <p class="muted">African Mix is ready by default. For each search result, choose the playlist you want from that song’s own dropdown. Playlists are saved in this browser.</p>
     <div class="panel">
       <div class="playlist-tools">
         <input id="playlistName" type="text" maxlength="60" placeholder="Playlist name, e.g. Kenyan Hits" aria-label="New playlist name">
@@ -159,7 +180,7 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
         </select>
         <button id="createPlaylistBtn">＋ Create playlist</button>
       </div>
-      <p id="playlistStatus" class="muted" role="status" aria-live="polite">Create a playlist, then use “＋ Playlist” on a search result.</p>
+      <p id="playlistStatus" class="muted" role="status" aria-live="polite">African Mix is ready. For each song, choose its destination from that song’s dropdown, then click “＋ Add to selected playlist.”</p>
     </div>
     <div id="playlistsList" class="playlist-grid"></div>
   </section>
@@ -172,10 +193,9 @@ footer{border-top:1px solid #303630;padding-top:18px;margin-top:44px;color:var(-
 
 <script>
 /*
-  IMPORTANT:
-  Replace PASTE_YOUR_NEW_API_KEY_HERE with a newly created YouTube Data API key.
-  Do not send your key to anyone. Restrict it in Google Cloud to
-  YouTube Data API v3 and your GitHub Pages website.
+  DEVELOPMENT NOTE:
+  This API key is included as requested. Before public launch, replace it with
+  a fresh key restricted to YouTube Data API v3 and your GitHub Pages referrer.
 */
 const API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
 const API_URL = "https://www.googleapis.com/youtube/v3/search";
@@ -197,6 +217,14 @@ const playlistStatusEl = document.getElementById("playlistStatus");
 let library = readArray(LIBRARY_KEY);
 let favourites = readArray(FAV_KEY);
 let playlists = readArray(PLAYLIST_KEY);
+
+// Ensure African Mix exists and make it the default for each song.
+let africanMix = playlists.find(playlist => playlist.name.toLowerCase() === "african mix");
+if (!africanMix) {
+  africanMix = { id: "playlist-african-mix", name: "African Mix", items: [] };
+  playlists.unshift(africanMix);
+}
+
 let currentVideo = null;
 let playbackQueue = [];
 let currentQueueIndex = -1;
@@ -258,8 +286,8 @@ async function searchYouTube(term, mode = "search") {
     setStatus("Type a song, artist or genre first.", true);
     return;
   }
-  if (API_KEY === "PASTE_YOUR_NEW_API_KEY_HERE" || !API_KEY.trim()) {
-    setStatus("Add your new YouTube API key first. Find const API_KEY near the bottom of index.html and replace PASTE_YOUR_NEW_API_KEY_HERE.", true);
+  if (!API_KEY.trim()) {
+    setStatus("Add your YouTube API key first.", true);
     return;
   }
   if (busy) return;
@@ -348,13 +376,34 @@ function renderVideoResults(videos) {
     heart.setAttribute("aria-label", "Toggle favourite");
     heart.addEventListener("click", () => toggleFavourite(video));
 
+    // Each song gets its own independent playlist dropdown.
+    const playlistPicker = document.createElement("select");
+    playlistPicker.className = "result-playlist-select";
+    playlistPicker.setAttribute("aria-label", "Choose which playlist to add this song to");
+
+    const choosePlaylist = document.createElement("option");
+    choosePlaylist.value = "";
+    choosePlaylist.textContent = "Choose playlist for this song…";
+    playlistPicker.append(choosePlaylist);
+
+    playlists.forEach(playlist => {
+      const option = document.createElement("option");
+      option.value = playlist.id;
+      option.textContent = playlist.name;
+      playlistPicker.append(option);
+    });
+
+    // African Mix is preselected, but the user can choose another playlist.
+    const defaultPlaylist = playlists.find(playlist => playlist.name.toLowerCase() === "african mix");
+    if (defaultPlaylist) playlistPicker.value = defaultPlaylist.id;
+
     const addToPlaylist = document.createElement("button");
     addToPlaylist.className = "secondary";
-    addToPlaylist.textContent = "＋ Playlist";
-    addToPlaylist.addEventListener("click", () => addVideoToSelectedPlaylist(video));
+    addToPlaylist.textContent = "＋ Add to selected playlist";
+    addToPlaylist.addEventListener("click", () => addVideoToPlaylist(video, playlistPicker.value));
 
-    actions.append(play, save, heart, addToPlaylist);
-    body.append(title, channel, actions);
+    actions.append(play, save, heart);
+    body.append(title, channel, playlistPicker, addToPlaylist, actions);
     card.append(image, body);
     resultsEl.append(card);
   });
@@ -366,9 +415,14 @@ function updateQueueStatus() {
     queueStatus.textContent = "Queue: no tracks loaded. Search for music to create a queue.";
     return;
   }
-  const position = currentQueueIndex >= 0 ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}` : `${playbackQueue.length} tracks ready`;
+
+  const position = currentQueueIndex >= 0
+    ? `Track ${currentQueueIndex + 1} of ${playbackQueue.length}`
+    : `${playbackQueue.length} tracks ready`;
+
   queueStatus.textContent = `Queue: ${position}. AfroVibe will try to play the next result when the current video ends.`;
-  document.getElementById("nextBtn").disabled = currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
+  document.getElementById("nextBtn").disabled =
+    currentQueueIndex < 0 || currentQueueIndex >= playbackQueue.length - 1;
 }
 
 function updatePlayingDetails(video) {
@@ -383,12 +437,12 @@ function updatePlayingDetails(video) {
 function playVideo(video, scrollToPlayer = true) {
   if (!video || !video.id) return;
 
-  // Keep the selected track inside the queue, including tracks played from My Music.
   let index = playbackQueue.findIndex(item => item.id === video.id);
   if (index === -1) {
     playbackQueue.push(video);
     index = playbackQueue.length - 1;
   }
+
   currentQueueIndex = index;
   updatePlayingDetails(video);
   pendingVideo = video;
@@ -460,6 +514,7 @@ function playNextVideo(automatic = false) {
     if (automatic) setStatus("You've reached the end of this queue. Search for more music to continue.");
     return;
   }
+
   currentQueueIndex = nextIndex;
   playVideo(playbackQueue[nextIndex], false);
 }
@@ -490,45 +545,49 @@ function setPlaylistStatus(message, error = false) {
 
 function createPlaylist() {
   const name = playlistNameInput.value.trim();
+
   if (!name) {
     setPlaylistStatus("Type a name for your playlist first.", true);
     playlistNameInput.focus();
     return;
   }
+
   if (playlists.some(playlist => playlist.name.toLowerCase() === name.toLowerCase())) {
     setPlaylistStatus("A playlist with that name already exists. Choose another name.", true);
     return;
   }
+
   const playlist = {
     id: "playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
     name,
     items: []
   };
+
   playlists.unshift(playlist);
   playlistNameInput.value = "";
   persist();
   renderPlaylists();
   playlistSelect.value = playlist.id;
-  setPlaylistStatus('Created "' + playlist.name + '". Choose it above, then add songs using the ＋ Playlist button.');
+  setPlaylistStatus('Created "' + playlist.name + '". You can now choose it from a song’s dropdown.');
 }
 
-function addVideoToSelectedPlaylist(video) {
-  const playlistId = playlistSelect.value;
+function addVideoToPlaylist(video, playlistId) {
   if (!playlistId) {
-    setPlaylistStatus("Create a playlist and choose it in the dropdown before adding songs.", true);
-    document.getElementById("playlists").scrollIntoView({ behavior: "smooth", block: "start" });
-    playlistNameInput.focus();
+    setPlaylistStatus("Choose the playlist for this song from its dropdown.", true);
     return;
   }
+
   const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) {
     setPlaylistStatus("Choose a playlist first.", true);
     return;
   }
+
   if (playlist.items.some(item => item.id === video.id)) {
     setPlaylistStatus('"' + video.title + '" is already in "' + playlist.name + '".');
     return;
   }
+
   playlist.items.push(video);
   persist();
   renderPlaylists();
@@ -538,6 +597,7 @@ function addVideoToSelectedPlaylist(video) {
 function removeTrackFromPlaylist(playlistId, videoId) {
   const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) return;
+
   playlist.items = playlist.items.filter(item => item.id !== videoId);
   persist();
   renderPlaylists();
@@ -547,7 +607,9 @@ function removeTrackFromPlaylist(playlistId, videoId) {
 function deletePlaylist(playlistId) {
   const playlist = playlists.find(item => item.id === playlistId);
   if (!playlist) return;
+
   if (!window.confirm('Delete the playlist "' + playlist.name + '"? This does not delete your saved songs.')) return;
+
   playlists = playlists.filter(item => item.id !== playlistId);
   persist();
   renderPlaylists();
@@ -557,9 +619,10 @@ function deletePlaylist(playlistId) {
 function renderPlaylists() {
   const previousSelection = playlistSelect.value;
   playlistSelect.replaceChildren();
+
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
-  defaultOption.textContent = playlists.length ? "Choose a playlist for new songs" : "Create a playlist first";
+  defaultOption.textContent = playlists.length ? "Choose a playlist" : "Create a playlist first";
   playlistSelect.append(defaultOption);
 
   playlists.forEach(playlist => {
@@ -568,13 +631,17 @@ function renderPlaylists() {
     option.textContent = playlist.name;
     playlistSelect.append(option);
   });
-  if (playlists.some(playlist => playlist.id === previousSelection)) playlistSelect.value = previousSelection;
+
+  if (playlists.some(playlist => playlist.id === previousSelection)) {
+    playlistSelect.value = previousSelection;
+  }
 
   playlistsEl.replaceChildren();
+
   if (!playlists.length) {
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.textContent = "No playlists yet. Create one above, for example Kenyan Hits, Amapiano or Gospel.";
+    empty.textContent = "No playlists yet. Create a playlist above to start collecting music.";
     playlistsEl.append(empty);
     return;
   }
@@ -582,40 +649,51 @@ function renderPlaylists() {
   playlists.forEach(playlist => {
     const card = document.createElement("article");
     card.className = "playlist-card";
+
     const title = document.createElement("h3");
     title.textContent = playlist.name;
+
     const count = document.createElement("p");
     count.className = "playlist-count";
     count.textContent = playlist.items.length + (playlist.items.length === 1 ? " track" : " tracks");
+
     const deleteButton = document.createElement("button");
     deleteButton.className = "secondary";
     deleteButton.textContent = "Delete playlist";
     deleteButton.addEventListener("click", () => deletePlaylist(playlist.id));
+
     card.append(title, count, deleteButton);
 
     if (!playlist.items.length) {
       const empty = document.createElement("p");
       empty.className = "empty";
-      empty.textContent = "This playlist is empty. Search for music and use ＋ Playlist to add tracks.";
+      empty.textContent = "This playlist is empty. Search for music and use the song’s playlist dropdown to add tracks.";
       card.append(empty);
     }
 
     playlist.items.forEach(video => {
       const row = document.createElement("div");
       row.className = "playlist-track";
+
       const image = document.createElement("img");
       image.src = video.thumbnail || "";
       image.alt = "";
       image.loading = "lazy";
+
       const info = document.createElement("div");
       info.className = "playlist-track-info";
+
       const trackTitle = document.createElement("strong");
       trackTitle.textContent = video.title;
+
       const channel = document.createElement("small");
       channel.textContent = video.channel;
+
       info.append(trackTitle, channel);
+
       const actions = document.createElement("div");
       actions.className = "actions";
+
       const play = document.createElement("button");
       play.textContent = "▶ Play";
       play.addEventListener("click", () => {
@@ -623,26 +701,31 @@ function renderPlaylists() {
         currentQueueIndex = playbackQueue.findIndex(item => item.id === video.id);
         playVideo(video);
       });
+
       const remove = document.createElement("button");
       remove.className = "secondary";
       remove.textContent = "Remove";
       remove.addEventListener("click", () => removeTrackFromPlaylist(playlist.id, video.id));
+
       actions.append(play, remove);
       row.append(image, info, actions);
       card.append(row);
     });
+
     playlistsEl.append(card);
   });
 }
 
 function renderSavedLists() {
   renderSavedSection(libraryEl, library, "Your music library is empty. Search YouTube and tap Save.");
+
   const favVideos = favourites.map(id => library.find(video => video.id === id)).filter(Boolean);
   renderSavedSection(favouritesEl, favVideos, "No favourites yet. Tap the heart on a video you like.");
 }
 
 function renderSavedSection(container, items, emptyMessage) {
   container.replaceChildren();
+
   if (!items.length) {
     const empty = document.createElement("div");
     empty.className = "empty";
@@ -708,6 +791,7 @@ function renderSavedSection(container, items, emptyMessage) {
 }
 
 document.getElementById("createPlaylistBtn").addEventListener("click", createPlaylist);
+
 playlistNameInput.addEventListener("keydown", event => {
   if (event.key === "Enter") createPlaylist();
 });
@@ -729,7 +813,6 @@ document.querySelectorAll(".quick").forEach(button => {
 
 document.getElementById("recommendBtn").addEventListener("click", () => {
   if (!currentVideo) return;
-  // One new YouTube search request for related videos.
   searchYouTube(currentVideo.title + " " + currentVideo.channel + " similar music", "recommend");
   document.getElementById("discover").scrollIntoView({ behavior: "smooth" });
 });
@@ -745,6 +828,7 @@ window.onYouTubeIframeAPIReady = function() {
   youtubeApiReady = true;
   if (pendingVideo && !ytPlayer) createYouTubePlayer(pendingVideo);
 };
+
 const youtubeIframeApi = document.createElement("script");
 youtubeIframeApi.src = "https://www.youtube.com/iframe_api";
 youtubeIframeApi.async = true;
@@ -759,6 +843,8 @@ document.querySelectorAll(".nav").forEach(button => {
 });
 
 renderSavedLists();
+renderPlaylists();
+persist();
 updateQueueStatus();
 </script>
 </body>
