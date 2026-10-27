@@ -1,17 +1,138 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0e0b">
 <title>AfroVibe - African Music</title>
 <style>
-:root{--bg:#0b0e0b;--panel:#141914;--panel2:#1c231c;--green:#20df79;--text:#f5f7f5;--muted:#a2ada2;--border:#303a30}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;padding:24px 24px 40px 260px;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}.sidebar{position:fixed;z-index:1100;top:0;left:0;bottom:0;width:235px;padding:24px 15px;background:#101510;border-right:1px solid var(--border);overflow-y:auto}.logo{display:flex;align-items:center;gap:10px;padding:8px 10px 28px;color:var(--green);font-size:25px;font-weight:800;cursor:pointer}.logo-icon{display:grid;place-items:center;width:39px;height:39px;background:var(--green);color:#061008;border-radius:12px}.nav-label{margin:10px 12px;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.nav-button{display:flex;align-items:center;gap:13px;width:100%;padding:13px 14px;margin:5px 0;background:transparent;color:#c6cec6;border:0;border-radius:10px;text-align:left;font-size:15px}.nav-button:hover,.nav-button.active{color:var(--green);background:#202a20}.nav-icon{width:22px;text-align:center;font-size:19px}.connection-dot{width:8px;height:8px;display:inline-block;flex-shrink:0;border-radius:50%;background:#888;margin-left:auto}.connection-dot.online{background:#20df79}main{width:100%;max-width:1200px;margin:0 auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}.topbar h2{margin:0;font-size:18px}.api-status{color:var(--muted);font-size:12px}.hero{padding:36px;margin-bottom:30px;background:radial-gradient(circle at 85% 20%,#1c673b 0,transparent 38%),linear-gradient(130deg,#19281b,#111711 70%);border:1px solid #2a432d;border-radius:22px}.hero-tag{color:var(--green);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}.hero h1{max-width:650px;margin:15px 0;font-size:clamp(30px,5vw,51px);line-height:1.1}.hero p{max-width:550px;color:#c1ccc1;line-height:1.7}.section{margin:30px 0;scroll-margin-top:20px}.section h2{margin:0 0 17px;font-size:23px}.section-description{margin-top:-7px;margin-bottom:20px;color:var(--muted);line-height:1.6}.search-row{display:flex;gap:10px;width:100%;margin:20px 0}.search-row input{min-width:0;flex:1;padding:15px 17px;color:white;background:var(--panel);border:1px solid var(--border);border-radius:12px}.primary-button{padding:13px 20px;background:var(--green);color:#061008;border:none;border-radius:11px;font-weight:bold}.primary-button:hover{background:#53f49a}.secondary-button{padding:9px 12px;color:var(--text);background:#242d24;border:1px solid var(--border);border-radius:9px}.secondary-button:hover{border-color:var(--green)}.song-list{display:flex;flex-direction:column;gap:10px}.song-item{display:flex;align-items:center;gap:15px;min-width:0;padding:12px;background:var(--panel);border:1px solid var(--border);border-radius:13px}.song-item:hover{border-color:#527252}.song-thumb{flex-shrink:0;width:130px;aspect-ratio:16/9;object-fit:cover;background:#222;border-radius:8px;cursor:pointer}.song-info{flex:1;min-width:0}.song-title{margin:0 0 8px;font-size:15px;line-height:1.4;overflow-wrap:anywhere}.song-channel{margin:0 0 10px;color:var(--muted);font-size:12px}.song-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px}.icon-button{padding:8px 10px;color:white;background:#252d25;border:1px solid var(--border);border-radius:8px}.icon-button:hover,.icon-button.favourited{color:var(--green);border-color:var(--green)}.empty-message{padding:25px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:12px;line-height:1.7}.message{margin:15px 0;color:var(--muted);line-height:1.6}.notice{padding:12px 15px;margin:15px 0;color:#d9ead9;background:#172419;border:1px solid #2b4a30;border-radius:10px;line-height:1.6}.hidden{display:none!important}.search-area{position:relative;margin:20px 0}.search-area .search-row{margin:0}.search-suggestions{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:900;padding:8px;background:#151c15;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 30px #0009}.suggestion-button{display:block;width:100%;padding:11px 12px;text-align:left;color:var(--text);background:transparent;border:0;border-radius:8px}.suggestion-button:hover{background:#253125;color:var(--green)}.suggestion-heading{padding:7px 10px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase}.popular-searches{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}.search-chip{padding:9px 12px;background:#192219;color:#d9e6d9;border:1px solid var(--border);border-radius:20px;font-size:13px}.search-chip:hover{color:var(--green);border-color:var(--green)}.search-tools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0}.search-tools .message{margin:0}#loadMoreButton{margin:18px 0}
+:root{--bg:#0b0e0b;--panel:#141914;--panel2:#1c231c;--green:#20df79;--text:#f5f7f5;--muted:#a2ada2;--border:#303a30}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:24px 24px 40px 260px;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.sidebar{position:fixed;z-index:1100;top:0;left:0;bottom:0;width:235px;padding:24px 15px;background:#101510;border-right:1px solid var(--border);overflow-y:auto}
+.logo{display:flex;align-items:center;gap:10px;padding:8px 10px 28px;color:var(--green);font-size:25px;font-weight:800;cursor:pointer}
+.logo-icon{display:grid;place-items:center;width:39px;height:39px;background:var(--green);color:#061008;border-radius:12px}
+.nav-label{margin:10px 12px;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.nav-button{display:flex;align-items:center;gap:13px;width:100%;padding:13px 14px;margin:5px 0;background:transparent;color:#c6cec6;border:0;border-radius:10px;text-align:left;font-size:15px}
+.nav-button:hover,.nav-button.active{color:var(--green);background:#202a20}
+.nav-icon{width:22px;text-align:center;font-size:19px}
+.connection-dot{width:8px;height:8px;display:inline-block;flex-shrink:0;border-radius:50%;background:#888;margin-left:auto}
+.connection-dot.online{background:#20df79}
+main{width:100%;max-width:1200px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
+.topbar h2{margin:0;font-size:18px}
+.api-status{color:var(--muted);font-size:12px}
+.hero{padding:36px;margin-bottom:30px;background:radial-gradient(circle at 85% 20%,#1c673b 0,transparent 38%),linear-gradient(130deg,#19281b,#111711 70%);border:1px solid #2a432d;border-radius:22px}
+.hero-tag{color:var(--green);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+.hero h1{max-width:650px;margin:15px 0;font-size:clamp(30px,5vw,51px);line-height:1.1}
+.hero p{max-width:550px;color:#c1ccc1;line-height:1.7}
+.section{margin:30px 0;scroll-margin-top:20px}
+.section h2{margin:0 0 17px;font-size:23px}
+.section-description{margin-top:-7px;margin-bottom:20px;color:var(--muted);line-height:1.6}
+.search-row{display:flex;gap:10px;width:100%;margin:20px 0}
+.search-row input{min-width:0;flex:1;padding:15px 17px;color:white;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+.primary-button{padding:13px 20px;background:var(--green);color:#061008;border:none;border-radius:11px;font-weight:bold}
+.primary-button:hover{background:#53f49a}
+.secondary-button{padding:9px 12px;color:var(--text);background:#242d24;border:1px solid var(--border);border-radius:9px}
+.secondary-button:hover{border-color:var(--green)}
+.song-list{display:flex;flex-direction:column;gap:10px}
+.song-item{display:flex;align-items:center;gap:15px;min-width:0;padding:12px;background:var(--panel);border:1px solid var(--border);border-radius:13px}
+.song-item:hover{border-color:#527252}
+.song-thumb{flex-shrink:0;width:130px;aspect-ratio:16/9;object-fit:cover;background:#222;border-radius:8px;cursor:pointer}
+.song-info{flex:1;min-width:0}
+.song-title{margin:0 0 8px;font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+.song-channel{margin:0 0 10px;color:var(--muted);font-size:12px}
+.song-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+.icon-button{padding:8px 10px;color:white;background:#252d25;border:1px solid var(--border);border-radius:8px}
+.icon-button:hover,.icon-button.favourited{color:var(--green);border-color:var(--green)}
+.empty-message{padding:25px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:12px;line-height:1.7}
+.message{margin:15px 0;color:var(--muted);line-height:1.6}
+.notice{padding:12px 15px;margin:15px 0;color:#d9ead9;background:#172419;border:1px solid #2b4a30;border-radius:10px;line-height:1.6}
+.hidden{display:none!important}
+.search-area{position:relative;margin:20px 0}
+.search-area .search-row{margin:0}
+.search-suggestions{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:900;padding:8px;background:#151c15;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 30px #0009}
+.suggestion-button{display:block;width:100%;padding:11px 12px;text-align:left;color:var(--text);background:transparent;border:0;border-radius:8px}
+.suggestion-button:hover{background:#253125;color:var(--green)}
+.suggestion-heading{padding:7px 10px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.popular-searches{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+.search-chip{padding:9px 12px;background:#192219;color:#d9e6d9;border:1px solid var(--border);border-radius:20px;font-size:13px}
+.search-chip:hover{color:var(--green);border-color:var(--green)}
+.search-tools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0}
+.search-tools .message{margin:0}
+#loadMoreButton{margin:18px 0}
 
-/* Fixed centered player and queue */
-#playerSection{display:none;position:fixed;z-index:1000;left:50%;transform:translateX(-50%);bottom:16px;width:min(760px,calc(100% - 290px));max-height:82vh;overflow-y:auto;padding:14px 18px;margin:0;background:rgba(10,14,10,.98);border:1px solid #394639;border-radius:18px;box-shadow:0 8px 35px #000b;backdrop-filter:blur(12px)}#playerSection.player-visible{display:block}.player-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.player-track-info{min-width:0}.player-track-title{margin:0 0 4px;font-size:14px;font-weight:bold;overflow-wrap:anywhere}.player-track-channel{margin:0;color:var(--muted);font-size:12px}.player-close{flex-shrink:0;width:32px;height:32px;color:white;background:#283028;border:1px solid var(--border);border-radius:50%}.player-close:hover{color:var(--green)}.player-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;align-items:center;gap:15px}.player-controls{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:9px}.control-button{display:grid;place-items:center;width:42px;height:42px;color:white;background:#242d24;border:1px solid var(--border);border-radius:50%;font-size:17px}.control-button:hover{color:var(--green);border-color:var(--green)}.control-button.play-control{width:49px;height:49px;color:#071108;background:var(--green);font-size:19px}.control-button.autoplay-on{color:var(--green);border-color:var(--green)}.queue-label{margin-top:8px;color:var(--muted);font-size:11px;text-align:center}#queueCount{color:var(--green)}.player-video{width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:10px}.player-video iframe{display:block;width:100%;height:100%;border:0}.up-next-panel{margin-top:12px;border-top:1px solid var(--border);padding-top:10px}.up-next-heading{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:12px}.up-next-heading strong{color:var(--text)}#upNextCount{color:var(--green)}.up-next-list{max-height:130px;overflow-y:auto}.up-next-item{display:flex;align-items:center;gap:9px;padding:7px;border-radius:8px}.up-next-item:hover{background:var(--panel2)}.up-next-thumb{width:65px;aspect-ratio:16/9;object-fit:cover;border-radius:5px;flex-shrink:0}.up-next-info{flex:1;min-width:0}.up-next-title{margin:0 0 3px;font-size:12px;line-height:1.4;overflow-wrap:anywhere}.up-next-channel{margin:0;color:var(--muted);font-size:10px}.up-next-play,.up-next-remove{padding:6px 8px;background:#242d24;color:white;border:1px solid var(--border);border-radius:7px;font-size:11px}.up-next-play:hover,.up-next-remove:hover{border-color:var(--green);color:var(--green)}.up-next-empty{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.footer{padding:25px 0;color:var(--muted);font-size:12px;line-height:1.7;text-align:center}#connectionPrompt{position:fixed;z-index:2000;left:50%;bottom:20px;transform:translateX(-50%);width:min(420px,calc(100% - 24px));padding:15px;background:#172419;border:1px solid #2b4a30;border-radius:12px;box-shadow:0 8px 30px #0009}#connectionPrompt p{margin:0 0 10px;line-height:1.5;font-size:14px}#connectionPrompt button{margin-right:7px;margin-top:4px}
+/* Centered player */
+#playerSection{display:none;position:fixed;z-index:1000;left:50%;transform:translateX(-50%);bottom:16px;width:min(760px,calc(100% - 290px));max-height:82vh;overflow-y:auto;padding:14px 18px;margin:0;background:rgba(10,14,10,.98);border:1px solid #394639;border-radius:18px;box-shadow:0 8px 35px #000b;backdrop-filter:blur(12px)}
+#playerSection.player-visible{display:block}
+.player-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.player-track-info{min-width:0}
+.player-track-title{margin:0 0 4px;font-size:14px;font-weight:bold;overflow-wrap:anywhere}
+.player-track-channel{margin:0;color:var(--muted);font-size:12px}
+.player-close{flex-shrink:0;width:32px;height:32px;color:white;background:#283028;border:1px solid var(--border);border-radius:50%}
+.player-close:hover{color:var(--green)}
+.player-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;align-items:center;gap:15px}
+.player-controls{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:9px}
+.control-button{display:grid;place-items:center;width:42px;height:42px;color:white;background:#242d24;border:1px solid var(--border);border-radius:50%;font-size:17px}
+.control-button:hover{color:var(--green);border-color:var(--green)}
+.control-button.play-control{width:49px;height:49px;color:#071108;background:var(--green);font-size:19px}
+.control-button.autoplay-on{color:var(--green);border-color:var(--green)}
+.queue-label{margin-top:8px;color:var(--muted);font-size:11px;text-align:center}
+#queueCount{color:var(--green)}
+.player-video{width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:10px}
+.player-video iframe{display:block;width:100%;height:100%;border:0}
 
-@media(max-width:760px){body{padding:16px 12px 100px}.sidebar{top:auto;right:0;bottom:0;width:100%;height:70px;padding:5px 4px;border-right:0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;overflow-x:auto;overflow-y:hidden}.logo,.nav-label{display:none}.nav-button{position:relative;flex:1;min-width:48px;max-width:100px;height:58px;padding:5px 2px;margin:0;display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:10px;text-align:center}.nav-icon{font-size:19px}.connection-dot{position:absolute;width:7px;height:7px;margin:0;top:5px;right:9px}.topbar{margin-bottom:18px}.hero{padding:25px 20px}.search-row{flex-direction:column}.search-row .primary-button{width:100%}.song-item{gap:10px;padding:9px}.song-thumb{width:100px}.song-title{font-size:13px}#playerSection{bottom:78px;width:calc(100% - 16px);max-height:65vh;padding:10px}.player-layout{grid-template-columns:1fr;gap:8px}.player-video{max-width:260px;margin:0 auto}.player-controls{gap:7px}.control-button{width:38px;height:38px}.control-button.play-control{width:44px;height:44px}.up-next-list{max-height:90px}.footer{padding-bottom:85px}}
+/* Queue: played songs remain visible and grey */
+.up-next-panel{margin-top:12px;border-top:1px solid var(--border);padding-top:10px}
+.up-next-heading{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:12px}
+#upNextCount{color:var(--green)}
+.up-next-list{max-height:180px;overflow-y:auto}
+.up-next-item{display:flex;align-items:center;gap:9px;padding:7px;border-radius:8px;border:1px solid transparent}
+.up-next-item:hover{background:var(--panel2)}
+.up-next-item.played{opacity:.43;filter:grayscale(1)}
+.up-next-item.current{border-color:var(--green);background:#172419;opacity:1;filter:none}
+.up-next-item.current .up-next-title{color:var(--green)}
+.up-next-thumb{width:65px;aspect-ratio:16/9;object-fit:cover;border-radius:5px;flex-shrink:0}
+.up-next-info{flex:1;min-width:0}
+.up-next-title{margin:0 0 3px;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+.up-next-channel{margin:0;color:var(--muted);font-size:10px}
+.up-next-play,.up-next-remove{padding:6px 8px;background:#242d24;color:white;border:1px solid var(--border);border-radius:7px;font-size:11px}
+.up-next-play:hover,.up-next-remove:hover{border-color:var(--green);color:var(--green)}
+.up-next-play:disabled{color:var(--green);opacity:.8;cursor:default}
+.up-next-empty{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.footer{padding:25px 0;color:var(--muted);font-size:12px;line-height:1.7;text-align:center}
+#connectionPrompt{position:fixed;z-index:2000;left:50%;bottom:20px;transform:translateX(-50%);width:min(420px,calc(100% - 24px));padding:15px;background:#172419;border:1px solid #2b4a30;border-radius:12px;box-shadow:0 8px 30px #0009}
+#connectionPrompt p{margin:0 0 10px;line-height:1.5;font-size:14px}
+#connectionPrompt button{margin-right:7px;margin-top:4px}
+
+@media(max-width:760px){
+body{padding:16px 12px 100px}
+.sidebar{top:auto;right:0;bottom:0;width:100%;height:70px;padding:5px 4px;border-right:0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;overflow-x:auto;overflow-y:hidden}
+.logo,.nav-label{display:none}
+.nav-button{position:relative;flex:1;min-width:48px;max-width:100px;height:58px;padding:5px 2px;margin:0;display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:10px;text-align:center}
+.nav-icon{font-size:19px}
+.connection-dot{position:absolute;width:7px;height:7px;margin:0;top:5px;right:9px}
+.topbar{margin-bottom:18px}
+.hero{padding:25px 20px}
+.search-row{flex-direction:column}
+.search-row .primary-button{width:100%}
+.song-item{gap:10px;padding:9px}
+.song-thumb{width:100px}
+.song-title{font-size:13px}
+#playerSection{bottom:78px;width:calc(100% - 16px);max-height:65vh;padding:10px}
+.player-layout{grid-template-columns:1fr;gap:8px}
+.player-video{max-width:260px;margin:0 auto}
+.player-controls{gap:7px}
+.control-button{width:38px;height:38px}
+.control-button.play-control{width:44px;height:44px}
+.up-next-list{max-height:100px}
+.footer{padding-bottom:85px}
+}
 </style>
 </head>
 <body>
@@ -22,7 +143,7 @@
 <button class="nav-button active" data-section="home" onclick="showSection('home')"><span class="nav-icon">⌂</span><span>Home</span></button>
 <button class="nav-button" data-section="discover" onclick="showSection('discover')"><span class="nav-icon">🔎</span><span>Discover</span></button>
 <button class="nav-button" data-section="playerSection" onclick="showSection('playerSection')"><span class="nav-icon">▶</span><span>Player</span></button>
-<button class="nav-button" data-section="downloads" onclick="showSection('downloads')"><span class="nav-icon">⬇</span><span>Downloads</span><span id="connectionDot" class="connection-dot offline" aria-label="Offline"></span></button>
+<button class="nav-button" data-section="downloads" onclick="showSection('downloads')"><span class="nav-icon">⬇</span><span>Downloads</span><span id="connectionDot" class="connection-dot offline"></span></button>
 <button class="nav-button" data-section="myMusic" onclick="showSection('myMusic')"><span class="nav-icon">♫</span><span>My Music</span></button>
 <button class="nav-button" data-section="favourites" onclick="showSection('favourites')"><span class="nav-icon">♥</span><span>Favourites</span></button>
 <button class="nav-button" data-section="playlists" onclick="showSection('playlists')"><span class="nav-icon">▤</span><span>Playlists</span></button>
@@ -67,7 +188,7 @@
 <section id="downloads" class="section hidden">
 <h2>⬇ Downloads</h2>
 <p class="section-description">Your saved offline music and downloadable files.</p>
-<div class="notice">Saved information and authorized audio files can be available offline. YouTube streams themselves cannot be saved as audio or video files by this website.</div>
+<div class="notice">YouTube streams cannot be saved as audio or video files by this website.</div>
 <div class="notice">Choose audio files that you own or are authorized to download. They will be saved in this browser for offline playback.</div>
 <label for="offlineFile" class="secondary-button">Choose an audio file</label>
 <input id="offlineFile" type="file" accept="audio/*" multiple class="hidden">
@@ -108,136 +229,1085 @@
 <p id="playerTitle" class="player-track-title">No song selected</p>
 <p id="playerChannel" class="player-track-channel">Choose a song to start listening</p>
 </div>
-<button class="player-close" type="button" title="Close player" aria-label="Close player" onclick="closePlayer()">×</button>
+<button class="player-close" type="button" onclick="closePlayer()">×</button>
 </div>
 <div class="player-layout">
 <div>
 <div class="player-controls">
-<button class="control-button" type="button" title="Previous song" onclick="playPrevious()">⏮</button>
-<button id="playPauseButton" class="control-button play-control" type="button" title="Play or pause" onclick="togglePlayback()">▶</button>
-<button class="control-button" type="button" title="Next song" onclick="playNext()">⏭</button>
-<button class="control-button" type="button" title="Add to favourites" onclick="favouriteCurrent()">♥</button>
-<button id="autoplayButton" class="control-button autoplay-on" type="button" title="Autoplay ON — click to disable" aria-pressed="true" onclick="toggleAutoplay()">A✓</button>
+<button class="control-button" type="button" onclick="playPrevious()" title="Previous song">⏮</button>
+<button id="playPauseButton" class="control-button play-control" type="button" onclick="togglePlayback()">▶</button>
+<button class="control-button" type="button" onclick="playNext()" title="Next song">⏭</button>
+<button class="control-button" type="button" onclick="favouriteCurrent()" title="Add to favourites">♥</button>
+<button id="autoplayButton" class="control-button autoplay-on" type="button" onclick="toggleAutoplay()">A✓</button>
 </div>
 <div class="queue-label">Queue: <span id="queueCount">0 songs</span></div>
 </div>
 <div class="player-video"><div id="youtubePlayer"></div></div>
 </div>
 <div class="up-next-panel">
-<div class="up-next-heading"><strong>♫ Up Next</strong><span id="upNextCount">0 songs waiting</span></div>
+<div class="up-next-heading"><strong>♫ Queue</strong><span id="upNextCount">0 songs</span></div>
 <div id="upNextList" class="up-next-list"><p class="up-next-empty">Play a song to build your queue.</p></div>
 </div>
 </section>
 
-<div id="connectionPrompt" class="hidden" role="status">
+<div id="connectionPrompt" class="hidden">
 <p id="connectionPromptText">Your connection is unavailable. Open Downloads to listen to saved files.</p>
 <button class="primary-button" onclick="openDownloads()">Open Downloads</button>
 <button class="secondary-button" onclick="dismissConnectionPrompt()">Dismiss</button>
 </div>
 
 <script>
-// Add your restricted YouTube Data API v3 key between these quotes.
-const YOUTUBE_API_KEY = "AIzaSyAfFkDPpTTRPbW04Dc9xdcdZEBInkXyVGs";
+/* Add your YouTube Data API v3 key between these quotes. */
+const YOUTUBE_API_KEY = "";
 
-const STORAGE_KEYS={favourites:"afrovibe_favourites_v1",library:"afrovibe_library_v1",playlists:"afrovibe_playlists_v1",recent:"afrovibe_recent_v1"};
-const POPULAR_SEARCHES=["Kenyan music hits","Gengetone Kenya","Kenyan old school hits","Kenyan reggae mix","African music mix","Amapiano mix","Afrobeats 2026","Bongo Flava","Tanzanian music","Ugandan music","Dancehall mix","Reggae mixtape","Gospel music Kenya","Ohangla mix","Luo music","Kikuyu music","Afro house mix","African old school","Kenyan DJ mix","African love songs","Nigerian music","South African music","Kapuka hits","African party mix"];
+const STORAGE_KEYS = {
+  favourites: "afrovibe_favourites_v1",
+  library: "afrovibe_library_v1",
+  playlists: "afrovibe_playlists_v1",
+  recent: "afrovibe_recent_v1"
+};
 
-let searchResults=[],queue=[],currentIndex=-1,ytPlayer=null,playerReady=false,lastPlayedId=null,connectionPromptDismissed=false,nextPageToken=null,currentSearchQuery="",searchRequestNumber=0,isLoadingMore=false,queueFromSearch=false,queueSearchQuery="",queueLoadingMore=false,queueSkipInProgress=false,offlineDB=null;
-let autoplayEnabled=localStorage.getItem("afrovibe_autoplay")!=="false";
+const POPULAR_SEARCHES = [
+  "Kenyan music hits","Gengetone Kenya","Kenyan old school hits",
+  "Kenyan reggae mix","African music mix","Amapiano mix",
+  "Afrobeats 2026","Bongo Flava","Tanzanian music","Ugandan music",
+  "Dancehall mix","Reggae mixtape","Gospel music Kenya","Ohangla mix",
+  "Luo music","Kikuyu music","Afro house mix","African old school",
+  "Kenyan DJ mix","African love songs","Nigerian music",
+  "South African music","Kapuka hits","African party mix"
+];
 
-function loadStorage(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return v===null?fallback:v}catch(e){return fallback}}
-function saveStorage(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch(e){console.warn("Could not save browser data",e)}}
+let searchResults = [];
+let queue = [];
+let currentIndex = -1;
+let ytPlayer = null;
+let playerReady = false;
+let lastPlayedId = null;
+let connectionPromptDismissed = false;
+let nextPageToken = null;
+let currentSearchQuery = "";
+let searchRequestNumber = 0;
+let isLoadingMore = false;
+let queueFromSearch = false;
+let queueSearchQuery = "";
+let queueLoadingMore = false;
+let queueSkipInProgress = false;
+let offlineDB = null;
 
-let favourites=loadStorage(STORAGE_KEYS.favourites,[]),library=loadStorage(STORAGE_KEYS.library,[]),playlists=loadStorage(STORAGE_KEYS.playlists,[]),recentSongs=loadStorage(STORAGE_KEYS.recent,[]);
+let autoplayEnabled = localStorage.getItem("afrovibe_autoplay") !== "false";
 
-function showSection(id){["home","discover","downloads","myMusic","favourites","playlists"].forEach(x=>{const el=document.getElementById(x);if(el)el.classList.toggle("hidden",x!==id)});document.querySelectorAll(".nav-button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(id==="playerSection"){if(document.getElementById("playerSection").classList.contains("player-visible"))document.getElementById("playerSection").scrollIntoView({behavior:"smooth",block:"end"});else{showSection("discover");document.getElementById("searchInput").focus()}return}if(id==="downloads")renderDownloads();if(id==="myMusic")renderLibrary();if(id==="favourites")renderFavourites();if(id==="playlists")renderPlaylists();window.scrollTo({top:0,behavior:"smooth"})}
+function loadStorage(key, fallback) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key));
+    return value === null ? fallback : value;
+  } catch (error) {
+    return fallback;
+  }
+}
 
-function openDownloads(){dismissConnectionPrompt();showSection("downloads")}
-function dismissConnectionPrompt(){document.getElementById("connectionPrompt").classList.add("hidden");connectionPromptDismissed=true}
-function showConnectionPrompt(msg){if(connectionPromptDismissed)return;document.getElementById("connectionPromptText").textContent=msg;document.getElementById("connectionPrompt").classList.remove("hidden")}
-function updateConnectionDot(){const dot=document.getElementById("connectionDot"),online=navigator.onLine;dot.classList.toggle("online",online);dot.classList.toggle("offline",!online);dot.setAttribute("aria-label",online?"Online":"Offline");dot.title=online?"Online":"Offline";if(!online)showConnectionPrompt("You are offline. Open Downloads to listen to audio files saved on this device.");else dismissConnectionPrompt()}
+function saveStorage(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.warn("Could not save browser data", error);
+  }
+}
 
-window.addEventListener("online",()=>{connectionPromptDismissed=false;updateConnectionDot()});
-window.addEventListener("offline",()=>{connectionPromptDismissed=false;updateConnectionDot()});
-function monitorSlowConnection(){if(!navigator.onLine||!navigator.connection)return;const c=navigator.connection;if(["slow-2g","2g"].includes(c.effectiveType)||c.saveData)showConnectionPrompt("Your connection may be slow. Switch to Downloads to use files saved on this device.")};if(navigator.connection?.addEventListener)navigator.connection.addEventListener("change",monitorSlowConnection);
+let favourites = loadStorage(STORAGE_KEYS.favourites, []);
+let library = loadStorage(STORAGE_KEYS.library, []);
+let playlists = loadStorage(STORAGE_KEYS.playlists, []);
+let recentSongs = loadStorage(STORAGE_KEYS.recent, []);
 
-function normaliseSong(s){return{id:s.id,title:s.title||"Untitled video",channel:s.channel||"YouTube",thumbnail:s.thumbnail||"https://placehold.co/320x180/151915/20df79?text=AfroVibe",url:"https://www.youtube.com/watch?v="+encodeURIComponent(s.id)}}
-function isFavourite(id){return favourites.some(s=>s.id===id)}
-function isInLibrary(id){return library.some(s=>s.id===id)}
+function showSection(id) {
+  if (id === "playerSection") {
+    if (document.getElementById("playerSection").classList.contains("player-visible")) {
+      document.getElementById("playerSection").scrollIntoView({behavior:"smooth",block:"end"});
+    } else {
+      showSection("discover");
+      document.getElementById("searchInput").focus();
+    }
+    return;
+  }
 
-function addToLibrary(song){const clean=normaliseSong(song);if(!isInLibrary(clean.id)){library.unshift(clean);saveStorage(STORAGE_KEYS.library,library);renderLibrary();return true}return false}
-function toggleFavourite(song){const s=normaliseSong(song);favourites=isFavourite(s.id)?favourites.filter(x=>x.id!==s.id):[s,...favourites];saveStorage(STORAGE_KEYS.favourites,favourites);renderFavourites();renderLibrary();renderRecent();renderSearchResults();renderPlaylists()}
-function favouriteCurrent(){const s=getCurrentSong();if(!s){alert("Select a song first.");return}toggleFavourite(s)}
+  ["home","discover","downloads","myMusic","favourites","playlists"].forEach(sectionId => {
+    document.getElementById(sectionId).classList.toggle("hidden", sectionId !== id);
+  });
 
-function getCurrentSong(){return currentIndex<0||currentIndex>=queue.length?null:queue[currentIndex]}
-function setPlayerVisible(v){document.getElementById("playerSection").classList.toggle("player-visible",v)}
-function updateAutoplayButton(){const b=document.getElementById("autoplayButton");b.classList.toggle("autoplay-on",autoplayEnabled);b.textContent=autoplayEnabled?"A✓":"A×";b.title=autoplayEnabled?"Autoplay ON — click to disable":"Autoplay OFF — click to enable";b.setAttribute("aria-pressed",String(autoplayEnabled));b.setAttribute("aria-label",autoplayEnabled?"Turn autoplay off":"Turn autoplay on")}
-function toggleAutoplay(){autoplayEnabled=!autoplayEnabled;localStorage.setItem("afrovibe_autoplay",String(autoplayEnabled));updateAutoplayButton()}
+  document.querySelectorAll(".nav-button").forEach(button => {
+    button.classList.toggle("active", button.dataset.section === id);
+  });
 
-function updateQueueCount(){document.getElementById("queueCount").textContent=queue.length+(queue.length===1?" song":" songs");renderUpNext()}
+  if (id === "downloads") renderDownloads();
+  if (id === "myMusic") renderLibrary();
+  if (id === "favourites") renderFavourites();
+  if (id === "playlists") renderPlaylists();
 
-function renderUpNext(){const list=document.getElementById("upNextList"),count=document.getElementById("upNextCount");if(!list||!count)return;const upcoming=queue.slice(currentIndex+1);count.textContent=upcoming.length+(upcoming.length===1?" song waiting":" songs waiting");list.innerHTML="";if(!upcoming.length){const p=document.createElement("p");p.className="up-next-empty";p.textContent=queueLoadingMore?"Finding more songs...":"No more songs queued yet. Play a search result or load more music.";list.append(p);return}upcoming.forEach(song=>{const idx=queue.findIndex(x=>x.id===song.id),row=document.createElement("div");row.className="up-next-item";const img=document.createElement("img");img.className="up-next-thumb";img.src=song.thumbnail;img.alt="";img.loading="lazy";const info=document.createElement("div");info.className="up-next-info";const title=document.createElement("p");title.className="up-next-title";title.textContent=song.title;const channel=document.createElement("p");channel.className="up-next-channel";channel.textContent=song.channel;const play=document.createElement("button");play.className="up-next-play";play.textContent="Play";play.type="button";play.addEventListener("click",()=>startQueueSong(idx));const remove=document.createElement("button");remove.className="up-next-remove";remove.textContent="×";remove.type="button";remove.title="Remove from queue";remove.addEventListener("click",()=>removeFromQueue(song.id));info.append(title,channel);row.append(img,info,play,remove);list.append(row)})}
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 
-function recordSongPlayed(song){recentSongs=recentSongs.filter(x=>x.id!==song.id);recentSongs.unshift(song);recentSongs=recentSongs.slice(0,20);saveStorage(STORAGE_KEYS.recent,recentSongs);addToLibrary(song);renderRecent();renderSearchResults();const key="afrovibe_play_count_"+song.id;localStorage.setItem(key,String(Number(localStorage.getItem(key)||0)+1))}
+function openDownloads() {
+  dismissConnectionPrompt();
+  showSection("downloads");
+}
 
-function startQueueSong(index){if(index<0||index>=queue.length)return;currentIndex=index;const song=normaliseSong(queue[index]);queue[index]=song;queueSkipInProgress=false;setPlayerVisible(true);document.getElementById("playerTitle").textContent=song.title;document.getElementById("playerChannel").textContent=song.channel;document.getElementById("playPauseButton").textContent="▶";if(playerReady&&ytPlayer)ytPlayer.loadVideoById(song.id);else lastPlayedId=song.id;recordSongPlayed(song);updateQueueCount()}
+function dismissConnectionPrompt() {
+  document.getElementById("connectionPrompt").classList.add("hidden");
+  connectionPromptDismissed = true;
+}
 
-function playVideo(song,scrollToPlayer=false){if(!song?.id)return;song=normaliseSong(song);const si=searchResults.findIndex(x=>x.id===song.id);if(si!==-1){queue=searchResults.map(normaliseSong);currentIndex=si;queueFromSearch=true;queueSearchQuery=currentSearchQuery}else{const qi=queue.findIndex(x=>x.id===song.id);if(qi!==-1){startQueueSong(qi);if(scrollToPlayer)document.getElementById("playerSection").scrollIntoView({behavior:"smooth",block:"end"});return}queue=[song];currentIndex=0;queueFromSearch=false;queueSearchQuery=""}startQueueSong(currentIndex);if(scrollToPlayer)document.getElementById("playerSection").scrollIntoView({behavior:"smooth",block:"end"})}
+function showConnectionPrompt(message) {
+  if (connectionPromptDismissed) return;
+  document.getElementById("connectionPromptText").textContent = message;
+  document.getElementById("connectionPrompt").classList.remove("hidden");
+}
 
-function removeFromQueue(id){const i=queue.findIndex(s=>s.id===id);if(i<0)return;if(i===currentIndex){alert("The song currently playing cannot be removed.");return}queue.splice(i,1);if(i<currentIndex)currentIndex--;updateQueueCount()}
+function updateConnectionDot() {
+  const dot = document.getElementById("connectionDot");
+  dot.classList.toggle("online", navigator.onLine);
+  dot.classList.toggle("offline", !navigator.onLine);
+  dot.title = navigator.onLine ? "Online" : "Offline";
 
-async function playNext(){if(!queue.length)return;if(currentIndex<queue.length-1){startQueueSong(currentIndex+1);return}if(queueFromSearch&&queueSearchQuery===currentSearchQuery&&nextPageToken&&searchResults.length<50&&!queueLoadingMore&&navigator.onLine){queueLoadingMore=true;renderUpNext();const oldId=getCurrentSong()?.id;try{await searchYouTube(queueSearchQuery,true);const ids=new Set(queue.map(s=>s.id));queue.push(...searchResults.map(normaliseSong).filter(s=>!ids.has(s.id)));if(oldId)currentIndex=queue.findIndex(s=>s.id===oldId);if(currentIndex<queue.length-1&&autoplayEnabled)startQueueSong(currentIndex+1);else if(currentIndex>=queue.length-1)document.getElementById("playerChannel").textContent="No more results are available. Search for more music."}catch(e){console.warn("Could not load more songs",e)}finally{queueLoadingMore=false;updateQueueCount()}return}if(ytPlayer&&playerReady)ytPlayer.stopVideo();document.getElementById("playerChannel").textContent="Queue finished. Search for more music to keep listening.";updateQueueCount()}
+  if (!navigator.onLine) {
+    showConnectionPrompt("You are offline. Open Downloads to listen to audio files saved on this device.");
+  } else {
+    dismissConnectionPrompt();
+  }
+}
 
-function playPrevious(){if(!queue.length)return;if(currentIndex>0)startQueueSong(currentIndex-1);else if(ytPlayer&&playerReady){ytPlayer.seekTo(0,true);ytPlayer.playVideo()}}
-function togglePlayback(){if(!playerReady||!ytPlayer){alert("Please select a song and wait for the player to load.");return}if(ytPlayer.getPlayerState()===YT.PlayerState.PLAYING)ytPlayer.pauseVideo();else ytPlayer.playVideo()}
-function closePlayer(){if(ytPlayer&&playerReady)ytPlayer.stopVideo();setPlayerVisible(false)}
+window.addEventListener("online", () => {
+  connectionPromptDismissed = false;
+  updateConnectionDot();
+});
 
-function renderSongList(id,songs,emptyText){const c=document.getElementById(id);c.innerHTML="";if(!songs.length){const e=document.createElement("div");e.className="empty-message";e.textContent=emptyText;c.append(e);return}songs.forEach(s=>c.append(createSongCard(s)))}
+window.addEventListener("offline", () => {
+  connectionPromptDismissed = false;
+  updateConnectionDot();
+});
 
-function createSongCard(song){song=normaliseSong(song);const card=document.createElement("article");card.className="song-item";const img=document.createElement("img");img.className="song-thumb";img.src=song.thumbnail;img.alt="Thumbnail for "+song.title;img.loading="lazy";img.addEventListener("click",()=>playVideo(song));const info=document.createElement("div");info.className="song-info";const title=document.createElement("h3");title.className="song-title";title.textContent=song.title;const channel=document.createElement("p");channel.className="song-channel";channel.textContent=song.channel;const actions=document.createElement("div");actions.className="song-actions";const play=document.createElement("button");play.className="primary-button";play.type="button";play.textContent="▶ Play";play.addEventListener("click",()=>playVideo(song));const fav=document.createElement("button");fav.className="icon-button"+(isFavourite(song.id)?" favourited":"");fav.type="button";fav.textContent=isFavourite(song.id)?"♥ Saved":"♡ Favourite";fav.addEventListener("click",()=>toggleFavourite(song));const save=document.createElement("button");save.className="icon-button";save.type="button";save.textContent=isInLibrary(song.id)?"✓ Saved":"+ My Music";save.addEventListener("click",()=>{if(addToLibrary(song))save.textContent="✓ Saved"});const pl=document.createElement("button");pl.className="icon-button";pl.type="button";pl.textContent="+ Playlist";pl.addEventListener("click",()=>addSongToPlaylist(song));actions.append(play,fav,save,pl);info.append(title,channel,actions);card.append(img,info);return card}
+function normaliseSong(song) {
+  return {
+    id: song.id,
+    title: song.title || "Untitled video",
+    channel: song.channel || "YouTube",
+    thumbnail: song.thumbnail || "https://placehold.co/320x180/151915/20df79?text=AfroVibe",
+    url: "https://www.youtube.com/watch?v=" + encodeURIComponent(song.id)
+  };
+}
 
-function renderSearchResults(){renderSongList("searchResults",searchResults,"No search results yet.");document.getElementById("resultCount").textContent=searchResults.length?searchResults.length+" results loaded":"";const b=document.getElementById("loadMoreButton"),can=Boolean(nextPageToken)&&searchResults.length<50;b.classList.toggle("hidden",!can);b.disabled=isLoadingMore;b.textContent=isLoadingMore?"Loading...":"Load More Results"}
+function isFavourite(id) {
+  return favourites.some(song => song.id === id);
+}
 
-function renderLibrary(){renderSongList("myMusicList",library,"Your saved music will appear here.")}
-function renderFavourites(){renderSongList("favouriteList",favourites,"You have not added any favourites yet.")}
-function renderRecent(){renderSongList("recentSongs",recentSongs.slice(0,5),"Songs you play will appear here.")}
+function isInLibrary(id) {
+  return library.some(song => song.id === id);
+}
 
-function renderPlaylists(){const c=document.getElementById("playlistList");c.innerHTML="";if(!playlists.length){c.innerHTML='<div class="empty-message">You have not created a playlist yet. Use the form above to create one.</div>';return}playlists.forEach(p=>{const wrap=document.createElement("section");wrap.className="section";const row=document.createElement("div");row.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:10px";const h=document.createElement("h2");h.textContent=p.name;const del=document.createElement("button");del.className="secondary-button";del.textContent="Delete playlist";del.addEventListener("click",()=>{if(confirm('Delete playlist "'+p.name+'"?')){playlists=playlists.filter(x=>x.id!==p.id);saveStorage(STORAGE_KEYS.playlists,playlists);renderPlaylists()}});row.append(h,del);wrap.append(row);const songs=document.createElement("div");songs.className="song-list";if(!p.songs.length)songs.innerHTML='<div class="empty-message">This playlist is empty. Add songs from Discover.</div>';else p.songs.forEach(s=>{const card=createSongCard(s),remove=document.createElement("button");remove.className="icon-button";remove.textContent="Remove from playlist";remove.addEventListener("click",()=>{p.songs=p.songs.filter(x=>x.id!==s.id);saveStorage(STORAGE_KEYS.playlists,playlists);renderPlaylists()});card.querySelector(".song-actions").append(remove);songs.append(card)});wrap.append(songs);c.append(wrap)})}
+function addToLibrary(song) {
+  const clean = normaliseSong(song);
+  if (!isInLibrary(clean.id)) {
+    library.unshift(clean);
+    saveStorage(STORAGE_KEYS.library, library);
+    renderLibrary();
+    return true;
+  }
+  return false;
+}
 
-function addSongToPlaylist(song){if(!playlists.length){alert("Create a playlist first in the Playlists section.");showSection("playlists");return}const choices=playlists.map((p,i)=>(i+1)+". "+p.name).join("\n"),answer=prompt("Type the number of the playlist:\n\n"+choices);if(answer===null)return;const i=Number(answer)-1;if(!Number.isInteger(i)||i<0||i>=playlists.length){alert("That playlist number is not valid.");return}const p=playlists[i],clean=normaliseSong(song);if(!p.songs.some(x=>x.id===clean.id)){p.songs.push(clean);saveStorage(STORAGE_KEYS.playlists,playlists);renderPlaylists();alert("Song added to "+p.name+".")}else alert("That song is already in this playlist.")}
+function toggleFavourite(song) {
+  const clean = normaliseSong(song);
+  favourites = isFavourite(clean.id)
+    ? favourites.filter(item => item.id !== clean.id)
+    : [clean, ...favourites];
 
-document.getElementById("playlistForm").addEventListener("submit",e=>{e.preventDefault();const input=document.getElementById("playlistName"),name=input.value.trim();if(!name)return;if(playlists.some(p=>p.name.toLowerCase()===name.toLowerCase())){document.getElementById("playlistMessage").textContent="A playlist with that name already exists.";return}playlists.push({id:String(Date.now())+Math.random().toString(16).slice(2),name,songs:[]});saveStorage(STORAGE_KEYS.playlists,playlists);input.value="";document.getElementById("playlistMessage").textContent='Playlist "'+name+'" created.';renderPlaylists()});
+  saveStorage(STORAGE_KEYS.favourites, favourites);
+  renderFavourites();
+  renderLibrary();
+  renderRecent();
+  renderSearchResults();
+  renderPlaylists();
+}
 
-function renderPopularSearches(){const c=document.getElementById("popularSearches");c.innerHTML="";POPULAR_SEARCHES.slice(0,12).forEach(q=>{const b=document.createElement("button");b.type="button";b.className="search-chip";b.textContent=q;b.addEventListener("click",()=>{document.getElementById("searchInput").value=q;hideSearchSuggestions();searchYouTube(q)});c.append(b)})}
+function favouriteCurrent() {
+  const song = getCurrentSong();
+  if (!song) {
+    alert("Select a song first.");
+    return;
+  }
+  toggleFavourite(song);
+}
 
-function hideSearchSuggestions(){document.getElementById("searchSuggestions").classList.add("hidden")}
-function showSearchSuggestions(){const input=document.getElementById("searchInput"),box=document.getElementById("searchSuggestions"),q=input.value.trim().toLowerCase();box.innerHTML="";const heading=document.createElement("div");heading.className="suggestion-heading";heading.textContent=q?"Search suggestions":"Popular searches";box.append(heading);let results=q?POPULAR_SEARCHES.filter(x=>x.toLowerCase().includes(q)).slice(0,7):POPULAR_SEARCHES.slice(0,6);if(q&&!results.some(x=>x.toLowerCase()===q))results.unshift(input.value.trim());results.slice(0,8).forEach(item=>{const b=document.createElement("button");b.type="button";b.className="suggestion-button";b.textContent="⌕  "+item;b.addEventListener("click",()=>selectSuggestion(item));box.append(b)});box.classList.remove("hidden")}
-function selectSuggestion(q){document.getElementById("searchInput").value=q;hideSearchSuggestions();searchYouTube(q)}
-document.getElementById("searchInput").addEventListener("input",showSearchSuggestions);
-document.getElementById("searchInput").addEventListener("focus",showSearchSuggestions);
-document.addEventListener("click",e=>{const a=document.querySelector(".search-area");if(a&&!a.contains(e.target))hideSearchSuggestions()});
+function getCurrentSong() {
+  return currentIndex < 0 || currentIndex >= queue.length
+    ? null
+    : queue[currentIndex];
+}
 
-async function searchYouTube(query,loadMore=false){const msg=document.getElementById("searchMessage"),container=document.getElementById("searchResults"),more=document.getElementById("loadMoreButton");if(!YOUTUBE_API_KEY||YOUTUBE_API_KEY==="YOUR_API_KEY"){msg.textContent="Add your YouTube Data API v3 key in the YOUTUBE_API_KEY line in the code.";return}if(!navigator.onLine){msg.textContent="You are offline. You can listen to audio files saved in Downloads.";return}if(loadMore&&(isLoadingMore||!nextPageToken||searchResults.length>=50))return;if(!loadMore){currentSearchQuery=query.trim();searchResults=[];nextPageToken=null;searchRequestNumber++;container.innerHTML="";more.classList.add("hidden")}const request=searchRequestNumber;isLoadingMore=true;more.disabled=true;more.textContent="Loading...";msg.textContent=loadMore?"Finding more songs and mixes...":"Searching YouTube for "+currentSearchQuery+"...";try{const params=new URLSearchParams({part:"snippet",type:"video",videoEmbeddable:"true",maxResults:"20",q:currentSearchQuery,key:YOUTUBE_API_KEY});if(loadMore&&nextPageToken)params.set("pageToken",nextPageToken);const response=await fetch("https://www.googleapis.com/youtube/v3/search?"+params),data=await response.json();if(request!==searchRequestNumber)return;if(!response.ok)throw new Error(data.error?.message||"YouTube search failed.");const ids=new Set(searchResults.map(s=>s.id));const found=(data.items||[]).filter(x=>x.id?.videoId&&!ids.has(x.id.videoId)).map(x=>({id:x.id.videoId,title:x.snippet.title,channel:x.snippet.channelTitle,thumbnail:(x.snippet.thumbnails.medium||x.snippet.thumbnails.high||x.snippet.thumbnails.default).url}));searchResults=searchResults.concat(found.slice(0,50-searchResults.length));nextPageToken=data.nextPageToken||null;if(searchResults.length>=50)nextPageToken=null;renderSearchResults();msg.textContent=searchResults.length?"Found "+searchResults.length+' results for "'+currentSearchQuery+'". Select Play to listen.':"No results found. Try another search or choose a recommendation.";if(searchResults.length>=50)msg.textContent+=" Maximum of 50 results loaded.";else if(!nextPageToken&&searchResults.length)msg.textContent+=" No more results are available."}catch(e){if(request===searchRequestNumber)msg.textContent="Could not search YouTube: "+e.message+". Check your API key, API quota, restrictions and internet connection."}finally{if(request===searchRequestNumber){isLoadingMore=false;renderSearchResults()}}}
+function setPlayerVisible(visible) {
+  document.getElementById("playerSection").classList.toggle("player-visible", visible);
+}
 
-document.getElementById("searchForm").addEventListener("submit",e=>{e.preventDefault();const q=document.getElementById("searchInput").value.trim();hideSearchSuggestions();if(q)searchYouTube(q)});
-document.getElementById("loadMoreButton").addEventListener("click",()=>searchYouTube(currentSearchQuery,true));
+function updateAutoplayButton() {
+  const button = document.getElementById("autoplayButton");
+  button.classList.toggle("autoplay-on", autoplayEnabled);
+  button.textContent = autoplayEnabled ? "A✓" : "A×";
+  button.title = autoplayEnabled ? "Autoplay ON — click to disable" : "Autoplay OFF — click to enable";
+  button.setAttribute("aria-pressed", String(autoplayEnabled));
+}
 
-function onYouTubeIframeAPIReady(){ytPlayer=new YT.Player("youtubePlayer",{width:"100%",height:"100%",videoId:"",playerVars:{playsinline:1,rel:0},events:{onReady:()=>{playerReady=true;if(lastPlayedId){const id=lastPlayedId;lastPlayedId=null;ytPlayer.loadVideoById(id)}},onStateChange:event=>{if(event.data===YT.PlayerState.ENDED&&autoplayEnabled)playNext();document.getElementById("playPauseButton").textContent=event.data===YT.PlayerState.PLAYING?"Ⅱ":"▶"},onError:event=>{console.warn("YouTube player error",event.data);document.getElementById("playerChannel").textContent="This video cannot play here. Trying the next song...";if(autoplayEnabled&&!queueSkipInProgress){queueSkipInProgress=true;setTimeout(()=>playNext(),800)}}}})}
+function toggleAutoplay() {
+  autoplayEnabled = !autoplayEnabled;
+  localStorage.setItem("afrovibe_autoplay", String(autoplayEnabled));
+  updateAutoplayButton();
+}
 
-function loadYouTubePlayerAPI(){if(document.getElementById("youtube-iframe-api"))return;const s=document.createElement("script");s.id="youtube-iframe-api";s.src="https://www.youtube.com/iframe_api";s.async=true;document.head.appendChild(s)}
+/* All queue entries remain visible.
+   Earlier entries are greyed out; the current entry is highlighted. */
+function updateQueueCount() {
+  document.getElementById("queueCount").textContent =
+    queue.length + (queue.length === 1 ? " song" : " songs");
+  renderUpNext();
+}
 
-/* Save user-owned/authorized audio files in browser storage for offline playback. */
-function openOfflineDB(){return new Promise((resolve,reject)=>{if(!("indexedDB"in window)){reject(new Error("Offline storage is not supported"));return}const r=indexedDB.open("AfroVibeOfflineFiles",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("audio"))r.result.createObjectStore("audio",{keyPath:"id"})};r.onsuccess=()=>{offlineDB=r.result;resolve(offlineDB)};r.onerror=()=>reject(r.error)})}
+function renderUpNext() {
+  const list = document.getElementById("upNextList");
+  const count = document.getElementById("upNextCount");
 
-async function saveOfflineFile(file){const db=await openOfflineDB(),record={id:"local-"+Date.now()+"-"+Math.random().toString(16).slice(2),title:file.name,type:file.type||"audio/mpeg",size:file.size,blob:file,savedAt:Date.now()};return new Promise((resolve,reject)=>{const t=db.transaction("audio","readwrite");t.objectStore("audio").put(record);t.oncomplete=()=>resolve(record);t.onerror=()=>reject(t.error)})}
+  if (!list || !count) return;
 
-async function getOfflineFiles(){const db=await openOfflineDB();return new Promise((resolve,reject)=>{const r=db.transaction("audio","readonly").objectStore("audio").getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error)})}
+  count.textContent = queue.length + (queue.length === 1 ? " song" : " songs");
+  list.innerHTML = "";
 
-async function deleteOfflineFile(id){const db=await openOfflineDB();return new Promise((resolve,reject)=>{const t=db.transaction("audio","readwrite");t.objectStore("audio").delete(id);t.oncomplete=resolve;t.onerror=()=>reject(t.error)})}
+  if (!queue.length) {
+    const empty = document.createElement("p");
+    empty.className = "up-next-empty";
+    empty.textContent = "Play a song to build your queue.";
+    list.append(empty);
+    return;
+  }
 
-async function renderDownloads(){const c=document.getElementById("downloadsList");c.innerHTML='<div class="empty-message">Loading saved files...</div>';try{const files=(await getOfflineFiles()).sort((a,b)=>b.savedAt-a.savedAt);c.innerHTML="";if(!files.length){c.innerHTML='<div class="empty-message">No audio files saved for offline listening yet. Choose authorized audio files above.</div>';return}files.forEach(f=>{const card=document.createElement("article");card.className="song-item";const info=document.createElement("div");info.className="song-info";const title=document.createElement("h3");title.className="song-title";title.textContent=f.title;const detail=document.createElement("p");detail.className="song-channel";detail.textContent="Saved offline · "+(f.size/1048576).toFixed(2)+" MB";const audio=document.createElement("audio");audio.controls=true;audio.preload="none";audio.style.width="100%";audio.style.marginTop="8px";audio.src=URL.createObjectURL(f.blob);const del=document.createElement("button");del.className="icon-button";del.textContent="Delete download";del.addEventListener("click",async()=>{if(confirm("Delete this offline file?")){await deleteOfflineFile(f.id);renderDownloads()}});info.append(title,detail,audio,del);card.append(info);c.append(card)})}catch(e){c.innerHTML='<div class="empty-message">Offline storage is unavailable in this browser.</div>'}}
+  queue.forEach((song, index) => {
+    const row = document.createElement("div");
+    const played = index < currentIndex;
+    const current = index === currentIndex;
 
-document.getElementById("offlineFile").addEventListener("change",async e=>{const files=Array.from(e.target.files||[]),msg=document.getElementById("offlineFileMessage");if(!files.length)return;try{let n=0;for(const f of files){if(f.type.startsWith("audio/")){await saveOfflineFile(f);n++}}msg.textContent=n+" audio file(s) saved for offline listening.";renderDownloads()}catch(err){msg.textContent="Could not save files. Your browser may be out of storage."}e.target.value=""});
+    row.className = "up-next-item" +
+      (played ? " played" : "") +
+      (current ? " current" : "");
+
+    const image = document.createElement("img");
+    image.className = "up-next-thumb";
+    image.src = song.thumbnail;
+    image.alt = "";
+    image.loading = "lazy";
+
+    const info = document.createElement("div");
+    info.className = "up-next-info";
+
+    const title = document.createElement("p");
+    title.className = "up-next-title";
+    title.textContent = song.title;
+
+    const channel = document.createElement("p");
+    channel.className = "up-next-channel";
+    channel.textContent = current
+      ? "▶ Now playing"
+      : played
+        ? "✓ Played"
+        : song.channel;
+
+    info.append(title, channel);
+
+    const play = document.createElement("button");
+    play.className = "up-next-play";
+    play.type = "button";
+    play.textContent = current ? "Playing" : "Play";
+    play.disabled = current;
+    play.addEventListener("click", () => startQueueSong(index));
+
+    row.append(image, info, play);
+
+    if (!played && !current) {
+      const remove = document.createElement("button");
+      remove.className = "up-next-remove";
+      remove.type = "button";
+      remove.textContent = "×";
+      remove.title = "Remove from queue";
+      remove.setAttribute("aria-label", "Remove " + song.title);
+      remove.addEventListener("click", () => removeFromQueue(song.id));
+      row.append(remove);
+    }
+
+    list.append(row);
+  });
+}
+
+function recordSongPlayed(song) {
+  recentSongs = recentSongs.filter(item => item.id !== song.id);
+  recentSongs.unshift(song);
+  recentSongs = recentSongs.slice(0, 20);
+  saveStorage(STORAGE_KEYS.recent, recentSongs);
+  addToLibrary(song);
+  renderRecent();
+  renderSearchResults();
+
+  const key = "afrovibe_play_count_" + song.id;
+  localStorage.setItem(key, String(Number(localStorage.getItem(key) || 0) + 1));
+}
+
+function startQueueSong(index) {
+  if (index < 0 || index >= queue.length) return;
+
+  currentIndex = index;
+  const song = normaliseSong(queue[index]);
+  queue[index] = song;
+  queueSkipInProgress = false;
+
+  setPlayerVisible(true);
+  document.getElementById("playerTitle").textContent = song.title;
+  document.getElementById("playerChannel").textContent = song.channel;
+  document.getElementById("playPauseButton").textContent = "▶";
+
+  if (playerReady && ytPlayer) {
+    ytPlayer.loadVideoById(song.id);
+  } else {
+    lastPlayedId = song.id;
+  }
+
+  recordSongPlayed(song);
+  updateQueueCount();
+}
+
+function playVideo(song, scrollToPlayer = false) {
+  if (!song || !song.id) return;
+
+  song = normaliseSong(song);
+  const searchIndex = searchResults.findIndex(item => item.id === song.id);
+
+  if (searchIndex !== -1) {
+    queue = searchResults.map(normaliseSong);
+    currentIndex = searchIndex;
+    queueFromSearch = true;
+    queueSearchQuery = currentSearchQuery;
+  } else {
+    const existingIndex = queue.findIndex(item => item.id === song.id);
+
+    if (existingIndex !== -1) {
+      startQueueSong(existingIndex);
+      if (scrollToPlayer) {
+        document.getElementById("playerSection").scrollIntoView({behavior:"smooth",block:"end"});
+      }
+      return;
+    }
+
+    queue = [song];
+    currentIndex = 0;
+    queueFromSearch = false;
+    queueSearchQuery = "";
+  }
+
+  startQueueSong(currentIndex);
+
+  if (scrollToPlayer) {
+    document.getElementById("playerSection").scrollIntoView({behavior:"smooth",block:"end"});
+  }
+}
+
+function removeFromQueue(id) {
+  const index = queue.findIndex(song => song.id === id);
+  if (index < 0) return;
+
+  if (index <= currentIndex) {
+    alert("Played songs and the currently playing song stay in the queue.");
+    return;
+  }
+
+  queue.splice(index, 1);
+  updateQueueCount();
+}
+
+async function playNext() {
+  if (!queue.length) return;
+
+  if (currentIndex < queue.length - 1) {
+    startQueueSong(currentIndex + 1);
+    return;
+  }
+
+  if (
+    queueFromSearch &&
+    queueSearchQuery === currentSearchQuery &&
+    nextPageToken &&
+    searchResults.length < 50 &&
+    !queueLoadingMore &&
+    navigator.onLine
+  ) {
+    queueLoadingMore = true;
+    renderUpNext();
+
+    const oldId = getCurrentSong()?.id;
+
+    try {
+      await searchYouTube(queueSearchQuery, true);
+
+      const existingIds = new Set(queue.map(song => song.id));
+      const newSongs = searchResults
+        .map(normaliseSong)
+        .filter(song => !existingIds.has(song.id));
+
+      queue.push(...newSongs);
+
+      if (oldId) {
+        currentIndex = queue.findIndex(song => song.id === oldId);
+      }
+
+      if (currentIndex < queue.length - 1 && autoplayEnabled) {
+        startQueueSong(currentIndex + 1);
+      } else if (currentIndex >= queue.length - 1) {
+        document.getElementById("playerChannel").textContent =
+          "No more results are available. Search for more music.";
+      }
+    } catch (error) {
+      console.warn("Could not load more songs", error);
+    } finally {
+      queueLoadingMore = false;
+      updateQueueCount();
+    }
+
+    return;
+  }
+
+  if (ytPlayer && playerReady) ytPlayer.stopVideo();
+
+  document.getElementById("playerChannel").textContent =
+    "Queue finished. Search for more music to keep listening.";
+
+  updateQueueCount();
+}
+
+function playPrevious() {
+  if (!queue.length) return;
+
+  if (currentIndex > 0) {
+    startQueueSong(currentIndex - 1);
+  } else if (ytPlayer && playerReady) {
+    ytPlayer.seekTo(0, true);
+    ytPlayer.playVideo();
+  }
+}
+
+function togglePlayback() {
+  if (!playerReady || !ytPlayer) {
+    alert("Please select a song and wait for the player to load.");
+    return;
+  }
+
+  if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+    ytPlayer.pauseVideo();
+  } else {
+    ytPlayer.playVideo();
+  }
+}
+
+function closePlayer() {
+  if (ytPlayer && playerReady) ytPlayer.stopVideo();
+  setPlayerVisible(false);
+}
+
+function renderSongList(id, songs, emptyText) {
+  const container = document.getElementById(id);
+  container.innerHTML = "";
+
+  if (!songs.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-message";
+    empty.textContent = emptyText;
+    container.append(empty);
+    return;
+  }
+
+  songs.forEach(song => container.append(createSongCard(song)));
+}
+
+function createSongCard(song) {
+  song = normaliseSong(song);
+
+  const card = document.createElement("article");
+  card.className = "song-item";
+
+  const image = document.createElement("img");
+  image.className = "song-thumb";
+  image.src = song.thumbnail;
+  image.alt = "Thumbnail for " + song.title;
+  image.loading = "lazy";
+  image.addEventListener("click", () => playVideo(song));
+
+  const info = document.createElement("div");
+  info.className = "song-info";
+
+  const title = document.createElement("h3");
+  title.className = "song-title";
+  title.textContent = song.title;
+
+  const channel = document.createElement("p");
+  channel.className = "song-channel";
+  channel.textContent = song.channel;
+
+  const actions = document.createElement("div");
+  actions.className = "song-actions";
+
+  const play = document.createElement("button");
+  play.className = "primary-button";
+  play.type = "button";
+  play.textContent = "▶ Play";
+  play.addEventListener("click", () => playVideo(song));
+
+  const fav = document.createElement("button");
+  fav.className = "icon-button" + (isFavourite(song.id) ? " favourited" : "");
+  fav.type = "button";
+  fav.textContent = isFavourite(song.id) ? "♥ Saved" : "♡ Favourite";
+  fav.addEventListener("click", () => toggleFavourite(song));
+
+  const save = document.createElement("button");
+  save.className = "icon-button";
+  save.type = "button";
+  save.textContent = isInLibrary(song.id) ? "✓ Saved" : "+ My Music";
+  save.addEventListener("click", () => {
+    if (addToLibrary(song)) save.textContent = "✓ Saved";
+  });
+
+  const playlistButton = document.createElement("button");
+  playlistButton.className = "icon-button";
+  playlistButton.type = "button";
+  playlistButton.textContent = "+ Playlist";
+  playlistButton.addEventListener("click", () => addSongToPlaylist(song));
+
+  actions.append(play, fav, save, playlistButton);
+  info.append(title, channel, actions);
+  card.append(image, info);
+
+  return card;
+}
+
+function renderSearchResults() {
+  renderSongList("searchResults", searchResults, "No search results yet.");
+
+  document.getElementById("resultCount").textContent =
+    searchResults.length ? searchResults.length + " results loaded" : "";
+
+  const button = document.getElementById("loadMoreButton");
+  const canLoadMore = Boolean(nextPageToken) && searchResults.length < 50;
+
+  button.classList.toggle("hidden", !canLoadMore);
+  button.disabled = isLoadingMore;
+  button.textContent = isLoadingMore ? "Loading..." : "Load More Results";
+}
+
+function renderLibrary() {
+  renderSongList("myMusicList", library, "Your saved music will appear here.");
+}
+
+function renderFavourites() {
+  renderSongList("favouriteList", favourites, "You have not added any favourites yet.");
+}
+
+function renderRecent() {
+  renderSongList("recentSongs", recentSongs.slice(0, 5), "Songs you play will appear here.");
+}
+
+function renderPlaylists() {
+  const container = document.getElementById("playlistList");
+  container.innerHTML = "";
+
+  if (!playlists.length) {
+    container.innerHTML = '<div class="empty-message">You have not created a playlist yet. Use the form above to create one.</div>';
+    return;
+  }
+
+  playlists.forEach(playlist => {
+    const section = document.createElement("section");
+    section.className = "section";
+
+    const heading = document.createElement("div");
+    heading.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:10px";
+
+    const title = document.createElement("h2");
+    title.textContent = playlist.name;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "secondary-button";
+    deleteButton.textContent = "Delete playlist";
+    deleteButton.addEventListener("click", () => {
+      if (confirm('Delete playlist "' + playlist.name + '"?')) {
+        playlists = playlists.filter(item => item.id !== playlist.id);
+        saveStorage(STORAGE_KEYS.playlists, playlists);
+        renderPlaylists();
+      }
+    });
+
+    heading.append(title, deleteButton);
+    section.append(heading);
+
+    const songs = document.createElement("div");
+    songs.className = "song-list";
+
+    if (!playlist.songs.length) {
+      songs.innerHTML = '<div class="empty-message">This playlist is empty. Add songs from Discover.</div>';
+    } else {
+      playlist.songs.forEach(song => {
+        const card = createSongCard(song);
+        const remove = document.createElement("button");
+        remove.className = "icon-button";
+        remove.textContent = "Remove from playlist";
+        remove.addEventListener("click", () => {
+          playlist.songs = playlist.songs.filter(item => item.id !== song.id);
+          saveStorage(STORAGE_KEYS.playlists, playlists);
+          renderPlaylists();
+        });
+        card.querySelector(".song-actions").append(remove);
+        songs.append(card);
+      });
+    }
+
+    section.append(songs);
+    container.append(section);
+  });
+}
+
+function addSongToPlaylist(song) {
+  if (!playlists.length) {
+    alert("Create a playlist first in the Playlists section.");
+    showSection("playlists");
+    return;
+  }
+
+  const choices = playlists.map((playlist, index) =>
+    (index + 1) + ". " + playlist.name
+  ).join("\n");
+
+  const answer = prompt("Type the number of the playlist:\n\n" + choices);
+  if (answer === null) return;
+
+  const index = Number(answer) - 1;
+
+  if (!Number.isInteger(index) || index < 0 || index >= playlists.length) {
+    alert("That playlist number is not valid.");
+    return;
+  }
+
+  const playlist = playlists[index];
+  const clean = normaliseSong(song);
+
+  if (!playlist.songs.some(item => item.id === clean.id)) {
+    playlist.songs.push(clean);
+    saveStorage(STORAGE_KEYS.playlists, playlists);
+    renderPlaylists();
+    alert("Song added to " + playlist.name + ".");
+  } else {
+    alert("That song is already in this playlist.");
+  }
+}
+
+document.getElementById("playlistForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const input = document.getElementById("playlistName");
+  const name = input.value.trim();
+  if (!name) return;
+
+  if (playlists.some(item => item.name.toLowerCase() === name.toLowerCase())) {
+    document.getElementById("playlistMessage").textContent =
+      "A playlist with that name already exists.";
+    return;
+  }
+
+  playlists.push({
+    id: String(Date.now()) + Math.random().toString(16).slice(2),
+    name,
+    songs: []
+  });
+
+  saveStorage(STORAGE_KEYS.playlists, playlists);
+  input.value = "";
+  document.getElementById("playlistMessage").textContent =
+    'Playlist "' + name + '" created.';
+
+  renderPlaylists();
+});
+
+function renderPopularSearches() {
+  const container = document.getElementById("popularSearches");
+  container.innerHTML = "";
+
+  POPULAR_SEARCHES.slice(0, 12).forEach(query => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "search-chip";
+    button.textContent = query;
+    button.addEventListener("click", () => {
+      document.getElementById("searchInput").value = query;
+      hideSearchSuggestions();
+      searchYouTube(query);
+    });
+    container.append(button);
+  });
+}
+
+function hideSearchSuggestions() {
+  document.getElementById("searchSuggestions").classList.add("hidden");
+}
+
+function showSearchSuggestions() {
+  const input = document.getElementById("searchInput");
+  const box = document.getElementById("searchSuggestions");
+  const query = input.value.trim().toLowerCase();
+
+  box.innerHTML = "";
+
+  const heading = document.createElement("div");
+  heading.className = "suggestion-heading";
+  heading.textContent = query ? "Search suggestions" : "Popular searches";
+  box.append(heading);
+
+  let suggestions = query
+    ? POPULAR_SEARCHES.filter(item => item.toLowerCase().includes(query)).slice(0, 7)
+    : POPULAR_SEARCHES.slice(0, 6);
+
+  if (query && !suggestions.some(item => item.toLowerCase() === query)) {
+    suggestions.unshift(input.value.trim());
+  }
+
+  suggestions.slice(0, 8).forEach(item => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "suggestion-button";
+    button.textContent = "⌕  " + item;
+    button.addEventListener("click", () => selectSuggestion(item));
+    box.append(button);
+  });
+
+  box.classList.remove("hidden");
+}
+
+function selectSuggestion(query) {
+  document.getElementById("searchInput").value = query;
+  hideSearchSuggestions();
+  searchYouTube(query);
+}
+
+document.getElementById("searchInput").addEventListener("input", showSearchSuggestions);
+document.getElementById("searchInput").addEventListener("focus", showSearchSuggestions);
+
+document.addEventListener("click", event => {
+  const area = document.querySelector(".search-area");
+  if (area && !area.contains(event.target)) hideSearchSuggestions();
+});
+
+async function searchYouTube(query, loadMore = false) {
+  const message = document.getElementById("searchMessage");
+  const moreButton = document.getElementById("loadMoreButton");
+
+  if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === "YOUR_API_KEY") {
+    message.textContent = "Add your YouTube Data API v3 key in the YOUTUBE_API_KEY line in the code.";
+    return;
+  }
+
+  if (!navigator.onLine) {
+    message.textContent = "You are offline. You can listen to audio files saved in Downloads.";
+    return;
+  }
+
+  if (loadMore && (isLoadingMore || !nextPageToken || searchResults.length >= 50)) return;
+
+  if (!loadMore) {
+    currentSearchQuery = query.trim();
+    searchResults = [];
+    nextPageToken = null;
+    searchRequestNumber++;
+    renderSearchResults();
+  }
+
+  const request = searchRequestNumber;
+  isLoadingMore = true;
+  moreButton.disabled = true;
+  moreButton.textContent = "Loading...";
+  message.textContent = loadMore
+    ? "Finding more songs and mixes..."
+    : "Searching YouTube for " + currentSearchQuery + "...";
+
+  try {
+    const params = new URLSearchParams({
+      part: "snippet",
+      type: "video",
+      videoEmbeddable: "true",
+      maxResults: "20",
+      q: currentSearchQuery,
+      key: YOUTUBE_API_KEY
+    });
+
+    if (loadMore && nextPageToken) {
+      params.set("pageToken", nextPageToken);
+    }
+
+    const response = await fetch(
+      "https://www.googleapis.com/youtube/v3/search?" + params
+    );
+
+    const data = await response.json();
+
+    if (request !== searchRequestNumber) return;
+    if (!response.ok) throw new Error(data.error?.message || "YouTube search failed.");
+
+    const existingIds = new Set(searchResults.map(song => song.id));
+
+    const found = (data.items || [])
+      .filter(item => item.id?.videoId && !existingIds.has(item.id.videoId))
+      .map(item => ({
+        id: item.id.videoId,
+        title: item.snippet.title,
+        channel: item.snippet.channelTitle,
+        thumbnail: (
+          item.snippet.thumbnails.medium ||
+          item.snippet.thumbnails.high ||
+          item.snippet.thumbnails.default
+        ).url
+      }));
+
+    searchResults = searchResults.concat(found.slice(0, 50 - searchResults.length));
+    nextPageToken = data.nextPageToken || null;
+
+    if (searchResults.length >= 50) nextPageToken = null;
+
+    renderSearchResults();
+
+    message.textContent = searchResults.length
+      ? 'Found ' + searchResults.length + ' results for "' + currentSearchQuery + '". Select Play to listen.'
+      : "No results found. Try another search or choose a recommendation.";
+
+    if (searchResults.length >= 50) {
+      message.textContent += " Maximum of 50 results loaded.";
+    } else if (!nextPageToken && searchResults.length) {
+      message.textContent += " No more results are available.";
+    }
+  } catch (error) {
+    if (request === searchRequestNumber) {
+      message.textContent = "Could not search YouTube: " + error.message +
+        ". Check your API key, API quota, restrictions and internet connection.";
+    }
+  } finally {
+    if (request === searchRequestNumber) {
+      isLoadingMore = false;
+      renderSearchResults();
+    }
+  }
+}
+
+document.getElementById("searchForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const query = document.getElementById("searchInput").value.trim();
+  hideSearchSuggestions();
+  if (query) searchYouTube(query);
+});
+
+document.getElementById("loadMoreButton").addEventListener("click", () => {
+  searchYouTube(currentSearchQuery, true);
+});
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player("youtubePlayer", {
+    width: "100%",
+    height: "100%",
+    videoId: "",
+    playerVars: {playsinline:1, rel:0},
+    events: {
+      onReady: () => {
+        playerReady = true;
+        if (lastPlayedId) {
+          const id = lastPlayedId;
+          lastPlayedId = null;
+          ytPlayer.loadVideoById(id);
+        }
+      },
+      onStateChange: event => {
+        if (event.data === YT.PlayerState.ENDED && autoplayEnabled) {
+          playNext();
+        }
+
+        if (event.data === YT.PlayerState.PLAYING) {
+          queueSkipInProgress = false;
+        }
+
+        document.getElementById("playPauseButton").textContent =
+          event.data === YT.PlayerState.PLAYING ? "Ⅱ" : "▶";
+      },
+      onError: event => {
+        console.warn("YouTube player error", event.data);
+
+        document.getElementById("playerChannel").textContent =
+          "This video cannot play here. Trying the next song...";
+
+        if (autoplayEnabled && !queueSkipInProgress) {
+          queueSkipInProgress = true;
+          setTimeout(() => playNext(), 800);
+        }
+      }
+    }
+  });
+}
+
+function loadYouTubePlayerAPI() {
+  if (document.getElementById("youtube-iframe-api")) return;
+
+  const script = document.createElement("script");
+  script.id = "youtube-iframe-api";
+  script.src = "https://www.youtube.com/iframe_api";
+  script.async = true;
+  document.head.appendChild(script);
+}
+
+/* Offline audio storage: files must be owned or authorized by you. */
+function openOfflineDB() {
+  return new Promise((resolve, reject) => {
+    if (!("indexedDB" in window)) {
+      reject(new Error("Offline storage is not supported"));
+      return;
+    }
+
+    const request = indexedDB.open("AfroVibeOfflineFiles", 1);
+
+    request.onupgradeneeded = () => {
+      if (!request.result.objectStoreNames.contains("audio")) {
+        request.result.createObjectStore("audio", {keyPath:"id"});
+      }
+    };
+
+    request.onsuccess = () => {
+      offlineDB = request.result;
+      resolve(offlineDB);
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveOfflineFile(file) {
+  const db = await openOfflineDB();
+
+  const record = {
+    id: "local-" + Date.now() + "-" + Math.random().toString(16).slice(2),
+    title: file.name,
+    type: file.type || "audio/mpeg",
+    size: file.size,
+    blob: file,
+    savedAt: Date.now()
+  };
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("audio", "readwrite");
+    transaction.objectStore("audio").put(record);
+    transaction.oncomplete = () => resolve(record);
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+async function getOfflineFiles() {
+  const db = await openOfflineDB();
+
+  return new Promise((resolve, reject) => {
+    const request = db.transaction("audio", "readonly").objectStore("audio").getAll();
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function deleteOfflineFile(id) {
+  const db = await openOfflineDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("audio", "readwrite");
+    transaction.objectStore("audio").delete(id);
+    transaction.oncomplete = resolve;
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+async function renderDownloads() {
+  const container = document.getElementById("downloadsList");
+  container.innerHTML = '<div class="empty-message">Loading saved files...</div>';
+
+  try {
+    const files = (await getOfflineFiles()).sort((a,b) => b.savedAt - a.savedAt);
+    container.innerHTML = "";
+
+    if (!files.length) {
+      container.innerHTML = '<div class="empty-message">No audio files saved for offline listening yet. Choose authorized audio files above.</div>';
+      return;
+    }
+
+    files.forEach(file => {
+      const card = document.createElement("article");
+      card.className = "song-item";
+
+      const info = document.createElement("div");
+      info.className = "song-info";
+
+      const title = document.createElement("h3");
+      title.className = "song-title";
+      title.textContent = file.title;
+
+      const detail = document.createElement("p");
+      detail.className = "song-channel";
+      detail.textContent = "Saved offline · " + (file.size / 1048576).toFixed(2) + " MB";
+
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.preload = "none";
+      audio.style.width = "100%";
+      audio.style.marginTop = "8px";
+      audio.src = URL.createObjectURL(file.blob);
+
+      const remove = document.createElement("button");
+      remove.className = "icon-button";
+      remove.textContent = "Delete download";
+      remove.addEventListener("click", async () => {
+        if (confirm("Delete this offline file?")) {
+          await deleteOfflineFile(file.id);
+          renderDownloads();
+        }
+      });
+
+      info.append(title, detail, audio, remove);
+      card.append(info);
+      container.append(card);
+    });
+  } catch (error) {
+    container.innerHTML = '<div class="empty-message">Offline storage is unavailable in this browser.</div>';
+  }
+}
+
+document.getElementById("offlineFile").addEventListener("change", async event => {
+  const files = Array.from(event.target.files || []);
+  const message = document.getElementById("offlineFileMessage");
+
+  if (!files.length) return;
+
+  try {
+    let saved = 0;
+
+    for (const file of files) {
+      if (file.type.startsWith("audio/")) {
+        await saveOfflineFile(file);
+        saved++;
+      }
+    }
+
+    message.textContent = saved + " audio file(s) saved for offline listening.";
+    renderDownloads();
+  } catch (error) {
+    message.textContent = "Could not save files. Your browser may be out of storage.";
+  }
+
+  event.target.value = "";
+});
 
 loadYouTubePlayerAPI();
 renderPopularSearches();
@@ -249,9 +1319,6 @@ updateQueueCount();
 updateConnectionDot();
 updateAutoplayButton();
 renderDownloads();
-monitorSlowConnection();
-
-if("serviceWorker"in navigator&&location.protocol.startsWith("http")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(e=>console.warn("Offline app caching unavailable",e)))}
 </script>
 </body>
 </html>
