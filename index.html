@@ -590,6 +590,24 @@ body {
   }
 }
 
+/* Hide the bottom player until a track is selected */
+#playerSection {
+  display: none;
+}
+
+/* Show the centered player only when a song is selected */
+#playerSection.player-visible {
+  display: block;
+}
+
+@media (max-width: 760px) {
+  #playerSection {
+    bottom: 8px;
+    width: calc(100% - 16px);
+    padding: 10px;
+  }
+}
+
 </style>
 </head>
 <body>
